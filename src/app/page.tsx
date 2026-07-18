@@ -257,7 +257,7 @@ function FeaturedCompact({
 
         <Button
           as={Link}
-          className="font-bold"
+          className="pressable font-bold"
           color="primary"
           fullWidth
           href={`/m/${meta.fixtureId}`}

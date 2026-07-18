@@ -118,7 +118,7 @@ export default function FeedSlide({
         </Button>
         {index < total - 1 ? (
           <div className="flex flex-col items-center text-default-400">
-            <Icon className="animate-bounce" icon="solar:alt-arrow-up-linear" width={16} />
+            <Icon icon="solar:alt-arrow-up-linear" width={16} />
             <span className="text-[10px] font-medium uppercase tracking-wider">Next</span>
           </div>
         ) : (

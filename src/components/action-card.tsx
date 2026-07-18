@@ -54,7 +54,7 @@ const ActionCard = React.forwardRef<HTMLDivElement, ActionCardProps>(
       <Card
         ref={ref}
         className={cn(
-          "group border-small transition-transform duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-reduce:transition-none hover:-translate-y-0.5 hover:shadow-md",
+          "group surface-interactive border-small motion-reduce:transition-none hover:border-default-300",
           colors?.card,
           className,
         )}
@@ -64,7 +64,7 @@ const ActionCard = React.forwardRef<HTMLDivElement, ActionCardProps>(
         <CardBody className="flex h-full flex-row items-start gap-3 p-4">
           <div
             className={cn(
-              "item-center flex shrink-0 rounded-medium border p-2 transition-transform duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-reduce:transition-none group-hover:scale-110",
+              "item-center flex shrink-0 rounded-medium border p-2 transition-transform duration-160 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none group-hover:scale-[1.04]",
               colors?.iconWrapper,
             )}
           >

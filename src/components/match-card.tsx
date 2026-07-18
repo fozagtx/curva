@@ -51,7 +51,7 @@ export default function MatchCard({
   return (
     <Card
       as={Link}
-      className="border-small border-default-200 hover:border-primary-200"
+      className="surface-interactive border-small border-default-200 hover:border-primary-200"
       href={`/m/${meta.fixtureId}`}
       isPressable
       shadow="sm"

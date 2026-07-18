@@ -73,10 +73,10 @@ export default function DramaToast({
         {toast ? (
           <motion.div
             key={toast.id}
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.96 }}
+            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.97 }}
             animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.98 }}
-            transition={{ duration: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.98 }}
+            transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
             className="pointer-events-auto flex max-w-sm items-center gap-3 rounded-full border border-warning-200 bg-content1 px-4 py-2.5 shadow-lg"
           >
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-warning-50 text-warning-600">

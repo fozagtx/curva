@@ -286,7 +286,7 @@ export default function MarketCard({ meta, probs, phase }: Props) {
                   <button
                     key={s}
                     className={cn(
-                      "flex min-w-0 flex-col items-center gap-0.5 rounded-medium border p-3 transition-colors",
+                      "surface-interactive flex min-w-0 flex-col items-center gap-0.5 rounded-medium border p-3",
                       active
                         ? "border-primary-300 bg-primary-50"
                         : "border-default-200 bg-default-50 hover:border-default-300",
