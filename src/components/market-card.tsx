@@ -11,8 +11,6 @@ import type { FixtureMeta } from "@/lib/engine/state";
 import { homeAwayProbs, type ProbPoint } from "@/lib/usePulse";
 import { useWallet, getProvider } from "@/lib/wallet";
 import {
-  fetchMarket,
-  fetchPositions,
   createMarketTx,
   stakeTx,
   settleTx,
@@ -24,7 +22,6 @@ import {
   type MarketSide,
   type SettleProof,
 } from "@/lib/markets/client";
-import { PublicKey } from "@solana/web3.js";
 
 const SIDE_META = [
   { label: "wins", color: "#22C55E" },
@@ -56,11 +53,12 @@ export default function MarketCard({ meta, probs, phase }: Props) {
   const refresh = useCallback(async () => {
     if (!fixtureId) return;
     try {
-      const m = await fetchMarket(fixtureId);
-      setMarket(m);
-      if (pubkey) {
-        setPositions(await fetchPositions(fixtureId, new PublicKey(pubkey)));
-      }
+      const qs = pubkey ? `?owner=${pubkey}` : "";
+      const res = await fetch(`/api/market/${fixtureId}${qs}`);
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error ?? `HTTP ${res.status}`);
+      setMarket(body.market as MarketAccount | null);
+      setPositions((body.positions ?? []) as PositionAccount[]);
     } catch {
       // devnet hiccup; next poll wins
     } finally {
