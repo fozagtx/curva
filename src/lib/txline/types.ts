@@ -120,6 +120,7 @@ export const LIVE_PHASES = new Set(["H1", "HT", "H2", "WET", "ET1", "HTET", "ET2
 // schema does not match production. This normalizer accepts both shapes and
 // produces the internal ScoresRecord the engine consumes.
 export function normalizeScoresRecord(input: unknown): ScoresRecord | null {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- raw feed record
   const raw = input as Record<string, any>;
   if (!raw || typeof raw !== "object") return null;
   const fixtureId = raw.FixtureId ?? raw.fixtureId;

@@ -23,12 +23,6 @@ import {
   type SettleProof,
 } from "@/lib/markets/client";
 
-const SIDE_META = [
-  { label: "wins", color: "#22C55E" },
-  { label: "Draw", color: "#71717A" },
-  { label: "wins", color: "#38BDF8" },
-] as const;
-
 const STAKE_AMOUNTS = [0.05, 0.1, 0.25] as const;
 
 interface Props {
@@ -67,6 +61,7 @@ export default function MarketCard({ meta, probs, phase }: Props) {
   }, [fixtureId, pubkey]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial chain read + poll
     refresh();
     const t = setInterval(refresh, 12_000);
     return () => clearInterval(t);
@@ -103,7 +98,11 @@ export default function MarketCard({ meta, probs, phase }: Props) {
   const latest = probs.length ? probs[probs.length - 1] : null;
   const consensus = latest && meta ? homeAwayProbs(meta, latest.probs) : null;
   const matchOver = ["F", "FET", "FPE"].includes(phase);
-  const kickoffPassed = meta ? Date.now() > meta.startTime : false;
+  // Kickoff gating keys off stream time (latest odds tick) with a wall-clock
+  // fallback captured once at mount.
+  const [mountedAt] = useState(() => Date.now());
+  const streamNow = latest?.ts ?? mountedAt;
+  const kickoffPassed = meta ? streamNow > meta.startTime : false;
 
   if (!meta) return null;
 
