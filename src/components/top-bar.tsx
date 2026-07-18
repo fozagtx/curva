@@ -24,11 +24,11 @@ export default function TopBar({ backHref }: { backHref?: string }) {
         ) : null}
         <Link className="flex items-center gap-3" href="/">
           <div className="flex items-center rounded-medium border border-primary-100 bg-primary-50 p-2">
-            <Icon className="text-primary" icon="solar:pulse-2-bold-duotone" width={22} />
+            <Icon className="text-primary" icon="solar:graph-up-bold-duotone" width={22} />
           </div>
           <div className="flex flex-col leading-tight">
-            <p className="text-medium font-semibold">Pulse</p>
-            <p className="text-tiny text-default-400">Feel the World Cup</p>
+            <p className="text-medium font-semibold">Curva</p>
+            <p className="text-tiny text-default-400">Where conviction meets the curve</p>
           </div>
         </Link>
       </div>

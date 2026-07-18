@@ -67,7 +67,7 @@ export default function Lobby() {
           Stake on the match. Let Solana settle it.
         </h1>
         <p className="text-medium text-default-500">
-          Pulse Markets runs a prediction pool for every World Cup game — live win
+          Curva runs a prediction pool for every World Cup game — live win
           probability from consensus odds, and payouts unlocked by cryptographic
           proof of the final score, not by anyone&apos;s say-so.
         </p>

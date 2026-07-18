@@ -8,3 +8,755 @@
 [   36251ms] [LOG] [Fast Refresh] done in 130ms @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
 [   70206ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
 [   70251ms] [LOG] [Fast Refresh] done in 147ms @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  310640ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  310649ms] [LOG] [Fast Refresh] done in 110ms @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  311007ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  311011ms] [LOG] [Fast Refresh] done in 104ms @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  312957ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  312964ms] [LOG] [Fast Refresh] done in 108ms @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  313065ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  313077ms] [LOG] [Fast Refresh] done in 114ms @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  314373ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  314406ms] [LOG] [Fast Refresh] done in 134ms @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  315309ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  315340ms] [LOG] [Fast Refresh] done in 130ms @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  324257ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  324382ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:3318
+[  324522ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  324621ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:3318
+[  324723ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  324886ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:3318
+[  324887ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3457/m/90000002?_rsc=u35cBfD-XaSwRdaG:0
+[  324902ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3457/m/90000002?_rsc=u35cBfD-XaSwRdaG:0
+[  324911ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3457/m/90000002?_rsc=u35cBfD-XaSwRdaG:0
+[  324956ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3457/m/90000002:0
+[  325008ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3457/_next/static/chunks/167t_react-dom_1tajth8._.js:15305
+[  325041ms] Error: ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./Desktop/predict/src/lib/markets/client.ts:15:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at Object.getCompilationErrors (file:///Users/kaizen/Desktop/predict/node_modules/.pnpm/next@16.2.10_@babel+core@7.29.7_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/kaizen/Desktop/predict/node_modules/.pnpm/next@16.2.10_@babel+core@7.29.7_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/kaizen/Desktop/predict/node_modules/.pnpm/next@16.2.10_@babel+core@7.29.7_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/next/dist/server/dev/next-dev-server.js:720:42)
+    at DevServer.findPageComponents (file:///Users/kaizen/Desktop/predict/node_modules/.pnpm/next@16.2.10_@babel+core@7.29.7_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/next/dist/server/dev/next-dev-server.js:690:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/kaizen/Desktop/predict/node_modules/.pnpm/next@16.2.10_@babel+core@7.29.7_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/next/dist/server/base-server.js:1753:26)
+[  325037ms] [LOG] [HMR] connected @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  325039ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  325100ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  325168ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  341289ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  341353ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  355274ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  355339ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  372849ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  372891ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  373349ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  373354ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  373505ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  373507ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  373813ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  373819ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  374179ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  374193ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  374305ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  374312ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  375058ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  375074ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  375221ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  375350ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  375353ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  375617ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  375675ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  375719ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  376221ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  376235ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  376552ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  376701ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  376767ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  376868ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  376902ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  377056ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  377066ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  378123ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  378141ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  378206ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  378243ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  384285ms] [ERROR] ./Desktop/predict/src/lib/markets/client.ts:15:1
+Module not found: Can't resolve './pulse-markets-idl.json'
+  13 | } from "@solana/web3.js";
+  14 | import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
+> 15 | import idl from "./pulse-markets-idl.json";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 |
+  17 | export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+  18 | export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715w...
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component Browser]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component Browser]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/predict/src/lib/markets/client.ts [Client Component SSR]
+    ./Desktop/predict/src/components/market-card.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Client Component SSR]
+    ./Desktop/predict/src/app/m/[fixtureId]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1945
+[  384351ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  406106ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  406268ms] [LOG] [Fast Refresh] done in 157ms @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_090q0j9._.js:1226
+[  406592ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  406600ms] [LOG] [HMR] connected @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  446632ms] [ERROR] Failed to load resource: net::ERR_INCOMPLETE_CHUNKED_ENCODING @ http://localhost:3457/api/live/90000002:0
+[  447651ms] [ERROR] WebSocket connection to 'ws://localhost:3457/_next/webpack-hmr?id=-MVkmESJ9aKagrCxrQApz' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_client_0mb4_cs._.js:13422
+[  448653ms] [ERROR] WebSocket connection to 'ws://localhost:3457/_next/webpack-hmr?id=-MVkmESJ9aKagrCxrQApz' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_client_0mb4_cs._.js:13422
+[  449634ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/api/live/90000002:0
+[  449657ms] [ERROR] WebSocket connection to 'ws://localhost:3457/_next/webpack-hmr?id=-MVkmESJ9aKagrCxrQApz' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_client_0mb4_cs._.js:13422
+[  450659ms] [ERROR] WebSocket connection to 'ws://localhost:3457/_next/webpack-hmr?id=-MVkmESJ9aKagrCxrQApz' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_client_0mb4_cs._.js:13422
+[  451660ms] [ERROR] WebSocket connection to 'ws://localhost:3457/_next/webpack-hmr?id=-MVkmESJ9aKagrCxrQApz' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_client_0mb4_cs._.js:13422
+[  452635ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/api/live/90000002:0
+[  455637ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/api/live/90000002:0
+[  456662ms] [ERROR] WebSocket connection to 'ws://localhost:3457/_next/webpack-hmr?id=-MVkmESJ9aKagrCxrQApz' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_client_0mb4_cs._.js:13422
+[  458640ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/api/live/90000002:0
+[  461643ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/api/live/90000002:0
+[  461671ms] [ERROR] WebSocket connection to 'ws://localhost:3457/_next/webpack-hmr?id=-MVkmESJ9aKagrCxrQApz' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_client_0mb4_cs._.js:13422
+[  464646ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/api/live/90000002:0
+[  466673ms] [ERROR] WebSocket connection to 'ws://localhost:3457/_next/webpack-hmr?id=-MVkmESJ9aKagrCxrQApz' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_client_0mb4_cs._.js:13422
+[  467648ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/api/live/90000002:0
+[  470650ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/api/live/90000002:0
+[  471676ms] [ERROR] WebSocket connection to 'ws://localhost:3457/_next/webpack-hmr?id=-MVkmESJ9aKagrCxrQApz' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_client_0mb4_cs._.js:13422
+[  473652ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/api/live/90000002:0
+[  476653ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/api/live/90000002:0
+[  476678ms] [ERROR] WebSocket connection to 'ws://localhost:3457/_next/webpack-hmr?id=-MVkmESJ9aKagrCxrQApz' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_client_0mb4_cs._.js:13422
+[  479656ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/api/live/90000002:0
+[  481680ms] [ERROR] WebSocket connection to 'ws://localhost:3457/_next/webpack-hmr?id=-MVkmESJ9aKagrCxrQApz' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_client_0mb4_cs._.js:13422
+[  482658ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/api/live/90000002:0
+[  485660ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/api/live/90000002:0
+[  486684ms] [ERROR] WebSocket connection to 'ws://localhost:3457/_next/webpack-hmr?id=-MVkmESJ9aKagrCxrQApz' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_client_0mb4_cs._.js:13422

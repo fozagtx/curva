@@ -1,6 +1,6 @@
 "use client";
 
-// Browser client for the pulse_markets program (devnet).
+// Browser client for the curva program (devnet).
 // Builds unsigned transactions; Phantom signs and sends them.
 
 import {
@@ -12,9 +12,9 @@ import {
   LAMPORTS_PER_SOL,
 } from "@solana/web3.js";
 import { AnchorProvider, BN, BorshCoder, Program, type Idl } from "@coral-xyz/anchor";
-import idl from "./pulse-markets-idl.json";
+import idl from "./curva-idl.json";
 
-export const PULSE_MARKETS_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
+export const CURVA_PROGRAM_ID = new PublicKey((idl as { address: string }).address);
 export const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715wyP2J");
 export const DEVNET_RPC = "https://api.devnet.solana.com";
 
@@ -48,21 +48,21 @@ export function connection(): Connection {
 export function marketPda(fixtureId: number): PublicKey {
   return PublicKey.findProgramAddressSync(
     [Buffer.from("market"), new BN(fixtureId).toArrayLike(Buffer, "le", 8)],
-    PULSE_MARKETS_PROGRAM_ID,
+    CURVA_PROGRAM_ID,
   )[0];
 }
 
 export function vaultPda(market: PublicKey): PublicKey {
   return PublicKey.findProgramAddressSync(
     [Buffer.from("vault"), market.toBuffer()],
-    PULSE_MARKETS_PROGRAM_ID,
+    CURVA_PROGRAM_ID,
   )[0];
 }
 
 export function positionPda(market: PublicKey, owner: PublicKey, side: MarketSide): PublicKey {
   return PublicKey.findProgramAddressSync(
     [Buffer.from("position"), market.toBuffer(), owner.toBuffer(), Buffer.from([side])],
-    PULSE_MARKETS_PROGRAM_ID,
+    CURVA_PROGRAM_ID,
   )[0];
 }
 

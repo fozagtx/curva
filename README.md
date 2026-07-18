@@ -1,4 +1,4 @@
-# Pulse Markets — World Cup pools settled by proof
+# Curva — World Cup pools settled by proof
 
 Parimutuel prediction pools for every World Cup match. Stake SOL on the result,
 watch the market breathe in real time, and let **Solana settle the pot** — payouts
@@ -10,12 +10,12 @@ Superteam Earn.
 ## Why this is different
 
 Most prediction markets trust an oracle operator or an admin multisig to report
-results. Pulse Markets trusts **a cryptographic proof verified by the chain**:
+results. Curva trusts **a cryptographic proof verified by the chain**:
 `settle` CPIs into TxODDS's deployed TxOracle program (`validate_stat`), which
 checks the proof of "P1 goals − P2 goals vs 0" against the daily Merkle root
 TxODDS anchors on Solana. Nobody — including us — can settle a market wrong.
 
-Three on-chain integrity gates in `settle` (see `program/programs/pulse-markets/src/lib.rs`):
+Three on-chain integrity gates in `settle` (see `program/programs/curva/src/lib.rs`):
 
 1. **Finalisation-only stats** — the proven stats must carry the `period = 100`
    stamp that TxLINE puts only on `game_finalised` records, so a half-time
@@ -62,7 +62,7 @@ TxLINE SSE/REST ──► Next.js server (engine: odds→probability, drama, eve
              Browser (wave, pools, Phantom)
                     │ stake / settle / claim
                     ▼
-        pulse_markets (Anchor, devnet) ── CPI ──► TxOracle validate_stat
+        curva (Anchor, devnet) ── CPI ──► TxOracle validate_stat
                     │                                   │
                 vault PDA                    daily_scores_roots PDA
 ```
@@ -88,3 +88,6 @@ pnpm dev
 
 Next.js 16 · HeroUI v2 · Tailwind v4 · Anchor 0.32 (Rust) · TxLINE devnet ·
 Solana web3.js · Phantom
+
+> Curva: the terrace where football's most devoted fans stand — and the curve
+> of live win probability this product is built around.

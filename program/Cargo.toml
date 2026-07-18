@@ -1,5 +1,5 @@
 [workspace]
-members = ["programs/pulse-markets"]
+members = ["programs/curva"]
 resolver = "2"
 
 [profile.release]

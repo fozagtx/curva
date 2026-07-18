@@ -6,7 +6,7 @@ resolution = true
 skip-lint = false
 
 [programs.devnet]
-pulse_markets = "3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp"
+curva = "3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp"
 
 [registry]
 url = "https://api.apr.dev"

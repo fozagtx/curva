@@ -18,7 +18,7 @@ import {
   LAMPORTS_PER_SOL,
 } from "@solana/web3.js";
 import * as fs from "fs";
-import marketsIdl from "../src/lib/markets/pulse-markets-idl.json";
+import marketsIdl from "../src/lib/markets/curva-idl.json";
 import { API_BASE_URL, JWT_URL, SOLANA_RPC, WORLD_CUP_COMPETITION_ID } from "../src/lib/txline/config";
 
 const TXORACLE_PROGRAM_ID = new PublicKey("6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715wyP2J");

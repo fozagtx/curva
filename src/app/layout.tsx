@@ -16,9 +16,9 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pulse Markets — World Cup pools settled by proof",
+  title: "Curva — World Cup pools settled by proof",
   description:
-    "Parimutuel World Cup prediction pools with live consensus odds, settled trustlessly on Solana by TxLINE Merkle proofs.",
+    "Curva runs a parimutuel pool for every World Cup match — live consensus odds, and payouts settled trustlessly on Solana by TxLINE Merkle proofs.",
 };
 
 export const viewport: Viewport = {
