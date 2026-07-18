@@ -38,48 +38,48 @@ RPC + TxLINE mainnet subscription, keep the same CPI into TxOracle
 Four instructions, written to be audited:
 
 - `create_market(fixture_id, kickoff_ts_ms)` - permissionless, one market per
- fixture (PDA-seeded), deterministic parameters.
+  fixture (PDA-seeded), deterministic parameters.
 - `stake(side, amount)` - escrows lamports in the vault PDA; closes at kickoff.
 - `settle(outcome, ts, summary, proofs…, stat_p1, stat_p2)` - the core. One CPI
- into TxOracle `validate_stat` with predicate `(P1 goals - P2 goals) vs 0`
- (`Subtract` + `GreaterThan/EqualTo/LessThan` per claimed outcome). Three
- on-chain integrity gates make wrong settlement impossible:
- 1. **Finalisation-only** - proven stats must carry `period == 100`, which
- TxLINE stamps only on `game_finalised` records. A half-time snapshot can
- never settle a match that later flipped.
- 2. **Post-match window** - the proof's own `max_timestamp` (hashed into the
- Merkle commitment, unforgeable) must be ≥ 105 minutes after kickoff.
- 3. **Fixed stat identities** - keys must be exactly 1 and 2 (P1/P2 total
- goals) so the subtraction has one deterministic meaning.
+  into TxOracle `validate_stat` with predicate `(P1 goals - P2 goals) vs 0`
+  (`Subtract` + `GreaterThan/EqualTo/LessThan` per claimed outcome). Three
+  on-chain integrity gates make wrong settlement impossible:
+  1. **Finalisation-only** - proven stats must carry `period == 100`, which
+     TxLINE stamps only on `game_finalised` records. A half-time snapshot can
+     never settle a match that later flipped.
+  2. **Post-match window** - the proof's own `max_timestamp` (hashed into the
+     Merkle commitment, unforgeable) must be ≥ 105 minutes after kickoff.
+  3. **Fixed stat identities** - keys must be exactly 1 and 2 (P1/P2 total
+     goals) so the subtraction has one deterministic meaning.
 - `claim()` - winners split the whole pot pro-rata (u128 math, overflow
- checked); empty winning pool → full refunds; unsettleable markets (abandoned)
- unlock refunds automatically 72h after kickoff.
+  checked); empty winning pool → full refunds; unsettleable markets (abandoned)
+  unlock refunds automatically 72h after kickoff.
 
 ## Architecture
 
 ```
 TxLINE SSE/REST ──► Next.js server (odds→probability engine, drama, events)
- │ /api/live /api/replay SSE relay to browsers
- │ /api/settle-proof proof shaped as ix args
- │ /api/market /api/verify chain reads, view checks
- ▼
- Browser (probability wave, pools, Phantom)
- │ stake / settle / claim (signed by the user)
- ▼
- curva program (devnet) ── CPI ──► TxOracle validate_stat
- │ │
- vault PDA daily_scores_roots PDA
+                    │  /api/live /api/replay        SSE relay to browsers
+                    │  /api/settle-proof            proof shaped as ix args
+                    │  /api/market /api/verify      chain reads, view checks
+                    ▼
+             Browser (probability wave, pools, Phantom)
+                    │ stake / settle / claim (signed by the user)
+                    ▼
+        curva program (devnet) ── CPI ──► TxOracle validate_stat
+                    │                            │
+               vault PDA                daily_scores_roots PDA
 ```
 
 - **Win probability** comes from TxLINE's `TXLineStablePriceDemargined`
- consensus feed (`Pct` values on the `1X2_PARTICIPANT_RESULT` market),
- normalized and streamed to the browser. Pool-implied multipliers are shown
- next to the professional market's numbers.
+  consensus feed (`Pct` values on the `1X2_PARTICIPANT_RESULT` market),
+  normalized and streamed to the browser. Pool-implied multipliers are shown
+  next to the professional market's numbers.
 - **Replay**: any of the 104 finished matches re-streams through the identical
- engine at 30-120x from TxLINE historical data - the product stays fully
- reviewable after the tournament ends.
+  engine at 30-120x from TxLINE historical data - the product stays fully
+  reviewable after the tournament ends.
 - **Live catch-up**: joining mid-match replays the full history first, so the
- wave always shows the whole story.
+  wave always shows the whole story.
 
 ## TxLINE endpoints used (upstream)
 
@@ -127,15 +127,15 @@ abandoned markets (72h) unlock refunds without an admin.
 1. `anchor build && anchor deploy` against mainnet (new program id).
 2. Swap RPC + update client IDL / program id constants.
 3. TxLINE: mainnet `subscribe` + token activate (same auth flow as
- `scripts/txline-setup.ts`).
+   `scripts/txline-setup.ts`).
 4. No settlement redesign - CPI target and the three gates stay identical.
 
 ## Business highlights
 
 - **Fee-ready parimutuel design**: a protocol fee on winning pots is a one-line
- change; white-label the market layer for operators/media as B2B.
+  change; white-label the market layer for operators/media as B2B.
 - **Trustless settlement is the moat**: operators today pay for result feeds
- AND carry oracle risk; Kryva's settlement cost is one transaction and the
- trust cost is zero.
+  AND carry oracle risk; Kryva's settlement cost is one transaction and the
+  trust cost is zero.
 - **The viewer doubles as content**: the probability wave + drama recap cards
- are shareable moments that market the pools.
+  are shareable moments that market the pools.

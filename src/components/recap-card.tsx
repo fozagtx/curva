@@ -10,121 +10,121 @@ import type { FixtureMeta, ScoreState } from "@/lib/engine/state";
 import { homeAwayProbs, homeAwayScore, type ProbPoint } from "@/lib/usePulse";
 
 interface Props {
- meta: FixtureMeta;
- score: ScoreState | null;
- probs: ProbPoint[];
+  meta: FixtureMeta;
+  score: ScoreState | null;
+  probs: ProbPoint[];
 }
 
 const SWING_WINDOW_MS = 5 * 60 * 1000;
 
 export default function RecapCard({ meta, score, probs }: Props) {
- const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState(false);
 
- const recap = useMemo(() => {
- if (probs.length < 3) return null;
- const peakDrama = Math.max(...probs.map((p) => p.drama));
+  const recap = useMemo(() => {
+    if (probs.length < 3) return null;
+    const peakDrama = Math.max(...probs.map((p) => p.drama));
 
- // biggest 5-minute swing for either side
- let best = { delta: 0, team: meta.home.name, from: 0, to: 0 };
- let j = 0;
- for (let i = 0; i < probs.length; i++) {
- while (probs[i].ts - probs[j].ts > SWING_WINDOW_MS) j++;
- const now = homeAwayProbs(meta, probs[i].probs);
- const then = homeAwayProbs(meta, probs[j].probs);
- for (const side of ["home", "away"] as const) {
- const delta = now[side] - then[side];
- if (Math.abs(delta) > Math.abs(best.delta)) {
- best = {
- delta,
- team: side === "home" ? meta.home.name : meta.away.name,
- from: then[side],
- to: now[side],
- };
- }
- }
- }
- return { peakDrama, swing: best };
- }, [probs, meta]);
+    // biggest 5-minute swing for either side
+    let best = { delta: 0, team: meta.home.name, from: 0, to: 0 };
+    let j = 0;
+    for (let i = 0; i < probs.length; i++) {
+      while (probs[i].ts - probs[j].ts > SWING_WINDOW_MS) j++;
+      const now = homeAwayProbs(meta, probs[i].probs);
+      const then = homeAwayProbs(meta, probs[j].probs);
+      for (const side of ["home", "away"] as const) {
+        const delta = now[side] - then[side];
+        if (Math.abs(delta) > Math.abs(best.delta)) {
+          best = {
+            delta,
+            team: side === "home" ? meta.home.name : meta.away.name,
+            from: then[side],
+            to: now[side],
+          };
+        }
+      }
+    }
+    return { peakDrama, swing: best };
+  }, [probs, meta]);
 
- if (!recap) return null;
- const goals = score ? homeAwayScore(meta, score.goals) : [0, 0];
+  if (!recap) return null;
+  const goals = score ? homeAwayScore(meta, score.goals) : [0, 0];
 
- const shareText =
- `${meta.home.name} ${goals[0]}-${goals[1]} ${meta.away.name} · ` +
- `biggest swing: ${recap.swing.team} ${(recap.swing.from * 100).toFixed(0)}%→${(recap.swing.to * 100).toFixed(0)}% ` +
- `· drama peak ${recap.peakDrama}/100 · felt live on Kryva`;
+  const shareText =
+    `${meta.home.name} ${goals[0]}-${goals[1]} ${meta.away.name} · ` +
+    `biggest swing: ${recap.swing.team} ${(recap.swing.from * 100).toFixed(0)}%→${(recap.swing.to * 100).toFixed(0)}% ` +
+    `· drama peak ${recap.peakDrama}/100 · felt live on Kryva`;
 
- const share = async () => {
- try {
- if (navigator.share) {
- await navigator.share({ text: shareText, url: window.location.href });
- return;
- }
- await navigator.clipboard.writeText(`${shareText} ${window.location.href}`);
- setCopied(true);
- setTimeout(() => setCopied(false), 2000);
- } catch { /* user dismissed */ }
- };
+  const share = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({ text: shareText, url: window.location.href });
+        return;
+      }
+      await navigator.clipboard.writeText(`${shareText} ${window.location.href}`);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch { /* user dismissed */ }
+  };
 
- return (
- <Card className="border-small border-primary-200" shadow="sm">
- <CardBody className="gap-4 p-4 sm:p-6">
- <div className="flex items-center justify-between gap-2">
- <div className="flex items-center gap-3">
- <div className="flex rounded-medium border border-primary-100 bg-primary-50 p-2">
- <Icon className="text-primary" icon="solar:flag-2-bold-duotone" width={20} />
- </div>
- <div>
- <p className="text-medium font-semibold">That was the match</p>
- <p className="text-tiny text-default-400">The story the market told</p>
- </div>
- </div>
- <Button
- radius="full"
- size="sm"
- startContent={<Icon icon={copied ? "solar:check-circle-linear" : "solar:share-linear"} width={16} />}
- variant="bordered"
- onPress={share}
- >
- {copied ? "Copied" : "Share"}
- </Button>
- </div>
+  return (
+    <Card className="border-small border-primary-200" shadow="sm">
+      <CardBody className="gap-4 p-4 sm:p-6">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-3">
+            <div className="flex rounded-medium border border-primary-100 bg-primary-50 p-2">
+              <Icon className="text-primary" icon="solar:flag-2-bold-duotone" width={20} />
+            </div>
+            <div>
+              <p className="text-medium font-semibold">That was the match</p>
+              <p className="text-tiny text-default-400">The story the market told</p>
+            </div>
+          </div>
+          <Button
+            radius="full"
+            size="sm"
+            startContent={<Icon icon={copied ? "solar:check-circle-linear" : "solar:share-linear"} width={16} />}
+            variant="bordered"
+            onPress={share}
+          >
+            {copied ? "Copied" : "Share"}
+          </Button>
+        </div>
 
- <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
- <StatTile
- icon="solar:football-bold-duotone"
- label="Final score"
- value={`${goals[0]}-${goals[1]}`}
- sub={`${meta.home.name} vs ${meta.away.name}`}
- />
- <StatTile
- icon="solar:graph-up-bold-duotone"
- label="Biggest swing"
- value={`${(recap.swing.from * 100).toFixed(0)}% → ${(recap.swing.to * 100).toFixed(0)}%`}
- sub={`${recap.swing.team}, inside 5 minutes`}
- />
- <StatTile
- icon="solar:fire-bold-duotone"
- label="Drama peak"
- value={`${recap.peakDrama}/100`}
- sub={recap.peakDrama >= 60 ? "Absolute chaos" : recap.peakDrama >= 30 ? "Proper drama" : "A calm one"}
- />
- </div>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+          <StatTile
+            icon="solar:football-bold-duotone"
+            label="Final score"
+            value={`${goals[0]}-${goals[1]}`}
+            sub={`${meta.home.name} vs ${meta.away.name}`}
+          />
+          <StatTile
+            icon="solar:graph-up-bold-duotone"
+            label="Biggest swing"
+            value={`${(recap.swing.from * 100).toFixed(0)}% → ${(recap.swing.to * 100).toFixed(0)}%`}
+            sub={`${recap.swing.team}, inside 5 minutes`}
+          />
+          <StatTile
+            icon="solar:fire-bold-duotone"
+            label="Drama peak"
+            value={`${recap.peakDrama}/100`}
+            sub={recap.peakDrama >= 60 ? "Absolute chaos" : recap.peakDrama >= 30 ? "Proper drama" : "A calm one"}
+          />
+        </div>
 
- </CardBody>
- </Card>
- );
+      </CardBody>
+    </Card>
+  );
 }
 
 function StatTile({ icon, label, value, sub }: { icon: string; label: string; value: string; sub: string }) {
- return (
- <div className="flex flex-col gap-1 rounded-medium border border-default-100 bg-default-50 p-3">
- <div className="flex items-center gap-2">
- <Icon className="text-default-400" icon={icon} width={16} />
- <p className="text-tiny uppercase tracking-wide text-default-400">{label}</p>
- </div>
- <p className="font-mono text-large font-semibold tabular-nums">{value}</p>
- <p className="truncate text-tiny text-default-400">{sub}</p>
- </div>
- );
+  return (
+    <div className="flex flex-col gap-1 rounded-medium border border-default-100 bg-default-50 p-3">
+      <div className="flex items-center gap-2">
+        <Icon className="text-default-400" icon={icon} width={16} />
+        <p className="text-tiny uppercase tracking-wide text-default-400">{label}</p>
+      </div>
+      <p className="font-mono text-large font-semibold tabular-nums">{value}</p>
+      <p className="truncate text-tiny text-default-400">{sub}</p>
+    </div>
+  );
 }

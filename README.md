@@ -15,30 +15,30 @@ Built for the TxODDS **Prediction Markets and Settlement** track (World Cup hack
 
 **No house. Fully verifiable. Pro-rata payouts + auto-refunds.** Settlement is gated on-chain by three integrity checks: finalisation-only (`period = 100`), post-match proof window (≥ 105 min after kickoff), and fixed P1/P2 goal stat IDs.
 
-**Live app:** https://getkryva.vercel.app · **Program (devnet):** `3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp` 
+**Live app:** https://getkryva.vercel.app · **Program (devnet):** `3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp`  
 **Mainnet path:** same program + CPI; redeploy Anchor binary, point RPC/TxLINE at mainnet (see [docs/TECHNICAL.md](docs/TECHNICAL.md#mainnet-path)).
 
 ## How It Works
 
 1. **Open a market**: anyone can open the pool for a fixture - one click, permissionless, one
- market per fixture (PDA-seeded, deterministic parameters).
+   market per fixture (PDA-seeded, deterministic parameters).
 2. **Stake**: pick Home / Draw / Away and stake SOL through your wallet. Lamports escrow in a
- vault PDA no one controls. Staking closes at kickoff - every position is a public
- pre-commitment on the ledger before the result exists.
+   vault PDA no one controls. Staking closes at kickoff - every position is a public
+   pre-commitment on the ledger before the result exists.
 3. **Watch**: the match screen streams live win probability from TxLINE's StablePrice consensus,
- a drama meter, and an event ticker. Pool-implied multipliers sit next to the professional
- market's numbers.
+   a drama meter, and an event ticker. Pool-implied multipliers sit next to the professional
+   market's numbers.
 4. **Settle**: after the final whistle, anyone presses *Settle on Solana*. The app fetches the
- finalisation Merkle proof from TxLINE and the program CPIs into TxOracle `validate_stat`.
- The chain checks the proof against the daily scores root TxODDS anchors on-chain; a valid
- proof locks the outcome, an invalid or non-final proof always fails.
+   finalisation Merkle proof from TxLINE and the program CPIs into TxOracle `validate_stat`.
+   The chain checks the proof against the daily scores root TxODDS anchors on-chain; a valid
+   proof locks the outcome, an invalid or non-final proof always fails.
 5. **Claim**: winners split the whole pot pro-rata. Unsettleable markets (abandoned matches)
- unlock automatic refunds after 72 hours.
+   unlock automatic refunds after 72 hours.
 
 ## Settlement Integrity
 
 ```
-outcome predicate: (P1 goals - P2 goals) {>, =, <} 0 (judged by TxOracle on-chain)
+outcome predicate:  (P1 goals - P2 goals)  {>, =, <}  0     - judged by TxOracle on-chain
 ```
 
 Three gates in `settle` make wrong settlement impossible rather than unlikely:
@@ -100,20 +100,20 @@ server-side - the browser never talks to TxLINE directly.
 ## Key Features
 
 - **Trustless parimutuel pools**: vault PDA escrow, pro-rata payouts, automatic refunds for
- abandoned matches. No admin can move funds or decide outcomes.
-- **Proof-based settlement**: permissionless `settle` that CPIs into TxODDS's oracle program - 
- proven live on devnet against the real England vs Argentina semifinal
- ([settle tx](https://explorer.solana.com/tx/4VwkVQmmB1McxjUivcpp6icEGPicAoo8oZWBYkYEmfNfqGKmM9aKq9uw2FRSieLPV2T6dwDwWTDG8zMQrNWU8trN?cluster=devnet)).
+  abandoned matches. No admin can move funds or decide outcomes.
+- **Proof-based settlement**: permissionless `settle` that CPIs into TxODDS's oracle program  - 
+  proven live on devnet against the real England vs Argentina semifinal
+  ([settle tx](https://explorer.solana.com/tx/4VwkVQmmB1McxjUivcpp6icEGPicAoo8oZWBYkYEmfNfqGKmM9aKq9uw2FRSieLPV2T6dwDwWTDG8zMQrNWU8trN?cluster=devnet)).
 - **The wave**: live win-probability curve from TxLINE StablePrice consensus, lurching with
- goals, reds and VAR in real time; drama meter and event ticker beside it.
+  goals, reds and VAR in real time; drama meter and event ticker beside it.
 - **Verifiable resolution UI**: every settled market shows the proven score, the Merkle-root
- account and the settle transaction, linked to the explorer.
+  account and the settle transaction, linked to the explorer.
 - **"Don't trust us" verification**: one click re-runs the proof check from *your own browser*
- against devnet - our servers never touch the verdict.
+  against devnet - our servers never touch the verdict.
 - **Replay engine**: any finished match re-streams through the identical pipeline at 30-120x
- from TxLINE historical data, so the product stays fully reviewable after the tournament.
+  from TxLINE historical data, so the product stays fully reviewable after the tournament.
 - **Live catch-up**: joining mid-match replays the full history first - the wave always shows
- the whole story.
+  the whole story.
 
 ## API
 
@@ -133,21 +133,21 @@ Program instructions: `create_market`, `stake`, `settle`, `claim` - see
 
 ```
 curva/
-├── program/ # Anchor workspace
-│ ├── programs/curva/ # Settlement program (4 instructions, 3 integrity gates)
-│ └── idls/txoracle.json # TxOracle IDL for declare_program! CPI bindings
+├── program/                    # Anchor workspace
+│   ├── programs/curva/         # Settlement program (4 instructions, 3 integrity gates)
+│   └── idls/txoracle.json      # TxOracle IDL for declare_program! CPI bindings
 ├── src/
-│ ├── app/ # Next.js pages + API routes (live, replay, market, proofs)
-│ ├── components/ # Match screen, market card, wave, ticker, verify card
-│ └── lib/
-│ ├── engine/ # Odds→probability, drama meter, event mapper, reducer
-│ ├── markets/ # Program client, browser-side proof verification
-│ └── txline/ # Auth, REST+SSE client, feed normalization
+│   ├── app/                    # Next.js pages + API routes (live, replay, market, proofs)
+│   ├── components/             # Match screen, market card, wave, ticker, verify card
+│   └── lib/
+│       ├── engine/             # Odds→probability, drama meter, event mapper, reducer
+│       ├── markets/            # Program client, browser-side proof verification
+│       └── txline/             # Auth, REST+SSE client, feed normalization
 ├── scripts/
-│ ├── txline-setup.ts # Wallet -> on-chain subscribe -> API token
-│ ├── open-market.ts # Open a market (+ optional stakes) for a fixture
-│ └── settlement-e2e.ts # Full settlement rehearsal on a real fixture
-└── docs/ # Technical doc, API feedback, demo plan, screenshots
+│   ├── txline-setup.ts         # Wallet -> on-chain subscribe -> API token
+│   ├── open-market.ts          # Open a market (+ optional stakes) for a fixture
+│   └── settlement-e2e.ts       # Full settlement rehearsal on a real fixture
+└── docs/                       # Technical doc, API feedback, demo plan, screenshots
 ```
 
 ## Tests & robustness
