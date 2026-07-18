@@ -1,0 +1,28 @@
+- generic [active] [ref=f3e1]:
+  - main [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - generic [ref=f3e5]:
+        - button "Back to matches"
+        - link [ref=f3e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f3e8]:
+            - paragraph [ref=f3e9]: Pulse
+            - paragraph [ref=f3e10]: Feel the World Cup
+      - button "Connect wallet" [ref=f3e11]
+    - paragraph [ref=f3e16]: Connecting to the live feed…
+    - generic [ref=f3e18]:
+      - generic [ref=f3e19]:
+        - generic [ref=f3e22]:
+          - paragraph [ref=f3e23]: Pulse Calls
+          - paragraph [ref=f3e24]: Beat the market, build your streak
+        - generic [ref=f3e25]:
+          - generic [ref=f3e26]: 0 pts
+          - generic [ref=f3e28]: "0"
+      - generic [ref=f3e29]:
+        - paragraph [ref=f3e30]: Connect your Solana wallet to lock in calls and climb the board.
+        - button "Connect wallet" [ref=f3e31]
+    - generic [ref=f3e32]:
+      - heading "As it happened" [level=2] [ref=f3e33]
+      - paragraph [ref=f3e36]: Match events will land here the second they happen.
+  - button "Open Next.js Dev Tools" [ref=f3e42] [cursor=pointer]
+  - alert [ref=f3e46]

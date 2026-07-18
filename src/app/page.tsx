@@ -1,65 +1,157 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+// Lobby: top bar -> chips -> hero -> 3 action cards -> match list.
+
+import { useEffect, useMemo, useState } from "react";
+import { Card, CardBody, Chip, Skeleton } from "@heroui/react";
+import { Icon } from "@iconify/react";
+import TopBar from "@/components/top-bar";
+import ActionCard from "@/components/action-card";
+import MatchCard, { inferStatus, type MatchStatus } from "@/components/match-card";
+import type { FixtureMeta } from "@/lib/engine/state";
+
+export default function Lobby() {
+  const [matches, setMatches] = useState<FixtureMeta[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/matches")
+      .then(async (res) => {
+        const body = await res.json();
+        if (cancelled) return;
+        if (!res.ok) throw new Error(body.error ?? `HTTP ${res.status}`);
+        setMatches(body.matches as FixtureMeta[]);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(String(err.message ?? err));
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const groups = useMemo(() => {
+    if (!matches) return null;
+    const now = Date.now();
+    const by: Record<MatchStatus, FixtureMeta[]> = { live: [], upcoming: [], finished: [] };
+    for (const m of matches) by[inferStatus(m, now)].push(m);
+    by.upcoming.sort((a, b) => a.startTime - b.startTime);
+    by.finished.sort((a, b) => b.startTime - a.startTime);
+    return by;
+  }, [matches]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-10">
+      <TopBar />
+
+      <div className="flex flex-wrap items-center gap-2">
+        <Chip
+          color="danger"
+          size="sm"
+          startContent={<span className="mx-1 h-1.5 w-1.5 animate-pulse rounded-full bg-danger" />}
+          variant="flat"
+        >
+          {groups ? `${groups.live.length} live now` : "Checking pitches…"}
+        </Chip>
+        <Chip size="sm" variant="flat" startContent={<Icon icon="solar:cup-bold" width={14} />}>
+          World Cup 2026
+        </Chip>
+        <Chip color="primary" size="sm" variant="flat" startContent={<Icon icon="solar:shield-check-bold" width={14} />}>
+          Verified on Solana
+        </Chip>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
+          Watch the market breathe with every touch of the ball.
+        </h1>
+        <p className="text-medium text-default-500">
+          Pulse turns live consensus odds into a heartbeat for every match — then dares
+          you to call the next move before the market does.
+        </p>
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-3">
+        <ActionCard
+          color="primary"
+          description="A live wave of win probability that lurches with goals, reds and VAR."
+          icon="solar:pulse-2-bold-duotone"
+          title="Feel the swing"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+        <ActionCard
+          color="secondary"
+          description="Call the market higher or lower and build a streak while you watch."
+          icon="solar:cup-star-bold-duotone"
+          title="Beat the market"
+        />
+        <ActionCard
+          description="Every price and stat is anchored and verifiable on Solana via TxLINE."
+          icon="solar:shield-check-bold-duotone"
+          title="Provably real"
+        />
+      </div>
+
+      {error ? (
+        <Card className="border-small border-danger-300" shadow="sm">
+          <CardBody className="flex flex-row items-center gap-3 p-4">
+            <div className="flex rounded-medium border border-danger-100 bg-danger-50 p-2">
+              <Icon className="text-danger" icon="solar:danger-circle-bold" width={20} />
+            </div>
+            <div>
+              <p className="text-small font-medium">The data feed is catching its breath.</p>
+              <p className="text-tiny text-default-400">{error}</p>
+            </div>
+          </CardBody>
+        </Card>
+      ) : !groups ? (
+        <div className="flex flex-col gap-2">
+          {[0, 1, 2, 3].map((i) => (
+            <Skeleton key={i} className="h-[72px] rounded-large" />
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      ) : (
+        <>
+          {groups.live.length > 0 && (
+            <Section title="Live now">
+              {groups.live.map((m) => (
+                <MatchCard key={m.fixtureId} meta={m} status="live" />
+              ))}
+            </Section>
+          )}
+          {groups.upcoming.length > 0 && (
+            <Section title="Coming up">
+              {groups.upcoming.slice(0, 8).map((m) => (
+                <MatchCard key={m.fixtureId} meta={m} status="upcoming" />
+              ))}
+            </Section>
+          )}
+          {groups.finished.length > 0 && (
+            <Section title="Relive the drama">
+              {groups.finished.slice(0, 10).map((m) => (
+                <MatchCard key={m.fixtureId} meta={m} status="finished" />
+              ))}
+            </Section>
+          )}
+          {groups.live.length + groups.upcoming.length + groups.finished.length === 0 && (
+            <Card className="border-small border-dashed border-default-200" shadow="none">
+              <CardBody className="flex flex-col items-center gap-2 p-10">
+                <Icon className="text-default-300" icon="solar:football-bold-duotone" width={36} />
+                <p className="text-small text-default-400">No fixtures on the schedule right now.</p>
+              </CardBody>
+            </Card>
+          )}
+        </>
+      )}
+    </main>
+  );
+}
+
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="flex flex-col gap-2">
+      <h2 className="text-small font-medium uppercase tracking-wide text-default-400">{title}</h2>
+      {children}
+    </section>
   );
 }

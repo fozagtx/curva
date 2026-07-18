@@ -1,0 +1,31 @@
+- generic [active] [ref=f6e1]:
+  - main [ref=f6e3]:
+    - generic [ref=f6e4]:
+      - link [ref=f6e6] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f6e11]:
+          - paragraph [ref=f6e12]: Pulse
+          - paragraph [ref=f6e13]: Feel the World Cup
+      - button "Connect wallet" [ref=f6e14] [cursor=pointer]
+    - generic [ref=f6e19]:
+      - generic [ref=f6e20]: Checking pitches…
+      - generic [ref=f6e23]: World Cup 2026
+      - generic [ref=f6e28]: Verified on Solana
+    - generic [ref=f6e32]:
+      - heading "Watch the market breathe with every touch of the ball." [level=1] [ref=f6e33]
+      - paragraph [ref=f6e34]: Pulse turns live consensus odds into a heartbeat for every match — then dares you to call the next move before the market does.
+    - generic [ref=f6e35]:
+      - generic [ref=f6e42]:
+        - paragraph [ref=f6e43]: Feel the swing
+        - paragraph [ref=f6e44]: A live wave of win probability that lurches with goals, reds and VAR.
+      - generic [ref=f6e54]:
+        - paragraph [ref=f6e55]: Beat the market
+        - paragraph [ref=f6e56]: Call the market higher or lower and build a streak while you watch.
+      - generic [ref=f6e63]:
+        - paragraph [ref=f6e64]: Provably real
+        - paragraph [ref=f6e65]: Every price and stat is anchored and verifiable on Solana via TxLINE.
+    - generic [ref=f6e69]:
+      - paragraph [ref=f6e70]: The data feed is catching its breath.
+      - paragraph [ref=f6e71]: TXLINE_API_TOKEN not set — run scripts/txline-setup.ts
+  - button "Open Next.js Dev Tools" [ref=f6e77] [cursor=pointer]
+  - alert [ref=f6e81]
