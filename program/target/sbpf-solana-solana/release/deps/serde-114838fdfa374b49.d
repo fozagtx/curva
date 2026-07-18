@@ -1,0 +1,14 @@
+/Users/kaizen/Desktop/predict/program/target/sbpf-solana-solana/release/deps/serde-114838fdfa374b49.d: /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/kaizen/Desktop/predict/program/target/sbpf-solana-solana/release/build/serde-164202c8fe4d721b/out/private.rs
+
+/Users/kaizen/Desktop/predict/program/target/sbpf-solana-solana/release/deps/libserde-114838fdfa374b49.rlib: /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/kaizen/Desktop/predict/program/target/sbpf-solana-solana/release/build/serde-164202c8fe4d721b/out/private.rs
+
+/Users/kaizen/Desktop/predict/program/target/sbpf-solana-solana/release/deps/libserde-114838fdfa374b49.rmeta: /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/kaizen/Desktop/predict/program/target/sbpf-solana-solana/release/build/serde-164202c8fe4d721b/out/private.rs
+
+/Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs:
+/Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs:
+/Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs:
+/Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs:
+/Users/kaizen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs:
+/Users/kaizen/Desktop/predict/program/target/sbpf-solana-solana/release/build/serde-164202c8fe4d721b/out/private.rs:
+
+# env-dep:OUT_DIR=/Users/kaizen/Desktop/predict/program/target/sbpf-solana-solana/release/build/serde-164202c8fe4d721b/out

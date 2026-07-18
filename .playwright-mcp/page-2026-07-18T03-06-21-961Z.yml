@@ -1,0 +1,128 @@
+- generic [active] [ref=f12e1]:
+  - main [ref=f12e3]:
+    - generic [ref=f12e4]:
+      - generic [ref=f12e5]:
+        - button "Back to matches" [ref=f12e6] [cursor=pointer]
+        - link [ref=f12e7] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f12e9]:
+            - paragraph [ref=f12e10]: Pulse
+            - paragraph [ref=f12e11]: Feel the World Cup
+      - button "Connect wallet" [ref=f12e12] [cursor=pointer]
+    - generic [ref=f12e14]:
+      - generic [ref=f12e57]:
+        - generic [ref=f12e58]: 2nd half · 55'
+        - paragraph [ref=f12e61]: FIFA World Cup
+      - generic [ref=f12e62]:
+        - generic [ref=f12e63]:
+          - generic [ref=f12e64]: FRA
+          - paragraph [ref=f12e65]: France
+        - paragraph [ref=f12e67]: 1–1
+        - generic [ref=f12e68]:
+          - generic [ref=f12e69]: BRA
+          - paragraph [ref=f12e70]: Brazil
+      - generic [ref=f12e71]:
+        - progressbar "Drama meter" [ref=f12e74]
+        - paragraph [ref=f12e77]: Chaos · 100
+    - generic [ref=f12e16]:
+      - generic [ref=f12e79]:
+        - paragraph [ref=f12e80]: Win probability
+        - generic [ref=f12e81]: LIVE
+      - generic [ref=f12e83]:
+        - generic: 53%
+        - generic: 22%
+        - generic: 25%
+        - generic: HT
+      - generic [ref=f12e92]:
+        - generic [ref=f12e93]: France
+        - generic [ref=f12e95]: Brazil
+        - generic [ref=f12e97]: Draw
+    - generic [ref=f12e19]:
+      - generic [ref=f12e20]:
+        - generic [ref=f12e23]:
+          - paragraph [ref=f12e24]: Pulse Calls
+          - paragraph [ref=f12e25]: Beat the market, build your streak
+        - generic [ref=f12e26]:
+          - generic [ref=f12e27]: 0 pts
+          - generic [ref=f12e29]: "0"
+      - generic [ref=f12e234]:
+        - generic [ref=f12e235]:
+          - paragraph [ref=f12e236]:
+            - text: "Your call: France LOWER than"
+            - generic [ref=f12e237]: 54.8%
+          - generic [ref=f12e238]: "-1.9"
+        - progressbar "Time to resolution" [ref=f12e242]
+        - paragraph [ref=f12e245]: Resolves on the market's clock — watch the wave.
+      - button "Playing as guest — connect a wallet to keep your streak forever." [ref=f12e32]
+    - generic [ref=f12e123]:
+      - generic [ref=f12e129]:
+        - paragraph [ref=f12e130]: Provably real
+        - paragraph [ref=f12e131]: Ask Solana to check this scoreline, not us.
+      - button "Verify on Solana" [ref=f12e132] [cursor=pointer]
+    - generic [ref=f12e33]:
+      - heading "As it happened" [level=2] [ref=f12e34]
+      - generic [ref=f12e134]:
+        - generic [ref=f12e253]:
+          - generic [ref=f12e257]:
+            - paragraph [ref=f12e258]:
+              - text: GOAL
+              - generic [ref=f12e259]: · Brazil
+            - paragraph [ref=f12e260]: Head
+          - paragraph [ref=f12e261]: 55'
+        - generic [ref=f12e263]:
+          - paragraph [ref=f12e268]: Second half
+          - paragraph [ref=f12e269]: 46'
+        - generic [ref=f12e271]:
+          - paragraph [ref=f12e276]: Half-time
+          - paragraph [ref=f12e277]: 45'
+        - generic [ref=f12e136]:
+          - paragraph [ref=f12e141]:
+            - text: "VAR: decision overturned"
+            - generic [ref=f12e142]: · Brazil
+          - paragraph [ref=f12e143]: 37'
+        - generic [ref=f12e145]:
+          - generic [ref=f12e149]:
+            - paragraph [ref=f12e150]:
+              - text: VAR review
+              - generic [ref=f12e151]: · Brazil
+            - paragraph [ref=f12e152]: "Checking: Penalty"
+          - paragraph [ref=f12e153]: 35'
+        - generic [ref=f12e155]:
+          - paragraph [ref=f12e160]:
+            - text: Corner
+            - generic [ref=f12e161]: · France
+          - paragraph [ref=f12e162]: 31'
+        - generic [ref=f12e164]:
+          - paragraph [ref=f12e171]:
+            - text: Yellow card
+            - generic [ref=f12e172]: · Brazil
+          - paragraph [ref=f12e173]: 25'
+        - generic [ref=f12e175]:
+          - generic [ref=f12e179]:
+            - paragraph [ref=f12e180]:
+              - text: GOAL
+              - generic [ref=f12e181]: · France
+            - paragraph [ref=f12e182]: Shot
+          - paragraph [ref=f12e183]: 18'
+        - generic [ref=f12e185]:
+          - paragraph [ref=f12e190]:
+            - text: Dangerous free kick
+            - generic [ref=f12e191]: · Brazil
+          - paragraph [ref=f12e192]: 13'
+        - generic [ref=f12e194]:
+          - paragraph [ref=f12e199]:
+            - text: Shot on target
+            - generic [ref=f12e200]: · France
+          - paragraph [ref=f12e201]: 9'
+        - generic [ref=f12e203]:
+          - paragraph [ref=f12e208]:
+            - text: Corner
+            - generic [ref=f12e209]: · Brazil
+          - paragraph [ref=f12e210]: 5'
+        - generic [ref=f12e212]:
+          - paragraph [ref=f12e217]:
+            - text: Kick-off
+            - generic [ref=f12e218]: · France
+          - paragraph [ref=f12e219]: 1'
+  - button "Open Next.js Dev Tools" [ref=f12e43] [cursor=pointer]
+  - alert [ref=f12e47]

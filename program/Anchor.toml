@@ -1,0 +1,19 @@
+[toolchain]
+anchor_version = "0.32.1"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.devnet]
+pulse_markets = "3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "devnet"
+wallet = "../.keys/devnet-wallet.json"
+
+[scripts]
+test = "echo 'integration tested against devnet via scripts/settlement-e2e.ts'"

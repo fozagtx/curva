@@ -16,9 +16,9 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pulse — feel the World Cup",
+  title: "Pulse Markets — World Cup pools settled by proof",
   description:
-    "Live win probability, match drama and beat-the-market calls for every World Cup game, powered by TxLINE consensus odds on Solana.",
+    "Parimutuel World Cup prediction pools with live consensus odds, settled trustlessly on Solana by TxLINE Merkle proofs.",
 };
 
 export const viewport: Viewport = {

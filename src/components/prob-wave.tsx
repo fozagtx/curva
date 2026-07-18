@@ -99,15 +99,23 @@ export default function ProbWave({ meta, probs, events, connected, mode }: Props
       yPct: (pts[pts.length - 1][1] / H) * 100,
     });
 
-    return {
-      home, away, draw, markers, phaseMarks,
-      labels: {
-        home: label(ha.home, home),
-        away: label(ha.away, away),
-        draw: label(ha.draw, draw),
-      },
-      lastX: xOf(last.ts),
+    const labels = {
+      home: label(ha.home, home),
+      away: label(ha.away, away),
+      draw: label(ha.draw, draw),
     };
+    // keep the three edge labels from stacking on top of each other
+    const MIN_GAP = 9;
+    const order = (["home", "away", "draw"] as const)
+      .map((k) => ({ k, l: labels[k] }))
+      .sort((a, b) => a.l.yPct - b.l.yPct);
+    for (let i = 1; i < order.length; i++) {
+      if (order[i].l.yPct - order[i - 1].l.yPct < MIN_GAP) {
+        order[i].l.yPct = order[i - 1].l.yPct + MIN_GAP;
+      }
+    }
+
+    return { home, away, draw, markers, phaseMarks, labels, lastX: xOf(last.ts) };
   }, [probs, meta, events]);
 
   if (!view || !meta) {

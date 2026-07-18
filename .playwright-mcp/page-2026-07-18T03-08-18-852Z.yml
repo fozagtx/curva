@@ -1,0 +1,27 @@
+- generic [active] [ref=f13e1]:
+  - main [ref=f13e3]:
+    - generic [ref=f13e4]:
+      - generic [ref=f13e5]:
+        - button "Back to matches" [ref=f13e6] [cursor=pointer]
+        - link [ref=f13e9] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f13e14]:
+            - paragraph [ref=f13e15]: Pulse
+            - paragraph [ref=f13e16]: Feel the World Cup
+      - button "Connect wallet" [ref=f13e17] [cursor=pointer]
+    - paragraph [ref=f13e31]: Connecting to the live feed…
+    - generic [ref=f13e33]:
+      - generic [ref=f13e34]:
+        - generic [ref=f13e43]:
+          - paragraph [ref=f13e44]: Pulse Calls
+          - paragraph [ref=f13e45]: Beat the market, build your streak
+        - generic [ref=f13e46]:
+          - generic [ref=f13e47]: 253 pts
+          - generic [ref=f13e49]: "1"
+      - paragraph [ref=f13e53]: Calls open while the ball is in play.
+      - button "Playing as guest — connect a wallet to keep your streak forever." [ref=f13e54]
+    - generic [ref=f13e59]:
+      - heading "As it happened" [level=2] [ref=f13e60]
+      - paragraph [ref=f13e66]: Match events will land here the second they happen.
+  - button "Open Next.js Dev Tools" [ref=f13e72] [cursor=pointer]
+  - alert [ref=f13e76]

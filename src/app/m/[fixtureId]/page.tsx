@@ -1,6 +1,6 @@
 "use client";
 
-// Match screen: score header -> probability wave -> Pulse Calls -> event ticker.
+// Match screen: score header -> probability wave -> market pool -> event ticker.
 
 import { use, useMemo, useState } from "react";
 import { Button, Card, CardBody, Chip } from "@heroui/react";
@@ -8,13 +8,11 @@ import { Icon } from "@iconify/react";
 import TopBar from "@/components/top-bar";
 import ScoreHeader from "@/components/score-header";
 import ProbWave from "@/components/prob-wave";
-import PulseCall from "@/components/pulse-call";
 import EventTicker from "@/components/event-ticker";
+import MarketCard from "@/components/market-card";
 import VerifyCard from "@/components/verify-card";
 import RecapCard from "@/components/recap-card";
 import { usePulse } from "@/lib/usePulse";
-import { usePulseGame } from "@/lib/game";
-import { useWallet } from "@/lib/wallet";
 
 const REPLAY_SPEEDS = [30, 60, 120] as const;
 
@@ -30,19 +28,15 @@ export default function MatchPage({
   const [speed, setSpeed] = useState<number>(60);
 
   const pulse = usePulse(Number.isFinite(fixtureId) ? fixtureId : null, mode, speed);
-  const { pubkey } = useWallet();
-  const identity = pubkey ?? "guest";
 
-  const gameApi = usePulseGame(fixtureId, pulse.meta, pulse.probs, pulse.phase, identity);
-
-  // A finished match with no live points -> offer replay directly.
+  // Finished matches always offer the replay experience.
   const [now] = useState(() => Date.now());
   const suggestReplay = useMemo(() => {
     if (mode !== "live") return false;
     if (!pulse.meta) return false;
-    const over = now > pulse.meta.startTime + 2.75 * 3600_000;
-    return over && pulse.probs.length < 3;
-  }, [mode, pulse.meta, pulse.probs.length, now]);
+    if (["F", "FET", "FPE"].includes(pulse.phase)) return true;
+    return now > pulse.meta.startTime + 2.75 * 3600_000;
+  }, [mode, pulse.meta, pulse.phase, now]);
 
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-4 px-4 py-6 sm:px-6 sm:py-10">
@@ -120,10 +114,10 @@ export default function MatchPage({
       />
 
       {pulse.meta && ["F", "FET", "FPE"].includes(pulse.phase) ? (
-        <RecapCard game={gameApi.game} meta={pulse.meta} probs={pulse.probs} score={pulse.score} />
+        <RecapCard meta={pulse.meta} probs={pulse.probs} score={pulse.score} />
       ) : null}
 
-      <PulseCall gameApi={gameApi} meta={pulse.meta} phase={pulse.phase} probs={pulse.probs} />
+      <MarketCard meta={pulse.meta} phase={pulse.phase} probs={pulse.probs} />
 
       <VerifyCard meta={pulse.meta} />
 

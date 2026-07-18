@@ -1,0 +1,27 @@
+- generic [active] [ref=f11e1]:
+  - main [ref=f11e3]:
+    - generic [ref=f11e4]:
+      - generic [ref=f11e5]:
+        - button "Back to matches" [ref=f11e6] [cursor=pointer]
+        - link [ref=f11e7] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f11e9]:
+            - paragraph [ref=f11e10]: Pulse
+            - paragraph [ref=f11e11]: Feel the World Cup
+      - button "Connect wallet" [ref=f11e12] [cursor=pointer]
+    - paragraph [ref=f11e17]: Connecting to the live feed…
+    - generic [ref=f11e19]:
+      - generic [ref=f11e20]:
+        - generic [ref=f11e23]:
+          - paragraph [ref=f11e24]: Pulse Calls
+          - paragraph [ref=f11e25]: Beat the market, build your streak
+        - generic [ref=f11e26]:
+          - generic [ref=f11e27]: 0 pts
+          - generic [ref=f11e29]: "0"
+      - generic [ref=f11e31]:
+        - paragraph [ref=f11e32]: Connect your Solana wallet to lock in calls and climb the board.
+        - button "Connect wallet" [ref=f11e33] [cursor=pointer]
+    - generic [ref=f11e34]:
+      - heading "As it happened" [level=2] [ref=f11e35]
+      - paragraph [ref=f11e38]: Match events will land here the second they happen.
+  - alert [ref=f11e39]

@@ -64,31 +64,32 @@ export default function Lobby() {
 
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
-          Watch the market breathe with every touch of the ball.
+          Stake on the match. Let Solana settle it.
         </h1>
         <p className="text-medium text-default-500">
-          Pulse turns live consensus odds into a heartbeat for every match — then dares
-          you to call the next move before the market does.
+          Pulse Markets runs a prediction pool for every World Cup game — live win
+          probability from consensus odds, and payouts unlocked by cryptographic
+          proof of the final score, not by anyone&apos;s say-so.
         </p>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-3">
         <ActionCard
           color="primary"
-          description="A live wave of win probability that lurches with goals, reds and VAR."
-          icon="solar:pulse-2-bold-duotone"
-          title="Feel the swing"
+          description="Stake SOL on any match. The pot sits in a vault no one controls."
+          icon="solar:safe-square-bold-duotone"
+          title="Trustless pools"
         />
         <ActionCard
           color="secondary"
-          description="Call the market higher or lower and build a streak while you watch."
-          icon="solar:cup-star-bold-duotone"
-          title="Beat the market"
+          description="Live win probability from TxLINE consensus odds, lurching with every goal."
+          icon="solar:pulse-2-bold-duotone"
+          title="The market, live"
         />
         <ActionCard
-          description="Every price and stat is anchored and verifiable on Solana via TxLINE."
+          description="Settlement is a Merkle proof verified by Solana itself — no oracle to trust."
           icon="solar:shield-check-bold-duotone"
-          title="Provably real"
+          title="Proof-settled"
         />
       </div>
 

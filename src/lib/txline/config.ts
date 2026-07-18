@@ -4,14 +4,16 @@
 export const TXLINE_NETWORK = process.env.TXLINE_NETWORK ?? "devnet";
 
 export const API_BASE_URL =
-  TXLINE_NETWORK === "mainnet"
+  process.env.TXLINE_API_BASE ??
+  (TXLINE_NETWORK === "mainnet"
     ? "https://txline.txodds.com/api"
-    : "https://txline-dev.txodds.com/api";
+    : "https://txline-dev.txodds.com/api");
 
 export const JWT_URL =
-  TXLINE_NETWORK === "mainnet"
+  process.env.TXLINE_JWT_URL ??
+  (TXLINE_NETWORK === "mainnet"
     ? "https://txline.txodds.com/auth/guest/start"
-    : "https://txline-dev.txodds.com/auth/guest/start";
+    : "https://txline-dev.txodds.com/auth/guest/start");
 
 export const SOLANA_RPC =
   process.env.SOLANA_RPC ?? "https://api.devnet.solana.com";

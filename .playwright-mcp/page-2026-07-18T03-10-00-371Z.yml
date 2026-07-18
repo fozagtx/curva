@@ -1,0 +1,64 @@
+- generic [active] [ref=f14e1]:
+  - main [ref=f14e3]:
+    - generic [ref=f14e4]:
+      - generic [ref=f14e5]:
+        - button "Back to matches" [ref=f14e6] [cursor=pointer]
+        - link [ref=f14e9] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f14e14]:
+            - paragraph [ref=f14e15]: Pulse
+            - paragraph [ref=f14e16]: Feel the World Cup
+      - button "Connect wallet" [ref=f14e17] [cursor=pointer]
+    - generic [ref=f14e23]:
+      - generic [ref=f14e365]:
+        - generic [ref=f14e366]: Kick-off soon
+        - paragraph [ref=f14e368]: FIFA World Cup
+      - generic [ref=f14e369]:
+        - generic [ref=f14e370]:
+          - generic [ref=f14e371]: SPA
+          - paragraph [ref=f14e372]: Spain
+        - paragraph [ref=f14e374]: 0–0
+        - generic [ref=f14e375]:
+          - generic [ref=f14e376]: ENG
+          - paragraph [ref=f14e377]: England
+      - generic [ref=f14e378]:
+        - progressbar "Drama meter" [ref=f14e381]
+        - paragraph [ref=f14e384]: Calm · 10
+    - generic [ref=f14e385]:
+      - generic [ref=f14e386]: Replay · 60x
+      - button "30x" [ref=f14e388] [cursor=pointer]
+      - button "60x" [ref=f14e389] [cursor=pointer]
+      - button "120x" [ref=f14e390] [cursor=pointer]
+      - button "Back to live" [ref=f14e391] [cursor=pointer]
+    - generic [ref=f14e25]:
+      - generic [ref=f14e396]:
+        - paragraph [ref=f14e397]: Win probability
+        - generic [ref=f14e398]: REPLAY
+      - generic [ref=f14e400]:
+        - generic: 45%
+        - generic: 28%
+        - generic: 27%
+      - generic [ref=f14e409]:
+        - generic [ref=f14e410]: Spain
+        - generic [ref=f14e412]: England
+        - generic [ref=f14e414]: Draw
+    - generic [ref=f14e33]:
+      - generic [ref=f14e34]:
+        - generic [ref=f14e43]:
+          - paragraph [ref=f14e44]: Pulse Calls
+          - paragraph [ref=f14e45]: Beat the market, build your streak
+        - generic [ref=f14e46]:
+          - generic [ref=f14e47]: 253 pts
+          - generic [ref=f14e49]: "1"
+      - paragraph [ref=f14e53]: Calls open while the ball is in play.
+      - button "Playing as guest — connect a wallet to keep your streak forever." [ref=f14e54]
+    - generic [ref=f14e427]:
+      - generic [ref=f14e433]:
+        - paragraph [ref=f14e434]: Provably real
+        - paragraph [ref=f14e435]: Ask Solana to check this scoreline, not us.
+      - button "Verify on Solana" [ref=f14e436] [cursor=pointer]
+    - generic [ref=f14e59]:
+      - heading "As it happened" [level=2] [ref=f14e60]
+      - paragraph [ref=f14e443]: Match events will land here the second they happen.
+  - button "Open Next.js Dev Tools" [ref=f14e72] [cursor=pointer]
+  - alert [ref=f14e76]

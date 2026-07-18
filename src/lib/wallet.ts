@@ -4,12 +4,13 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-interface SolanaProvider {
+export interface SolanaProvider {
   isPhantom?: boolean;
   publicKey: { toBase58(): string } | null;
   connect(opts?: { onlyIfTrusted?: boolean }): Promise<{ publicKey: { toBase58(): string } }>;
   disconnect(): Promise<void>;
   signMessage?(message: Uint8Array, encoding: string): Promise<{ signature: Uint8Array }>;
+  signAndSendTransaction(tx: unknown): Promise<{ signature: string }>;
   on?(event: string, handler: (...args: unknown[]) => void): void;
 }
 

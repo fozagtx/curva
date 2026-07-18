@@ -4,22 +4,20 @@
 // Appears when the match reaches full-time (live or replay).
 
 import { useMemo, useState } from "react";
-import { Button, Card, CardBody, Chip } from "@heroui/react";
+import { Button, Card, CardBody } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import type { FixtureMeta, ScoreState } from "@/lib/engine/state";
 import { homeAwayProbs, homeAwayScore, type ProbPoint } from "@/lib/usePulse";
-import type { GameState } from "@/lib/game";
 
 interface Props {
   meta: FixtureMeta;
   score: ScoreState | null;
   probs: ProbPoint[];
-  game: GameState;
 }
 
 const SWING_WINDOW_MS = 5 * 60 * 1000;
 
-export default function RecapCard({ meta, score, probs, game }: Props) {
+export default function RecapCard({ meta, score, probs }: Props) {
   const [copied, setCopied] = useState(false);
 
   const recap = useMemo(() => {
@@ -113,20 +111,6 @@ export default function RecapCard({ meta, score, probs, game }: Props) {
           />
         </div>
 
-        {game.history.length > 0 ? (
-          <div className="flex items-center justify-between rounded-medium border border-default-100 bg-default-50 px-3 py-2">
-            <p className="text-small text-default-500">
-              Your calls this run:{" "}
-              <span className="font-mono font-semibold text-foreground">
-                {game.history.filter((h) => h.outcome === "win").length}W
-                –{game.history.filter((h) => h.outcome === "loss").length}L
-              </span>
-            </p>
-            <Chip size="sm" variant="flat" startContent={<Icon icon="solar:cup-star-bold" width={14} />}>
-              <span className="font-mono tabular-nums">{game.score.toLocaleString()}</span> pts
-            </Chip>
-          </div>
-        ) : null}
       </CardBody>
     </Card>
   );
