@@ -40,12 +40,12 @@ export default function VerifyCard({ meta }: { meta: FixtureMeta | null }) {
   return (
     <Card className="border-small border-default-200" shadow="sm">
       <CardBody className="gap-3 p-4 sm:p-6">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="flex rounded-medium border border-primary-100 bg-primary-50 p-2">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="flex shrink-0 rounded-medium border border-primary-100 bg-primary-50 p-2">
               <Icon className="text-primary" icon="solar:shield-check-bold-duotone" width={20} />
             </div>
-            <div>
+            <div className="min-w-0">
               <p className="text-medium font-semibold">Don&apos;t trust us</p>
               <p className="text-tiny text-default-400">
                 Your browser asks Solana directly — our servers never touch the verdict.
@@ -54,6 +54,7 @@ export default function VerifyCard({ meta }: { meta: FixtureMeta | null }) {
           </div>
           {state !== "done" ? (
             <Button
+              className="shrink-0 self-start sm:self-auto"
               color="primary"
               isLoading={state === "loading"}
               radius="full"
@@ -65,6 +66,7 @@ export default function VerifyCard({ meta }: { meta: FixtureMeta | null }) {
             </Button>
           ) : (
             <Chip
+              className="self-start sm:self-auto"
               color={result?.isValid ? "success" : "danger"}
               startContent={<Icon icon={result?.isValid ? "solar:check-circle-bold" : "solar:close-circle-bold"} width={16} />}
               variant="flat"

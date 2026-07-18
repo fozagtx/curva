@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import WalletButton from "./wallet-button";
+import CurvaMark from "./curva-mark";
 
 export default function TopBar({ backHref }: { backHref?: string }) {
   return (
@@ -24,7 +25,7 @@ export default function TopBar({ backHref }: { backHref?: string }) {
         ) : null}
         <Link className="flex items-center gap-3" href="/">
           <div className="flex items-center rounded-medium border border-primary-100 bg-primary-50 p-2">
-            <Icon className="text-primary" icon="solar:graph-up-bold-duotone" width={22} />
+            <CurvaMark size={22} />
           </div>
           <div className="flex flex-col leading-tight">
             <p className="text-medium font-semibold">Curva</p>

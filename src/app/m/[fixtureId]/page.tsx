@@ -50,6 +50,8 @@ export default function MatchPage({
         score={pulse.score}
       />
 
+      <MarketCard meta={pulse.meta} phase={pulse.phase} probs={pulse.probs} />
+
       {suggestReplay ? (
         <Card className="border-small border-default-200" shadow="sm">
           <CardBody className="flex flex-col items-start justify-between gap-3 p-4 sm:flex-row sm:items-center">
@@ -116,8 +118,6 @@ export default function MatchPage({
       {pulse.meta && ["F", "FET", "FPE"].includes(pulse.phase) ? (
         <RecapCard meta={pulse.meta} probs={pulse.probs} score={pulse.score} />
       ) : null}
-
-      <MarketCard meta={pulse.meta} phase={pulse.phase} probs={pulse.probs} />
 
       <VerifyCard meta={pulse.meta} />
 

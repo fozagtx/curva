@@ -97,6 +97,11 @@ export default function MarketCard({ meta, probs, phase }: Props) {
   const total = market ? market.pools[0] + market.pools[1] + market.pools[2] : 0;
   const latest = probs.length ? probs[probs.length - 1] : null;
   const consensus = latest && meta ? homeAwayProbs(meta, latest.probs) : null;
+  const consensusFor = (s: MarketSide, name: string): number | null => {
+    if (!consensus || !meta) return null;
+    if (s === 1) return consensus.draw;
+    return name === meta.home.name ? consensus.home : consensus.away;
+  };
   const matchOver = ["F", "FET", "FPE"].includes(phase);
   // Kickoff gating keys off stream time (latest odds tick) with a wall-clock
   // fallback captured once at mount.
@@ -111,15 +116,15 @@ export default function MarketCard({ meta, probs, phase }: Props) {
   return (
     <Card className="border-small border-default-200" shadow="sm">
       <CardBody className="gap-4 p-4 sm:p-6">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-3">
-            <div className="flex rounded-medium border border-primary-100 bg-primary-50 p-2">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="flex shrink-0 rounded-medium border border-primary-100 bg-primary-50 p-2">
               <Icon className="text-primary" icon="solar:safe-square-bold-duotone" width={20} />
             </div>
-            <div>
+            <div className="min-w-0">
               <p className="text-medium font-semibold">The pool</p>
               <p className="text-tiny text-default-400">
-                Stakes locked on Solana · settled by TxLINE proof, not by us
+                Locked on Solana · settled by proof, not by us
               </p>
             </div>
           </div>
@@ -136,13 +141,7 @@ export default function MarketCard({ meta, probs, phase }: Props) {
               const pct = total > 0 ? pool / total : 0;
               const impliedOdds = pool > 0 ? total / pool : null;
               const mine = positions.find((p) => p.side === s);
-              const consensusPct = consensus
-                ? s === 1
-                  ? consensus.draw
-                  : name === meta.home.name
-                    ? consensus.home
-                    : consensus.away
-                : null;
+              const consensusPct = consensusFor(s, name);
               const won = market.settled && market.outcome === s;
               return (
                 <div
@@ -207,23 +206,39 @@ export default function MarketCard({ meta, probs, phase }: Props) {
           <p className="text-small text-default-400">Reading the chain…</p>
         )}
 
-        {/* Stake controls */}
+        {/* Pick a side: 1X2 odds buttons */}
         {market && !market.settled && !kickoffPassed ? (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
+            <div className="grid grid-cols-3 gap-2">
+              {displaySides.map(({ side: s, name }) => {
+                const pct = consensusFor(s, name);
+                const pool = market.pools[s];
+                const impliedOdds = pool > 0 ? total / pool : null;
+                const active = side === s;
+                return (
+                  <button
+                    key={s}
+                    className={cn(
+                      "flex min-w-0 flex-col items-center gap-0.5 rounded-medium border p-3 transition-colors",
+                      active
+                        ? "border-primary-300 bg-primary-50"
+                        : "border-default-200 bg-default-50 hover:border-default-300",
+                    )}
+                    type="button"
+                    onClick={() => setSide(s)}
+                  >
+                    <span className="max-w-full truncate text-tiny text-default-500">{name}</span>
+                    <span className={cn("font-mono text-xl font-semibold tabular-nums", active && "text-primary")}>
+                      {pct != null ? `${(pct * 100).toFixed(0)}%` : "—"}
+                    </span>
+                    <span className="font-mono text-[10px] text-default-400">
+                      {impliedOdds ? `pool ${impliedOdds.toFixed(2)}x` : "be first in"}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
             <div className="flex flex-wrap items-center gap-2">
-              {displaySides.map(({ side: s, name }) => (
-                <Button
-                  key={s}
-                  color={side === s ? "primary" : "default"}
-                  radius="full"
-                  size="sm"
-                  variant={side === s ? "solid" : "bordered"}
-                  onPress={() => setSide(s)}
-                >
-                  {name}
-                </Button>
-              ))}
-              <span className="mx-1 text-default-300">·</span>
               {STAKE_AMOUNTS.map((a) => (
                 <Button
                   key={a}
@@ -239,6 +254,7 @@ export default function MarketCard({ meta, probs, phase }: Props) {
             </div>
             {pubkey ? (
               <Button
+                className="w-full"
                 color="primary"
                 isLoading={busy === "stake"}
                 isDisabled={!!busy}
@@ -246,10 +262,11 @@ export default function MarketCard({ meta, probs, phase }: Props) {
                 startContent={busy === "stake" ? undefined : <Icon icon="solar:lock-keyhole-bold" width={18} />}
                 onPress={() => wallet && run("stake", () => stakeTx(wallet, meta.fixtureId, side, amount))}
               >
-                Stake {amount} SOL
+                Stake {amount} SOL on {displaySides.find((d) => d.side === side)?.name}
               </Button>
             ) : (
               <Button
+                className="w-full"
                 color="primary"
                 isLoading={connecting}
                 radius="full"
