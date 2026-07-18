@@ -1,0 +1,52 @@
+- generic [active] [ref=f24e1]:
+  - main [ref=f24e3]:
+    - generic [ref=f24e4]:
+      - generic [ref=f24e5]:
+        - button "Back to matches" [ref=f24e6] [cursor=pointer]
+        - link [ref=f24e9] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f24e14]:
+            - paragraph [ref=f24e15]: Curva
+            - paragraph [ref=f24e16]: Where conviction meets the curve
+      - button "Connect wallet" [ref=f24e17] [cursor=pointer]
+    - generic [ref=f24e22]:
+      - generic [ref=f24e450]:
+        - generic [ref=f24e451]: Kick-off soon
+        - paragraph [ref=f24e453]: World Cup
+      - generic [ref=f24e454]:
+        - generic [ref=f24e455]:
+          - generic [ref=f24e456]: ENG
+          - paragraph [ref=f24e457]: England
+        - paragraph [ref=f24e459]: 0–0
+        - generic [ref=f24e460]:
+          - generic [ref=f24e461]: ARG
+          - paragraph [ref=f24e462]: Argentina
+      - generic [ref=f24e463]:
+        - progressbar "Drama meter" [ref=f24e466]
+        - paragraph [ref=f24e469]: Calm · 0
+    - generic [ref=f24e470]:
+      - generic [ref=f24e471]: Replay · 60x
+      - button "30x" [ref=f24e473] [cursor=pointer]
+      - button "60x" [ref=f24e474] [cursor=pointer]
+      - button "120x" [ref=f24e475] [cursor=pointer]
+      - button "Back to live" [ref=f24e476] [cursor=pointer]
+    - paragraph [ref=f24e485]: Waiting for the market to speak…
+    - generic [ref=f24e487]:
+      - generic [ref=f24e488]:
+        - generic [ref=f24e495]:
+          - paragraph [ref=f24e496]: The pool
+          - paragraph [ref=f24e497]: Stakes locked on Solana · settled by TxLINE proof, not by us
+        - generic [ref=f24e498]: 0 SOL
+      - generic [ref=f24e508]:
+        - paragraph [ref=f24e509]: No pool for this match yet. Opening one is permissionless and takes a click.
+        - button "Open the market" [disabled]
+    - generic [ref=f24e512]:
+      - generic [ref=f24e518]:
+        - paragraph [ref=f24e519]: Provably real
+        - paragraph [ref=f24e520]: Ask Solana to check this scoreline, not us.
+      - button "Verify on Solana" [ref=f24e521] [cursor=pointer]
+    - generic [ref=f24e31]:
+      - heading "As it happened" [level=2] [ref=f24e32]
+      - paragraph [ref=f24e528]: Match events will land here the second they happen.
+  - button "Open Next.js Dev Tools" [ref=f24e44] [cursor=pointer]
+  - alert [ref=f24e48]

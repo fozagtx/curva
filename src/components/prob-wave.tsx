@@ -63,15 +63,22 @@ export default function ProbWave({ meta, probs, events, connected, mode }: Props
   const view = useMemo(() => {
     if (probs.length < 2 || !meta) return null;
 
-    const t0 = probs[0].ts;
-    const t1 = Math.max(probs[probs.length - 1].ts, t0 + 10 * 60 * 1000);
+    // Pre-match odds can span hours; clip to just before kickoff so the
+    // in-play story fills the frame.
+    const preroll = 15 * 60 * 1000;
+    const clipStart = meta.startTime - preroll;
+    const clipped = probs.filter((p) => p.ts >= clipStart);
+    const series = clipped.length >= 2 ? clipped : probs;
+
+    const t0 = series[0].ts;
+    const t1 = Math.max(series[series.length - 1].ts, t0 + 10 * 60 * 1000);
     const xOf = (ts: number) => PAD_L + ((ts - t0) / (t1 - t0)) * (W - PAD_L - PAD_R);
     const yOf = (p: number) => PAD_T + (1 - p) * (H - PAD_T - PAD_B);
 
     const home: [number, number][] = [];
     const away: [number, number][] = [];
     const draw: [number, number][] = [];
-    for (const pt of probs) {
+    for (const pt of series) {
       const ha = homeAwayProbs(meta, pt.probs);
       home.push([xOf(pt.ts), yOf(ha.home)]);
       away.push([xOf(pt.ts), yOf(ha.away)]);
@@ -91,7 +98,7 @@ export default function ProbWave({ meta, probs, events, connected, mode }: Props
         label: e.kind === "halftime" ? "HT" : "FT",
       }));
 
-    const last = probs[probs.length - 1];
+    const last = series[series.length - 1];
     const ha = homeAwayProbs(meta, last.probs);
     const label = (p: number, pts: [number, number][]) => ({
       pct: `${(p * 100).toFixed(0)}%`,

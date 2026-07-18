@@ -1,0 +1,25 @@
+- main [ref=f21e3]:
+  - generic [ref=f21e4]:
+    - link [ref=f21e6] [cursor=pointer]:
+      - /url: /
+      - generic [ref=f21e8]:
+        - paragraph [ref=f21e9]: Curva
+        - paragraph [ref=f21e10]: Where conviction meets the curve
+    - button "Connect wallet" [ref=f21e11] [cursor=pointer]
+  - generic [ref=f21e12]:
+    - generic [ref=f21e13]: Checking pitches…
+    - generic [ref=f21e16]: World Cup 2026
+    - generic [ref=f21e18]: Verified on Solana
+  - generic [ref=f21e20]:
+    - heading "Stake on the match. Let Solana settle it." [level=1] [ref=f21e21]
+    - paragraph [ref=f21e22]: Curva runs a prediction pool for every World Cup game — live win probability from consensus odds, and payouts unlocked by cryptographic proof of the final score, not by anyone's say-so.
+  - generic [ref=f21e23]:
+    - generic [ref=f21e27]:
+      - paragraph [ref=f21e28]: Trustless pools
+      - paragraph [ref=f21e29]: Stake SOL on any match. The pot sits in a vault no one controls.
+    - generic [ref=f21e33]:
+      - paragraph [ref=f21e34]: The market, live
+      - paragraph [ref=f21e35]: Live win probability from TxLINE consensus odds, lurching with every goal.
+    - generic [ref=f21e39]:
+      - paragraph [ref=f21e40]: Proof-settled
+      - paragraph [ref=f21e41]: Settlement is a Merkle proof verified by Solana itself — no oracle to trust.

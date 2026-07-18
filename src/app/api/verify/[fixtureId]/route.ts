@@ -34,11 +34,11 @@ function toProofNodes(nodes: ProofNodeWire[]) {
   return nodes.map((n) => ({ hash: toBytes32(n.hash), isRightSibling: n.isRightSibling }));
 }
 
-async function fetchProof(fixtureId: number, seq: number, statKey: number) {
+async function fetchProof(fixtureId: number, seq: number) {
   const params = new URLSearchParams({
     fixtureId: String(fixtureId),
     seq: String(seq),
-    statKey: String(statKey),
+    statKeys: "1,2",
   });
   const res = await fetch(`${API_BASE_URL}/scores/stat-validation?${params}`, {
     headers: await authHeaders(),
@@ -48,12 +48,15 @@ async function fetchProof(fixtureId: number, seq: number, statKey: number) {
   return res.json();
 }
 
-async function validateOnChain(validation: any): Promise<{ isValid: boolean; pda: string; epochDay: number; value: number }> {
+async function validateOnChain(validation: any, statIndex: number): Promise<{ isValid: boolean; pda: string; epochDay: number; value: number }> {
   const connection = new Connection(SOLANA_RPC, "confirmed");
-  // Simulation-only wallet: .view() never sends a transaction or pays fees.
-  const kp = Keypair.generate();
+  // Simulation-only wallet: .view() never sends a transaction or pays fees,
+  // but the simulated fee payer must be a funded account, so use ours.
+  const payer = process.env.TXLINE_WALLET
+    ? new PublicKey(process.env.TXLINE_WALLET)
+    : Keypair.generate().publicKey;
   const wallet = {
-    publicKey: kp.publicKey,
+    publicKey: payer,
     signTransaction: async <T,>(tx: T): Promise<T> => tx,
     signAllTransactions: async <T,>(txs: T[]): Promise<T[]> => txs,
   };
@@ -71,12 +74,17 @@ async function validateOnChain(validation: any): Promise<{ isValid: boolean; pda
     },
     eventsSubTreeRoot: toBytes32(validation.summary.eventStatsSubTreeRoot),
   };
+  const statWire = validation.statsToProve[statIndex];
   const stat = {
-    statToProve: validation.statToProve,
+    statToProve: {
+      key: Number(statWire.key),
+      value: Number(statWire.value),
+      period: Number(statWire.period ?? 0),
+    },
     eventStatRoot: toBytes32(validation.eventStatRoot),
-    statProof: toProofNodes(validation.statProof),
+    statProof: toProofNodes(validation.statProofs[statIndex]),
   };
-  const value = Number(validation.statToProve?.value ?? NaN);
+  const value = Number(statWire.value ?? NaN);
   const predicate = Number.isFinite(value)
     ? { threshold: value, comparison: { equalTo: {} } }
     : { threshold: -1, comparison: { greaterThan: {} } };
@@ -122,19 +130,19 @@ export async function GET(
     if (!records.length) {
       return NextResponse.json({ error: "No score records for fixture yet" }, { status: 404 });
     }
-    // Prefer the newest records; roots land on-chain in batches, so walk
-    // backwards until a proof is available.
-    const seqs = [...new Set(records.map((r) => r.seq).filter((s) => s >= 1))].sort((a, b) => b - a);
-    const candidates = seqs.filter((_, i) => i % Math.max(1, Math.floor(seqs.length / 6)) === 0).slice(0, 6);
+    // Prefer the finalisation record; fall back to the newest anchored batches.
+    const finalised = records.filter((r) => r.action === "game_finalised").map((r) => r.seq);
+    const newest = [...new Set(records.map((r) => r.seq).filter((s) => s >= 1))].sort((a, b) => b - a);
+    const candidates = [...new Set([...finalised, ...newest])].slice(0, 6);
 
     let lastErr: unknown = null;
     for (const seq of candidates) {
       try {
-        const [p1, p2] = await Promise.all([
-          fetchProof(fixtureId, seq, 1), // participant 1 total goals
-          fetchProof(fixtureId, seq, 2), // participant 2 total goals
-        ]);
-        const [r1, r2] = await Promise.all([validateOnChain(p1), validateOnChain(p2)]);
+        const v = await fetchProof(fixtureId, seq);
+        const idx1 = v.statsToProve.findIndex((s: any) => Number(s.key) === 1);
+        const idx2 = v.statsToProve.findIndex((s: any) => Number(s.key) === 2);
+        if (idx1 < 0 || idx2 < 0) throw new Error("statsToProve missing keys 1/2");
+        const [r1, r2] = await Promise.all([validateOnChain(v, idx1), validateOnChain(v, idx2)]);
         return NextResponse.json({
           verified: r1.isValid && r2.isValid,
           seq,
@@ -148,8 +156,9 @@ export async function GET(
         lastErr = err;
       }
     }
+    const detail = lastErr instanceof Error ? lastErr.message : JSON.stringify(lastErr);
     return NextResponse.json(
-      { error: `No on-chain root available yet: ${String(lastErr instanceof Error ? lastErr.message : lastErr)}` },
+      { error: `No on-chain root available yet: ${detail}` },
       { status: 409 },
     );
   } catch (err) {

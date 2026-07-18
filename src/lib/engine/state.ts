@@ -2,7 +2,13 @@
 // Feed it raw TxLINE records in timestamp order; it emits normalized PulseEvents
 // that the client renders. No wall-clock reads — replay stays byte-identical.
 
-import type { OddsPayload, ScoresRecord, Fixture, SoccerScore } from "../txline/types";
+import {
+  normalizeScoresRecord,
+  type OddsPayload,
+  type ScoresRecord,
+  type Fixture,
+  type SoccerScore,
+} from "../txline/types";
 import { extractProbs, isMatchWinnerMarket, isStablePrice, type Probs } from "./probability";
 import { toMatchEvent, clockMinute, type MatchEvent } from "./events";
 import { DramaMeter } from "./drama";
@@ -43,8 +49,15 @@ export function fixtureMeta(f: Fixture): FixtureMeta {
   };
 }
 
-function totalOf(s: { Total?: SoccerScore } | undefined): SoccerScore {
-  return s?.Total ?? { Goals: 0, YellowCards: 0, RedCards: 0, Corners: 0 };
+function totalOf(s: { Total?: Partial<SoccerScore> } | undefined): SoccerScore {
+  // The live feed omits zero-valued fields inside period objects.
+  const total = s?.Total ?? {};
+  return {
+    Goals: total.Goals ?? 0,
+    YellowCards: total.YellowCards ?? 0,
+    RedCards: total.RedCards ?? 0,
+    Corners: total.Corners ?? 0,
+  };
 }
 
 export class MatchEngine {
@@ -54,6 +67,24 @@ export class MatchEngine {
   private lastPhase = "";
   private seenEventIds = new Set<string>();
   private hasStableSource = false;
+  private lastCounters: ScoreState | null = null;
+
+  private inferTeam(action: string, next: ScoreState): 1 | 2 | undefined {
+    const prev = this.lastCounters;
+    if (!prev) return undefined;
+    const field =
+      action === "goal" ? "goals"
+      : action === "corner" ? "corners"
+      : action === "yellow_card" ? "yellows"
+      : action === "red_card" ? "reds"
+      : null;
+    if (!field) return undefined;
+    const [a1, a2] = next[field as "goals"];
+    const [b1, b2] = prev[field as "goals"];
+    if (a1 > b1 && a2 === b2) return 1;
+    if (a2 > b2 && a1 === b1) return 2;
+    return undefined;
+  }
 
   ingestOdds(o: OddsPayload): PulseEvent[] {
     if (!isMatchWinnerMarket(o)) return [];
@@ -76,7 +107,9 @@ export class MatchEngine {
     return [{ t: "prob", ts: o.Ts, probs, drama }];
   }
 
-  ingestScore(rec: ScoresRecord): PulseEvent[] {
+  ingestScore(raw: ScoresRecord | unknown): PulseEvent[] {
+    const rec = normalizeScoresRecord(raw);
+    if (!rec) return [];
     const out: PulseEvent[] = [];
     const minute = clockMinute(rec);
 
@@ -85,6 +118,7 @@ export class MatchEngine {
       out.push({ t: "phase", ts: rec.ts, phase: rec.gameState, minute });
     }
 
+    let inferredTeam: 1 | 2 | undefined;
     if (rec.scoreSoccer) {
       const p1 = totalOf(rec.scoreSoccer.Participant1);
       const p2 = totalOf(rec.scoreSoccer.Participant2);
@@ -99,14 +133,20 @@ export class MatchEngine {
           ? { penaltyGoals: [pe1 ?? 0, pe2 ?? 0] as [number, number] }
           : {}),
       };
+
+      // The feed leaves Data empty on unconfirmed events; attribute the team
+      // from whichever side's counter moved in this record.
+      inferredTeam = this.inferTeam(rec.action, score);
+      this.lastCounters = score;
+
       const key = JSON.stringify(score);
       if (key !== this.lastScoreKey) {
         this.lastScoreKey = key;
-        out.push({ t: "score", ts: rec.ts, score, phase: rec.gameState, minute });
+        out.push({ t: "score", ts: rec.ts, score, phase: rec.gameState || this.lastPhase, minute });
       }
     }
 
-    const ev = toMatchEvent(rec);
+    const ev = toMatchEvent(rec, inferredTeam);
     if (ev && !this.seenEventIds.has(`${ev.id}:${ev.kind}:${ev.label}`)) {
       this.seenEventIds.add(`${ev.id}:${ev.kind}:${ev.label}`);
       const drama = this.drama.onEvent(rec.ts, ev.weight);

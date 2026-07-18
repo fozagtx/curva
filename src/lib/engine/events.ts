@@ -39,9 +39,12 @@ export function clockMinute(rec: ScoresRecord): number | undefined {
   return Math.max(1, Math.ceil(seconds / 60));
 }
 
-export function toMatchEvent(rec: ScoresRecord): MatchEvent | null {
+export function toMatchEvent(rec: ScoresRecord, inferredTeam?: 1 | 2): MatchEvent | null {
   const d = rec.dataSoccer ?? {};
-  const team = d.Participant === 1 || d.Participant === 2 ? (d.Participant as 1 | 2) : undefined;
+  const team =
+    d.Participant === 1 || d.Participant === 2
+      ? (d.Participant as 1 | 2)
+      : inferredTeam;
   const minute = clockMinute(rec);
   const base = {
     id: `${rec.fixtureId}:${rec.id}`,

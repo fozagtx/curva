@@ -40,7 +40,16 @@ async function txlineGet(path: string, token: string): Promise<any> {
     },
   });
   if (!res.ok) throw new Error(`${path} -> ${res.status}: ${(await res.text()).slice(0, 160)}`);
-  return res.json();
+  const text = await res.text();
+  try {
+    return JSON.parse(text);
+  } catch {
+    // Historical endpoints stream SSE-formatted text: parse the data: lines.
+    return text
+      .split(/\r?\n/)
+      .filter((l) => l.startsWith("data: "))
+      .map((l) => JSON.parse(l.slice(6)));
+  }
 }
 
 function readEnvLocal(key: string): string {
@@ -127,28 +136,29 @@ async function main() {
 
   // 4. finalisation proof for goals P1/P2
   const hist: any[] = await txlineGet(`/scores/historical/${fixtureId}`, token);
-  const finalRec = hist.filter((r) => r.action === "game_finalised").pop();
-  const seq = finalRec?.seq ?? hist[hist.length - 1].seq;
+  const finalRec = hist.filter((r) => (r.Action ?? r.action) === "game_finalised").pop();
+  const seq = finalRec?.Seq ?? finalRec?.seq ?? hist[hist.length - 1].Seq ?? hist[hist.length - 1].seq;
   console.log(`using seq ${seq} (${finalRec ? "game_finalised" : "latest"})`);
   const v: any = await txlineGet(`/scores/stat-validation?fixtureId=${fixtureId}&seq=${seq}&statKeys=1,2`, token);
   console.log("validation keys:", Object.keys(v));
 
-  const stats: any[] = v.stats ?? v.statTerms ?? [];
-  const findStat = (key: number) =>
-    stats.find((s) => Number(s.statToProve?.key ?? s.key) === key) ?? stats[key - 1];
-  const s1 = findStat(1);
-  const s2 = findStat(2);
-  const term = (s: any) => ({
+  // Real V2 shape: statsToProve[] + statProofs[][] + one shared eventStatRoot.
+  const statList: any[] = v.statsToProve;
+  const proofList: any[][] = v.statProofs;
+  const idx1 = statList.findIndex((s) => Number(s.key) === 1);
+  const idx2 = statList.findIndex((s) => Number(s.key) === 2);
+  if (idx1 < 0 || idx2 < 0) throw new Error(`statsToProve missing keys 1/2: ${JSON.stringify(statList)}`);
+  const term = (i: number) => ({
     statToProve: {
-      key: Number(s.statToProve?.key ?? s.key),
-      value: Number(s.statToProve?.value ?? s.value),
-      period: Number(s.statToProve?.period ?? s.period ?? 0),
+      key: Number(statList[i].key),
+      value: Number(statList[i].value),
+      period: Number(statList[i].period ?? 0),
     },
-    eventStatRoot: b32(s.eventStatRoot),
-    statProof: nodes(s.statProof),
+    eventStatRoot: b32(v.eventStatRoot),
+    statProof: nodes(proofList[i]),
   });
-  const t1 = term(s1);
-  const t2 = term(s2);
+  const t1 = term(idx1);
+  const t2 = term(idx2);
   console.log(`proven goals P1=${t1.statToProve.value} P2=${t2.statToProve.value} periods=${t1.statToProve.period},${t2.statToProve.period}`);
 
   const goalsDiff = t1.statToProve.value - t2.statToProve.value;

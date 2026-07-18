@@ -2,7 +2,25 @@
 
 import { API_BASE_URL } from "./config";
 import { authHeaders, renewJwt } from "./auth";
-import type { Fixture, OddsPayload, ScoresRecord } from "./types";
+import { normalizeScoresRecord, parseSseText, type Fixture, type OddsPayload, type ScoresRecord } from "./types";
+
+async function apiGetText(pathname: string): Promise<string> {
+  let res = await fetch(`${API_BASE_URL}${pathname}`, {
+    headers: await authHeaders(),
+    cache: "no-store",
+  });
+  if (res.status === 401) {
+    await renewJwt();
+    res = await fetch(`${API_BASE_URL}${pathname}`, {
+      headers: await authHeaders(),
+      cache: "no-store",
+    });
+  }
+  if (!res.ok) {
+    throw new Error(`TxLINE GET ${pathname} -> ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  }
+  return res.text();
+}
 
 async function apiGet<T>(pathname: string): Promise<T> {
   let res = await fetch(`${API_BASE_URL}${pathname}`, {
@@ -40,16 +58,33 @@ export function fetchLiveOddsUpdates(fixtureId: number): Promise<OddsPayload[]> 
   return apiGet<OddsPayload[]>(`/odds/updates/${fixtureId}`);
 }
 
-export function fetchScoresSnapshot(fixtureId: number): Promise<ScoresRecord[]> {
-  return apiGet<ScoresRecord[]>(`/scores/snapshot/${fixtureId}`);
+export async function fetchScoresSnapshot(fixtureId: number): Promise<ScoresRecord[]> {
+  const raw = await apiGetText(`/scores/snapshot/${fixtureId}`);
+  return coerceScores(raw);
 }
 
-export function fetchScoresHistorical(fixtureId: number): Promise<ScoresRecord[]> {
-  return apiGet<ScoresRecord[]>(`/scores/historical/${fixtureId}`);
+export async function fetchScoresHistorical(fixtureId: number): Promise<ScoresRecord[]> {
+  // Responds as SSE-formatted text (data: lines), not a JSON array.
+  const raw = await apiGetText(`/scores/historical/${fixtureId}`);
+  return parseSseText(raw)
+    .map(normalizeScoresRecord)
+    .filter((r): r is ScoresRecord => r != null);
 }
 
-export function fetchLiveScoresUpdates(fixtureId: number): Promise<ScoresRecord[]> {
-  return apiGet<ScoresRecord[]>(`/scores/updates/${fixtureId}`);
+export async function fetchLiveScoresUpdates(fixtureId: number): Promise<ScoresRecord[]> {
+  const raw = await apiGetText(`/scores/updates/${fixtureId}`);
+  return coerceScores(raw);
+}
+
+function coerceScores(raw: string): ScoresRecord[] {
+  let items: unknown[];
+  try {
+    const parsed = JSON.parse(raw);
+    items = Array.isArray(parsed) ? parsed : [parsed];
+  } catch {
+    items = parseSseText(raw);
+  }
+  return items.map(normalizeScoresRecord).filter((r): r is ScoresRecord => r != null);
 }
 
 // Historical odds come in 5-minute interval buckets per hour.

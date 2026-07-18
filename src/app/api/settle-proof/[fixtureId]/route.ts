@@ -40,16 +40,17 @@ async function fetchValidation(fixtureId: number, seq: number, statKeys: string)
   return res.json();
 }
 
-// The V2 response carries one summary + shared tree proofs + an entry per stat.
-function toStatTerm(entry: any) {
+// Real V2 shape: statsToProve[] + statProofs[][] + one shared eventStatRoot.
+function toStatTerm(v: any, index: number) {
+  const s = v.statsToProve[index];
   return {
     statToProve: {
-      key: Number(entry.statToProve?.key ?? entry.key),
-      value: Number(entry.statToProve?.value ?? entry.value),
-      period: Number(entry.statToProve?.period ?? entry.period ?? 0),
+      key: Number(s.key),
+      value: Number(s.value),
+      period: Number(s.period ?? 0),
     },
-    eventStatRoot: b64ToBytes(entry.eventStatRoot),
-    statProof: proofNodes(entry.statProof),
+    eventStatRoot: b64ToBytes(v.eventStatRoot),
+    statProof: proofNodes(v.statProofs[index]),
   };
 }
 
@@ -78,11 +79,14 @@ export async function GET(
     for (const seq of candidates) {
       try {
         const v = await fetchValidation(fixtureId, seq, "1,2");
-        const stats: any[] = v.stats ?? v.statTerms ?? (v.statToProve ? [v] : null);
-        if (!stats || stats.length < 2) throw new Error("validation response missing two stats");
-
-        const statP1 = toStatTerm(stats.find((s: any) => Number(s.statToProve?.key ?? s.key) === 1) ?? stats[0]);
-        const statP2 = toStatTerm(stats.find((s: any) => Number(s.statToProve?.key ?? s.key) === 2) ?? stats[1]);
+        if (!Array.isArray(v.statsToProve) || v.statsToProve.length < 2) {
+          throw new Error("validation response missing statsToProve");
+        }
+        const idx1 = v.statsToProve.findIndex((s: any) => Number(s.key) === 1);
+        const idx2 = v.statsToProve.findIndex((s: any) => Number(s.key) === 2);
+        if (idx1 < 0 || idx2 < 0) throw new Error("statsToProve missing keys 1/2");
+        const statP1 = toStatTerm(v, idx1);
+        const statP2 = toStatTerm(v, idx2);
 
         const goals: [number, number] = [statP1.statToProve.value, statP2.statToProve.value];
         const outcome = goals[0] > goals[1] ? 0 : goals[0] === goals[1] ? 1 : 2;
