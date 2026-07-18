@@ -23,6 +23,7 @@ import {
   type SettleProof,
 } from "@/lib/markets/client";
 import { formatCountdown, msUntil, urgencyFor } from "@/lib/fomo";
+import TeamFlag from "./team-flag";
 import { KickoffCountdown } from "@/components/fomo-strip";
 
 const STAKE_AMOUNTS = [0.05, 0.1, 0.25] as const;
@@ -222,9 +223,10 @@ export default function MarketCard({ meta, probs, phase }: Props) {
                   )}
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <p className="text-small font-medium">
-                      {name}
-                      {won ? <span className="ml-2 text-primary">✓ result</span> : null}
+                    <p className="flex min-w-0 items-center gap-1.5 text-small font-medium">
+                      {name !== "Draw" ? <TeamFlag name={name} size={18} /> : null}
+                      <span className="truncate">{name}</span>
+                      {won ? <span className="ml-1 shrink-0 text-primary">✓ result</span> : null}
                     </p>
                     <div className="flex items-center gap-2">
                       {consensusPct != null && !market.settled ? (
@@ -292,7 +294,10 @@ export default function MarketCard({ meta, probs, phase }: Props) {
                     type="button"
                     onClick={() => setSide(s)}
                   >
-                    <span className="max-w-full truncate text-tiny text-default-500">{name}</span>
+                    <span className="flex max-w-full items-center gap-1 text-tiny text-default-500">
+                      {name !== "Draw" ? <TeamFlag name={name} size={14} /> : null}
+                      <span className="truncate">{name}</span>
+                    </span>
                     <span className={cn("font-mono text-xl font-semibold tabular-nums", active && "text-primary")}>
                       {pct != null ? `${(pct * 100).toFixed(0)}%` : "-"}
                     </span>

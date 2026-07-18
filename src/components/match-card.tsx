@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Card, CardBody, Chip } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import type { FixtureMeta } from "@/lib/engine/state";
+import TeamFlag from "./team-flag";
 
 export type MatchStatus = "live" | "upcoming" | "finished";
 export type MarketBadge = {
@@ -56,18 +57,9 @@ export default function MatchCard({
       shadow="sm"
     >
       <CardBody className="flex flex-row items-center gap-2.5 p-2.5">
-        <div className="flex shrink-0 rounded-medium border border-default-100 bg-default-50 p-1.5">
-          <Icon
-            className={status === "live" ? "text-danger" : "text-default-500"}
-            icon={
-              status === "live"
-                ? "solar:play-stream-bold"
-                : status === "finished"
-                  ? "solar:flag-2-bold-duotone"
-                  : "solar:calendar-bold-duotone"
-            }
-            width={16}
-          />
+        <div className="flex shrink-0 items-center gap-1">
+          <TeamFlag name={meta.home.name} size={22} />
+          <TeamFlag name={meta.away.name} size={22} />
         </div>
         <div className="flex min-w-0 flex-1 flex-col">
           <p className="truncate text-small font-semibold">

@@ -5,6 +5,7 @@ import { Button, Card, CardBody, Chip } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import type { FixtureMeta } from "@/lib/engine/state";
 import type { MatchStatus, MarketBadge } from "./match-card";
+import TeamFlag from "./team-flag";
 
 export default function FeaturedMatch({
   meta,
@@ -83,24 +84,17 @@ export default function FeaturedMatch({
 
 function TeamBlock({
   name,
-  accent,
   align,
 }: {
   name: string;
   accent: string;
   align: "start" | "end";
 }) {
-  const code = name.slice(0, 3).toUpperCase();
   return (
     <div
-      className={`flex min-w-0 flex-col gap-1 ${align === "end" ? "items-end text-right" : "items-start text-left"}`}
+      className={`flex min-w-0 flex-col gap-1.5 ${align === "end" ? "items-end text-right" : "items-start text-left"}`}
     >
-      <div
-        className="flex h-11 w-11 items-center justify-center rounded-full border text-small font-semibold"
-        style={{ borderColor: `${accent}55`, background: `${accent}14`, color: accent }}
-      >
-        {code}
-      </div>
+      <TeamFlag name={name} size={44} />
       <p className="max-w-full truncate text-small font-medium">{name}</p>
     </div>
   );

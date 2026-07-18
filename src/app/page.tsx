@@ -8,6 +8,7 @@ import { Button, Card, CardBody, Chip, Skeleton } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import TopBar from "@/components/top-bar";
 import MatchCard, { inferStatus, type MatchStatus, type MarketBadge } from "@/components/match-card";
+import TeamFlag from "@/components/team-flag";
 import { SocialProofTicker } from "@/components/fomo-strip";
 import { activityToPings, formatCountdown, msUntil, type SocialPing } from "@/lib/fomo";
 import type { FixtureMeta } from "@/lib/engine/state";
@@ -221,10 +222,16 @@ function FeaturedCompact({
           ) : null}
         </div>
 
-        <div className="flex items-center justify-between gap-2">
-          <p className="min-w-0 flex-1 truncate text-right text-small font-bold">{meta.home.name}</p>
-          <span className="shrink-0 px-2 text-tiny font-bold text-default-400">VS</span>
-          <p className="min-w-0 flex-1 truncate text-left text-small font-bold">{meta.away.name}</p>
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex min-w-0 flex-1 items-center justify-end gap-2">
+            <p className="min-w-0 truncate text-right text-small font-bold">{meta.home.name}</p>
+            <TeamFlag name={meta.home.name} size={32} />
+          </div>
+          <span className="shrink-0 text-tiny font-bold text-default-400">VS</span>
+          <div className="flex min-w-0 flex-1 items-center gap-2">
+            <TeamFlag name={meta.away.name} size={32} />
+            <p className="min-w-0 truncate text-left text-small font-bold">{meta.away.name}</p>
+          </div>
         </div>
 
         <div className="grid grid-cols-3 gap-1.5">

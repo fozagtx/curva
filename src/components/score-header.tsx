@@ -6,6 +6,7 @@ import { Card, CardBody, Chip, Progress } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import type { FixtureMeta, ScoreState } from "@/lib/engine/state";
 import { homeAwayScore } from "@/lib/usePulse";
+import TeamFlag from "./team-flag";
 
 const PHASE_LABEL: Record<string, string> = {
   NS: "Kick-off soon", H1: "1st half", HT: "Half-time", H2: "2nd half",
@@ -16,16 +17,10 @@ const PHASE_LABEL: Record<string, string> = {
 
 const LIVE = new Set(["H1", "H2", "ET1", "ET2", "PE"]);
 
-function TeamTile({ name, accent }: { name: string; accent: string }) {
-  const code = name.slice(0, 3).toUpperCase();
+function TeamTile({ name }: { name: string }) {
   return (
-    <div className="flex min-w-0 flex-1 flex-col items-center gap-1">
-      <div
-        className="flex h-9 w-9 items-center justify-center rounded-full border text-tiny font-semibold sm:h-10 sm:w-10"
-        style={{ borderColor: `${accent}55`, background: `${accent}14`, color: accent }}
-      >
-        {code}
-      </div>
+    <div className="flex min-w-0 flex-1 flex-col items-center gap-1.5">
+      <TeamFlag name={name} size={40} />
       <p className="max-w-full truncate text-tiny font-medium sm:text-small">{name}</p>
     </div>
   );
@@ -70,7 +65,7 @@ export default function ScoreHeader({
         </div>
 
         <div className="flex items-center gap-2">
-          <TeamTile accent="#22C55E" name={meta.home.name} />
+          <TeamTile name={meta.home.name} />
           <div className="flex flex-col items-center px-1">
             <p className="font-mono text-3xl font-semibold tabular-nums sm:text-4xl">
               {goals[0]}
@@ -83,7 +78,7 @@ export default function ScoreHeader({
               </p>
             ) : null}
           </div>
-          <TeamTile accent="#38BDF8" name={meta.away.name} />
+          <TeamTile name={meta.away.name} />
         </div>
 
         <div className="flex items-center gap-2">
