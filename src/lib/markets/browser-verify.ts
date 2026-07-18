@@ -6,7 +6,7 @@
 // credentials live server-side), but the verdict is computed by the TxOracle
 // program over your own RPC connection — our backend never touches it.
 
-import { Connection, Keypair, PublicKey, ComputeBudgetProgram } from "@solana/web3.js";
+import { Connection, PublicKey, ComputeBudgetProgram } from "@solana/web3.js";
 import { AnchorProvider, BN, Program, type Idl } from "@coral-xyz/anchor";
 import txoracleIdl from "./txoracle-idl.json";
 import { DEVNET_RPC, dailyScoresRootsPda, type SettleProof } from "./client";
@@ -18,11 +18,14 @@ export interface BrowserVerifyResult {
   rpc: string;
 }
 
+// Simulation fee payer: must be a funded account for the RPC to simulate, but
+// nothing is ever signed or sent — any public funded address works.
+const SIM_PAYER = new PublicKey("3MTbC3TnVgCeMMmzqwm1GqAopVQ7DLBqVfV4bY8XdXsU");
+
 export async function verifyInBrowser(proof: SettleProof): Promise<BrowserVerifyResult> {
   const connection = new Connection(DEVNET_RPC, "confirmed");
-  // Simulation-only identity; nothing is signed or sent.
   const wallet = {
-    publicKey: Keypair.generate().publicKey,
+    publicKey: SIM_PAYER,
     signTransaction: async <T,>(tx: T) => tx,
     signAllTransactions: async <T,>(txs: T[]) => txs,
   };

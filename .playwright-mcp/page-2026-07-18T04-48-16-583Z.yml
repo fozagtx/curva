@@ -1,0 +1,222 @@
+- generic [active] [ref=f34e1]:
+  - main [ref=f34e3]:
+    - generic [ref=f34e4]:
+      - generic [ref=f34e5]:
+        - button "Back to matches" [ref=f34e6] [cursor=pointer]
+        - link [ref=f34e9] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f34e14]:
+            - paragraph [ref=f34e15]: Curva
+            - paragraph [ref=f34e16]: Where conviction meets the curve
+      - button "Connect wallet" [ref=f34e17] [cursor=pointer]
+    - generic [ref=f34e22]:
+      - generic [ref=f34e44]:
+        - generic [ref=f34e45]: Full-time
+        - paragraph [ref=f34e47]: World Cup
+      - generic [ref=f34e48]:
+        - generic [ref=f34e49]:
+          - generic [ref=f34e50]: ENG
+          - paragraph [ref=f34e51]: England
+        - paragraph [ref=f34e53]: 1–2
+        - generic [ref=f34e54]:
+          - generic [ref=f34e55]: ARG
+          - paragraph [ref=f34e56]: Argentina
+      - generic [ref=f34e57]:
+        - progressbar "Drama meter" [ref=f34e60]
+        - paragraph [ref=f34e63]: Chaos · 100
+    - generic [ref=f34e65]:
+      - generic [ref=f34e66]:
+        - generic [ref=f34e73]:
+          - paragraph [ref=f34e74]: The pool
+          - paragraph [ref=f34e75]: Locked on Solana · settled by proof, not by us
+        - generic [ref=f34e76]: 0 SOL
+      - generic [ref=f34e86]:
+        - generic [ref=f34e87]:
+          - generic [ref=f34e88]:
+            - paragraph [ref=f34e89]: England
+            - generic [ref=f34e90]: 0 SOL
+          - progressbar "England pool share" [ref=f34e92]
+        - generic [ref=f34e95]:
+          - generic [ref=f34e96]:
+            - paragraph [ref=f34e97]: Draw
+            - generic [ref=f34e98]: 0 SOL
+          - progressbar "Draw pool share" [ref=f34e100]
+        - generic [ref=f34e103]:
+          - generic [ref=f34e104]:
+            - paragraph [ref=f34e105]: Argentina✓ result
+            - generic [ref=f34e106]: 0 SOL
+          - progressbar "Argentina pool share" [ref=f34e108]
+      - generic [ref=f34e111]:
+        - paragraph [ref=f34e115]: Settled trustlessly · final 1–2 (P1–P2), proven on-chain
+        - paragraph [ref=f34e116]:
+          - link "Merkle root HJ6nSVkU…" [ref=f34e117] [cursor=pointer]:
+            - /url: https://explorer.solana.com/address/HJ6nSVkUs4VG9JQ5sEUq3VbmyUSBf76ePXUCATLtRYTX?cluster=devnet
+          - text: ·
+          - link "market 955uZjkK…" [ref=f34e118] [cursor=pointer]:
+            - /url: https://explorer.solana.com/address/955uZjkKK4EqnmUFfVtHgWDqr85Wa1GouvMD9cQmgqV1?cluster=devnet
+    - generic [ref=f34e120]:
+      - generic [ref=f34e126]:
+        - paragraph [ref=f34e127]: This one is in the books.
+        - paragraph [ref=f34e128]: Replay the full match — real data, real drama, minutes not hours.
+      - button "Replay the drama" [ref=f34e129] [cursor=pointer]
+    - generic [ref=f34e24]:
+      - generic [ref=f34e133]:
+        - paragraph [ref=f34e134]: Win probability
+        - generic [ref=f34e135]: LIVE
+      - generic [ref=f34e137]:
+        - generic: 0%
+        - generic: 96%
+        - generic: 3%
+        - generic: HT
+      - generic [ref=f34e146]:
+        - generic [ref=f34e147]: England
+        - generic [ref=f34e149]: Argentina
+        - generic [ref=f34e151]: Draw
+    - generic [ref=f34e154]:
+      - generic [ref=f34e155]:
+        - generic [ref=f34e161]:
+          - paragraph [ref=f34e162]: That was the match
+          - paragraph [ref=f34e163]: The story the market told
+        - button "Share" [ref=f34e164] [cursor=pointer]
+      - generic [ref=f34e170]:
+        - generic [ref=f34e171]:
+          - paragraph [ref=f34e176]: Final score
+          - paragraph [ref=f34e177]: 1–2
+          - paragraph [ref=f34e178]: England vs Argentina
+        - generic [ref=f34e179]:
+          - paragraph [ref=f34e184]: Biggest swing
+          - paragraph [ref=f34e185]: 13% → 90%
+          - paragraph [ref=f34e186]: Argentina, inside 5 minutes
+        - generic [ref=f34e187]:
+          - paragraph [ref=f34e192]: Drama peak
+          - paragraph [ref=f34e193]: 100/100
+          - paragraph [ref=f34e194]: Absolute chaos
+    - generic [ref=f34e197]:
+      - generic [ref=f34e203]:
+        - paragraph [ref=f34e204]: Don't trust us
+        - paragraph [ref=f34e205]: Your browser asks Solana directly — our servers never touch the verdict.
+      - button "Loading Asking the chain" [disabled]:
+        - generic "Loading"
+        - text: Asking the chain
+    - generic [ref=f34e31]:
+      - heading "As it happened" [level=2] [ref=f34e32]
+      - generic [ref=f34e206]:
+        - generic [ref=f34e208]:
+          - paragraph [ref=f34e213]: Full-time
+          - paragraph
+        - generic [ref=f34e215]:
+          - paragraph [ref=f34e220]:
+            - text: Substitution
+            - generic [ref=f34e221]: · England
+          - paragraph [ref=f34e222]: 96'
+        - generic [ref=f34e224]:
+          - paragraph [ref=f34e229]:
+            - text: Substitution
+            - generic [ref=f34e230]: · England
+          - paragraph [ref=f34e231]: 96'
+        - generic [ref=f34e233]:
+          - paragraph [ref=f34e238]: Kick-off
+          - paragraph [ref=f34e239]: 94'
+        - generic [ref=f34e241]:
+          - paragraph [ref=f34e248]:
+            - text: Yellow card
+            - generic [ref=f34e249]: · Argentina
+          - paragraph [ref=f34e250]: 94'
+        - generic [ref=f34e252]:
+          - paragraph [ref=f34e257]:
+            - text: GOAL
+            - generic [ref=f34e258]: · Argentina
+          - paragraph [ref=f34e259]: 92'
+        - generic [ref=f34e261]:
+          - paragraph [ref=f34e266]: Off the woodwork!
+          - paragraph [ref=f34e267]: 92'
+        - generic [ref=f34e269]:
+          - paragraph [ref=f34e274]: Injury concern
+          - paragraph [ref=f34e275]: 89'
+        - generic [ref=f34e277]:
+          - paragraph [ref=f34e282]: Kick-off
+          - paragraph [ref=f34e283]: 87'
+        - generic [ref=f34e285]:
+          - paragraph [ref=f34e290]:
+            - text: GOAL
+            - generic [ref=f34e291]: · Argentina
+          - paragraph [ref=f34e292]: 85'
+        - generic [ref=f34e294]:
+          - paragraph [ref=f34e299]: Corner
+          - paragraph [ref=f34e300]: 85'
+        - generic [ref=f34e302]:
+          - paragraph [ref=f34e307]: Shot on target
+          - paragraph [ref=f34e308]: 85'
+        - generic [ref=f34e310]:
+          - paragraph [ref=f34e315]:
+            - text: Substitution
+            - generic [ref=f34e316]: · England
+          - paragraph [ref=f34e317]: 82'
+        - generic [ref=f34e319]:
+          - paragraph [ref=f34e324]:
+            - text: Substitution
+            - generic [ref=f34e325]: · England
+          - paragraph [ref=f34e326]: 82'
+        - generic [ref=f34e328]:
+          - paragraph [ref=f34e333]: Injury concern
+          - paragraph [ref=f34e334]: 81'
+        - generic [ref=f34e336]:
+          - paragraph [ref=f34e341]:
+            - text: Substitution
+            - generic [ref=f34e342]: · Argentina
+          - paragraph [ref=f34e343]: 81'
+        - generic [ref=f34e345]:
+          - paragraph [ref=f34e350]: Shot on target
+          - paragraph [ref=f34e351]: 76'
+        - generic [ref=f34e353]:
+          - paragraph [ref=f34e358]: Off the woodwork!
+          - paragraph [ref=f34e359]: 76'
+        - generic [ref=f34e361]:
+          - paragraph [ref=f34e366]:
+            - text: Substitution
+            - generic [ref=f34e367]: · Argentina
+          - paragraph [ref=f34e368]: 73'
+        - generic [ref=f34e370]:
+          - paragraph [ref=f34e375]:
+            - text: Substitution
+            - generic [ref=f34e376]: · Argentina
+          - paragraph [ref=f34e377]: 73'
+        - generic [ref=f34e379]:
+          - paragraph [ref=f34e384]:
+            - text: Substitution
+            - generic [ref=f34e385]: · Argentina
+          - paragraph [ref=f34e386]: 72'
+        - generic [ref=f34e388]:
+          - paragraph [ref=f34e393]:
+            - text: Substitution
+            - generic [ref=f34e394]: · England
+          - paragraph [ref=f34e395]: 72'
+        - generic [ref=f34e397]:
+          - paragraph [ref=f34e402]: Shot on target
+          - paragraph [ref=f34e403]: 69'
+        - generic [ref=f34e405]:
+          - paragraph [ref=f34e410]: Corner
+          - paragraph [ref=f34e411]: 68'
+        - generic [ref=f34e413]:
+          - paragraph [ref=f34e418]: Corner
+          - paragraph [ref=f34e419]: 67'
+        - generic [ref=f34e421]:
+          - paragraph [ref=f34e426]: Shot on target
+          - paragraph [ref=f34e427]: 66'
+        - generic [ref=f34e429]:
+          - paragraph [ref=f34e434]:
+            - text: Substitution
+            - generic [ref=f34e435]: · Argentina
+          - paragraph [ref=f34e436]: 64'
+        - generic [ref=f34e438]:
+          - paragraph [ref=f34e443]: Corner
+          - paragraph [ref=f34e444]: 57'
+        - generic [ref=f34e446]:
+          - paragraph [ref=f34e451]: Kick-off
+          - paragraph [ref=f34e452]: 57'
+        - generic [ref=f34e454]:
+          - paragraph [ref=f34e459]:
+            - text: GOAL
+            - generic [ref=f34e460]: · England
+          - paragraph [ref=f34e461]: 55'
+  - alert [ref=f34e39]
