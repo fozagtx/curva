@@ -1,93 +1,158 @@
-# Curva — World Cup pools settled by proof
+# Curva
 
-Parimutuel prediction pools for every World Cup match. Stake SOL on the result,
-watch the market breathe in real time, and let **Solana settle the pot** — payouts
-unlock only when TxLINE's Merkle proof of the final score verifies on-chain.
+Parimutuel World Cup prediction pools on Solana, settled trustlessly by cryptographic proof.
 
-Built for the TxODDS **Prediction Markets and Settlement** World Cup track on
-Superteam Earn.
+Fans stake SOL on Home / Draw / Away for any of the 104 World Cup matches. Stakes escrow in a
+program-owned vault, the live win-probability curve streams from TxLINE's consensus odds, and when
+a match finalises, **the pot settles itself**: the settlement instruction hands a Merkle proof of
+the final score to TxODDS's on-chain oracle program, and funds move only if the chain verifies it.
+There is no house, no oracle operator, and no admin key — every claim on the dashboard links to a
+transaction or can be re-verified from your own browser.
 
-## Why this is different
+Built for the TxODDS **Prediction Markets and Settlement** track (World Cup hackathon, Superteam Earn).
 
-Most prediction markets trust an oracle operator or an admin multisig to report
-results. Curva trusts **a cryptographic proof verified by the chain**:
-`settle` CPIs into TxODDS's deployed TxOracle program (`validate_stat`), which
-checks the proof of "P1 goals − P2 goals vs 0" against the daily Merkle root
-TxODDS anchors on Solana. Nobody — including us — can settle a market wrong.
+**Live app:** https://pulse-one-rose.vercel.app · **Program (devnet):** `3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp`
 
-Three on-chain integrity gates in `settle` (see `program/programs/curva/src/lib.rs`):
+## How It Works
 
-1. **Finalisation-only stats** — the proven stats must carry the `period = 100`
-   stamp that TxLINE puts only on `game_finalised` records, so a half-time
-   snapshot can never settle a match that later flipped.
-2. **Post-match proof window** — the proof's own `max_timestamp` (hashed into the
-   commitment, unforgeable) must be at least 105 minutes past kickoff.
-3. **Fixed stat identities** — keys must be exactly P1/P2 total goals so the
-   `Subtract` predicate has one deterministic meaning.
+1. **Open a market**: anyone can open the pool for a fixture — one click, permissionless, one
+   market per fixture (PDA-seeded, deterministic parameters).
+2. **Stake**: pick Home / Draw / Away and stake SOL through your wallet. Lamports escrow in a
+   vault PDA no one controls. Staking closes at kickoff — every position is a public
+   pre-commitment on the ledger before the result exists.
+3. **Watch**: the match screen streams live win probability from TxLINE's StablePrice consensus,
+   a drama meter, and an event ticker. Pool-implied multipliers sit next to the professional
+   market's numbers.
+4. **Settle**: after the final whistle, anyone presses *Settle on Solana*. The app fetches the
+   finalisation Merkle proof from TxLINE and the program CPIs into TxOracle `validate_stat`.
+   The chain checks the proof against the daily scores root TxODDS anchors on-chain; a valid
+   proof locks the outcome, an invalid or non-final proof always fails.
+5. **Claim**: winners split the whole pot pro-rata. Unsettleable markets (abandoned matches)
+   unlock automatic refunds after 72 hours.
 
-## The product
-
-- **Pools** — Home / Draw / Away parimutuel pools per fixture; stakes escrow in a
-  program vault PDA; winners split the whole pot pro-rata; abandoned matches
-  unlock refunds automatically after 72h.
-- **The wave** — live win probability from TxLINE's StablePrice consensus odds,
-  lurching visibly with goals, reds and VAR; pool-implied odds are shown next to
-  the professional market's own numbers.
-- **Verifiable resolution UI** — every settled market shows its receipt: the
-  proven scoreline, the Merkle-root account, and the settle transaction, all
-  linked to the explorer.
-- **Replay** — any finished match re-streams through the same pipeline at
-  30–120x from TxLINE historical data, so the experience is reviewable after
-  the tournament ends.
-
-## How TxLINE powers it
-
-| Feature | TxLINE endpoint |
-|---|---|
-| Match lobby | `GET /api/fixtures/snapshot?competitionId=72` |
-| Live odds → win probability | `GET /api/odds/stream` (SSE), `/api/odds/updates/{fixtureId}`, `/api/odds/snapshot/{fixtureId}` |
-| Live match events | `GET /api/scores/stream` (SSE) |
-| Mid-match catch-up + replay | `GET /api/scores/historical/{fixtureId}` + `/api/odds/updates/{epochDay}/{hourOfDay}/{interval}` |
-| Settlement proofs | `GET /api/scores/stat-validation?fixtureId&seq&statKeys=1,2` |
-| On-chain verification | TxOracle `validate_stat` via CPI (settlement) and read-only view (verify card) |
-| Access | `POST /auth/guest/start` → on-chain `subscribe` (free World Cup tier) → `POST /api/token/activate` |
-
-## Architecture
+## Settlement Integrity
 
 ```
-TxLINE SSE/REST ──► Next.js server (engine: odds→probability, drama, events)
-                    │  /api/live /api/replay /api/matches      (SSE relay)
-                    │  /api/settle-proof  (proof shaped as ix args)
-                    ▼
-             Browser (wave, pools, Phantom)
-                    │ stake / settle / claim
-                    ▼
-        curva (Anchor, devnet) ── CPI ──► TxOracle validate_stat
-                    │                                   │
-                vault PDA                    daily_scores_roots PDA
+outcome predicate:  (P1 goals − P2 goals)  {>, =, <}  0     — judged by TxOracle on-chain
 ```
 
-## Run it
+Three gates in `settle` make wrong settlement impossible rather than unlikely:
+
+| Gate | Mechanism |
+|------|-----------|
+| Finalisation-only | Proven stats must carry `period = 100`, stamped by TxLINE only on `game_finalised` records — a half-time snapshot can never settle a match that later flipped |
+| Post-match window | The proof's own `max_timestamp` (hashed into the Merkle commitment, unforgeable) must be ≥ 105 minutes after kickoff |
+| Fixed stat identities | Stat keys must be exactly P1/P2 total goals, so the subtraction has one deterministic meaning |
+
+Full walkthrough: [docs/TECHNICAL.md](docs/TECHNICAL.md)
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Program | Anchor 0.32 (Rust), Solana devnet, CPI into TxOracle `validate_stat` |
+| Frontend | Next.js 16, React 19, HeroUI v2, Tailwind v4 |
+| Server | Next.js route handlers (SSE relay, proof shaping, chain reads) |
+| Data | TxLINE (fixtures, StablePrice odds SSE, scores SSE, historical, stat-validation proofs) |
+| Wallet | Phantom (`signAndSendTransaction`) |
+
+## Screenshots
+
+### Lobby
+![Lobby with live, upcoming and finished World Cup matches](docs/screenshots/lobby.png)
+
+### Market — the World Cup final
+![1X2 odds selector with live consensus percentages and stake controls](docs/screenshots/market.png)
+
+### The wave — a real semifinal's market story
+![Win probability curve for England vs Argentina with goal markers and recap](docs/screenshots/wave.png)
+
+### Trustless resolution receipt
+![Settled market with proven score, Merkle root link and in-browser verification](docs/screenshots/receipt.png)
+
+## Quick Start
+
+Prerequisites: Node 18+, pnpm, Solana CLI + Anchor 0.32 (program only), a little devnet SOL.
 
 ```bash
 pnpm install
 
-# one-time: devnet wallet -> on-chain TxLINE subscribe (free tier) -> API token
+# one-time: devnet wallet -> on-chain TxLINE subscribe (free World Cup tier) -> API token
 pnpm tsx scripts/txline-setup.ts
 
-# program (requires solana + anchor toolchains and devnet SOL)
+# program (already deployed; rebuild/redeploy only if you change it)
 cd program && anchor build && anchor deploy && cd ..
 
-# end-to-end settlement rehearsal on a real finished fixture
+# end-to-end settlement rehearsal against a real finished fixture
 pnpm tsx scripts/settlement-e2e.ts
 
 pnpm dev
 ```
 
-## Stack
+`scripts/txline-setup.ts` writes `.env.local` with the TxLINE API token; credentials stay
+server-side — the browser never talks to TxLINE directly.
 
-Next.js 16 · HeroUI v2 · Tailwind v4 · Anchor 0.32 (Rust) · TxLINE devnet ·
-Solana web3.js · Phantom
+## Key Features
 
-> Curva: the terrace where football's most devoted fans stand — and the curve
-> of live win probability this product is built around.
+- **Trustless parimutuel pools**: vault PDA escrow, pro-rata payouts, automatic refunds for
+  abandoned matches. No admin can move funds or decide outcomes.
+- **Proof-based settlement**: permissionless `settle` that CPIs into TxODDS's oracle program —
+  proven live on devnet against the real England vs Argentina semifinal
+  ([settle tx](https://explorer.solana.com/tx/4VwkVQmmB1McxjUivcpp6icEGPicAoo8oZWBYkYEmfNfqGKmM9aKq9uw2FRSieLPV2T6dwDwWTDG8zMQrNWU8trN?cluster=devnet)).
+- **The wave**: live win-probability curve from TxLINE StablePrice consensus, lurching with
+  goals, reds and VAR in real time; drama meter and event ticker beside it.
+- **Verifiable resolution UI**: every settled market shows the proven score, the Merkle-root
+  account and the settle transaction, linked to the explorer.
+- **"Don't trust us" verification**: one click re-runs the proof check from *your own browser*
+  against devnet — our servers never touch the verdict.
+- **Replay engine**: any finished match re-streams through the identical pipeline at 30–120x
+  from TxLINE historical data, so the product stays fully reviewable after the tournament.
+- **Live catch-up**: joining mid-match replays the full history first — the wave always shows
+  the whole story.
+
+## API
+
+| Route | Purpose |
+|-------|---------|
+| `GET /api/matches` | All World Cup fixtures (live / upcoming / finished) |
+| `GET /api/live/[fixtureId]` | SSE: catch-up + live relay of normalized match events |
+| `GET /api/replay/[fixtureId]?speed=60` | SSE: historical re-stream through the same engine |
+| `GET /api/market/[fixtureId]?owner=` | Market account + caller's positions (server-side chain read) |
+| `GET /api/settle-proof/[fixtureId]` | Finalisation Merkle proof shaped as `settle` instruction args |
+| `GET /api/verify/[fixtureId]` | Server-side read-only `validate_stat` check |
+
+Program instructions: `create_market`, `stake`, `settle`, `claim` — see
+[program/programs/curva/src/lib.rs](program/programs/curva/src/lib.rs).
+
+## Project Structure
+
+```
+curva/
+├── program/                    # Anchor workspace
+│   ├── programs/curva/         # Settlement program (4 instructions, 3 integrity gates)
+│   └── idls/txoracle.json      # TxOracle IDL for declare_program! CPI bindings
+├── src/
+│   ├── app/                    # Next.js pages + API routes (live, replay, market, proofs)
+│   ├── components/             # Match screen, market card, wave, ticker, verify card
+│   └── lib/
+│       ├── engine/             # Odds→probability, drama meter, event mapper, reducer
+│       ├── markets/            # Program client, browser-side proof verification
+│       └── txline/             # Auth, REST+SSE client, feed normalization
+├── scripts/
+│   ├── txline-setup.ts         # Wallet -> on-chain subscribe -> API token
+│   ├── open-market.ts          # Open a market (+ optional stakes) for a fixture
+│   └── settlement-e2e.ts       # Full settlement rehearsal on a real fixture
+└── docs/                       # Technical doc, API feedback, demo plan, screenshots
+```
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Technical Overview](docs/TECHNICAL.md) | Architecture, settlement design, on-chain receipts, TxLINE endpoints used |
+| [TxLINE Feedback](docs/FEEDBACK.md) | Honest builder feedback: what we loved, where we hit friction |
+| [Demo Plan](docs/DEMO.md) | Demo video shot list and submission checklist |
+
+## License
+
+MIT

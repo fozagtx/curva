@@ -1,0 +1,16 @@
+- generic [active] [ref=f37e1]:
+  - main [ref=f37e3]:
+    - generic [ref=f37e4]:
+      - generic [ref=f37e5]:
+        - button "Back to matches" [ref=f37e6] [cursor=pointer]
+        - link [ref=f37e9] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f37e14]:
+            - paragraph [ref=f37e15]: Curva
+            - paragraph [ref=f37e16]: Where conviction meets the curve
+      - button "Connect wallet" [ref=f37e17] [cursor=pointer]
+    - paragraph [ref=f37e31]: Connecting to the live feed…
+    - generic [ref=f37e32]:
+      - heading "As it happened" [level=2] [ref=f37e33]
+      - paragraph [ref=f37e39]: Match events will land here the second they happen.
+  - alert [ref=f37e40]
