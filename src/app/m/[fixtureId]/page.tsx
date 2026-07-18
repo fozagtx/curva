@@ -12,6 +12,7 @@ import EventTicker from "@/components/event-ticker";
 import MarketCard from "@/components/market-card";
 import VerifyCard from "@/components/verify-card";
 import RecapCard from "@/components/recap-card";
+import ActivityFeed from "@/components/activity-feed";
 import { usePulse } from "@/lib/usePulse";
 
 const REPLAY_SPEEDS = [30, 60, 120] as const;
@@ -120,6 +121,8 @@ export default function MatchPage({
       ) : null}
 
       <VerifyCard meta={pulse.meta} />
+
+      <ActivityFeed meta={pulse.meta} />
 
       <section className="flex flex-col gap-2">
         <h2 className="text-small font-medium uppercase tracking-wide text-default-400">

@@ -73,6 +73,12 @@ export default function MarketCard({ meta, probs, phase }: Props) {
     try {
       const sig = await fn();
       setLastTx(sig);
+      // report to the receipts feed; server verifies on-chain before recording
+      fetch("/api/activity", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ txSig: sig }),
+      }).catch(() => { /* feed is best-effort */ });
       await refresh();
     } catch (err) {
       const msg = String(err instanceof Error ? err.message : err);

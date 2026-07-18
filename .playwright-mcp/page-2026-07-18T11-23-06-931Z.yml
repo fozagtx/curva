@@ -1,0 +1,27 @@
+- generic [active] [ref=f48e1]:
+  - main [ref=f48e3]:
+    - generic [ref=f48e4]:
+      - link [ref=f48e6] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f48e11]:
+          - paragraph [ref=f48e12]: Curva
+          - paragraph [ref=f48e13]: Where conviction meets the curve
+      - button "Connect wallet" [ref=f48e14] [cursor=pointer]
+    - generic [ref=f48e19]:
+      - generic [ref=f48e20]: Checking pitches…
+      - generic [ref=f48e23]: World Cup 2026
+      - generic [ref=f48e28]: Verified on Solana
+    - generic [ref=f48e32]:
+      - heading "Stake on the match. Let Solana settle it." [level=1] [ref=f48e33]
+      - paragraph [ref=f48e34]: There is no house and no oracle operator here. Your stake is a public commitment on Solana before the result exists, and payouts unlock only when the chain itself verifies a proof of the final score.
+    - generic [ref=f48e36]:
+      - generic [ref=f48e44]:
+        - paragraph [ref=f48e45]: Trustless pools
+        - paragraph [ref=f48e46]: Stake SOL on any match. The pot sits in a vault no one controls.
+      - generic [ref=f48e53]:
+        - paragraph [ref=f48e54]: The market, live
+        - paragraph [ref=f48e55]: Live win probability from TxLINE consensus odds, lurching with every goal.
+      - generic [ref=f48e62]:
+        - paragraph [ref=f48e63]: Don't trust us
+        - paragraph [ref=f48e64]: "Every claim is checkable: verify any result from your own browser."
+  - alert [ref=f48e65]
