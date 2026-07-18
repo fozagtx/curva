@@ -13,7 +13,10 @@ transaction or can be re-verified from your own browser.
 
 Built for the TxODDS **Prediction Markets and Settlement** track (World Cup hackathon, Superteam Earn).
 
-**Live app:** https://getkryva.vercel.app · **Program (devnet):** `3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp`
+**No house. Fully verifiable. Pro-rata payouts + auto-refunds.** Settlement is gated on-chain by three integrity checks: finalisation-only (`period = 100`), post-match proof window (≥ 105 min after kickoff), and fixed P1/P2 goal stat IDs.
+
+**Live app:** https://getkryva.vercel.app · **Program (devnet):** `3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp`  
+**Mainnet path:** same program + CPI; redeploy Anchor binary, point RPC/TxLINE at mainnet (see [docs/TECHNICAL.md](docs/TECHNICAL.md#mainnet-path)).
 
 ## How It Works
 
@@ -147,11 +150,22 @@ curva/
 └── docs/                       # Technical doc, API feedback, demo plan, screenshots
 ```
 
+## Tests & robustness
+
+No separate Jest suite yet — correctness is proven against **live World Cup data** on devnet:
+
+- `pnpm tsx scripts/settlement-e2e.ts [fixtureId]` — full proof → CPI `validate_stat` → settled market
+- `pnpm tsx scripts/open-market.ts` — permissionless market open (+ optional stakes)
+- Browser **Verify** card re-runs `validate_stat` client-side (don’t trust our server)
+- Replay any finished fixture via `/api/replay/[fixtureId]` through the same engine as live
+
+Details + mainnet path: [docs/TECHNICAL.md](docs/TECHNICAL.md#tests--robustness).
+
 ## Documentation
 
 | Document | Description |
 |----------|-------------|
-| [Technical Overview](docs/TECHNICAL.md) | Architecture, settlement design, on-chain receipts, TxLINE endpoints used |
+| [Technical Overview](docs/TECHNICAL.md) | Architecture, settlement design, on-chain receipts, TxLINE + app endpoints |
 | [TxLINE Feedback](docs/FEEDBACK.md) | Honest builder feedback: what we loved, where we hit friction |
 | [Demo Plan](docs/DEMO.md) | Demo video shot list and submission checklist |
 
@@ -174,16 +188,20 @@ Ready answers for the Superteam Earn **World Cup / TxODDS** form. Social / X fie
 ### Briefly explain your Project
 
 ```
-Kryva is a parimutuel World Cup 1X2 prediction market on Solana where settlement is a cryptographic proof, not a house call.
+Kryva is a trustless parimutuel World Cup 1X2 prediction market on Solana — no house, fully verifiable, pro-rata payouts + auto-refunds.
 
-Fans stake SOL on Home / Draw / Away. Stakes escrow in a program-owned vault. Live win probability streams from TxLINE StablePrice consensus. When a match finalises, anyone can settle: the program CPIs into TxODDS’s on-chain TxOracle validate_stat with a TxLINE finalisation Merkle proof. Funds unlock only if the chain verifies the proof — no oracle operator, no admin key.
+Fans stake SOL on Home / Draw / Away into a program-owned vault. Live win probability streams from TxLINE StablePrice SSE. After finalisation, anyone settles via CPI into TxODDS TxOracle validate_stat with a TxLINE Merkle proof. Three on-chain integrity gates make wrong settlement impossible: finalisation-only (period=100), post-match proof window, fixed P1/P2 goal stat IDs. The UI re-verifies the proof in the browser; finished matches replay through the same engine.
 
-Built for the TxODDS Prediction Markets and Settlement track. Proven on devnet against a real World Cup semifinal (England vs Argentina).
+Built for the TxODDS Prediction Markets and Settlement track (experimental verification layer + permissionless results validation + custom on-chain settlement). Proven on devnet against England vs Argentina. Mainnet path = redeploy same program + switch RPC/TxLINE — no settlement redesign.
 ```
 
 ### TxLINE API experience (paste into form)
 
 ```
+Endpoints we use (TxLINE): auth/guest/start + on-chain subscribe + token/activate; fixtures/snapshot; odds/stream + odds/updates + odds/snapshot; scores/stream + scores/historical + scores/updates; scores/stat-validation (settlement proofs); TxOracle validate_stat via CPI + .view().
+
+Our MVP routes: /api/matches, /api/live/[fixtureId], /api/replay/[fixtureId], /api/settle-proof/[fixtureId], /api/market/[fixtureId], /api/verify/[fixtureId].
+
 Liked most:
 - Pct on TXLineStablePriceDemargined (1X2_PARTICIPANT_RESULT) — clean implied probs, no de-vig math.
 - Finalisation design (game_finalised / period=100) — unforgeable on-chain gate against early-proof attacks.
@@ -210,6 +228,14 @@ Tech doc: https://github.com/fozagtx/curva/blob/main/docs/TECHNICAL.md
 Program (devnet): 3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp
 England vs Argentina settle tx: https://explorer.solana.com/tx/4VwkVQmmB1McxjUivcpp6icEGPicAoo8oZWBYkYEmfNfqGKmM9aKq9uw2FRSieLPV2T6dwDwWTDG8zMQrNWU8trN?cluster=devnet
 Settled market account: https://explorer.solana.com/address/955uZjkKK4EqnmUFfVtHgWDqr85Wa1GouvMD9cQmgqV1?cluster=devnet
+
+Trustless pitch for judges:
+- No house / no admin key — vault PDA escrow, permissionless settle + claim
+- Pro-rata winner payouts; auto-refunds if abandoned (72h) or empty winning side
+- 3 integrity gates: finalisation-only · post-match window · fixed stat IDs
+- Client-side proof re-verification + replay engine for any finished fixture
+- Robustness: scripts/settlement-e2e.ts against real World Cup fixtures (not mock data)
+- Mainnet path documented — same CPI settlement, redeploy + RPC/TxLINE switch
 ```
 
 ## License

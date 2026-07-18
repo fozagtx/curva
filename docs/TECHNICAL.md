@@ -7,12 +7,21 @@
 ## Core idea
 
 Parimutuel prediction pools for every World Cup match where **settlement is a
-cryptographic proof, not a promise**. Stakes escrow in a program vault PDA on
-Solana devnet. When TxLINE finalises a match, anyone can trigger `settle`: our
-program CPIs into TxODDS's deployed TxOracle program (`validate_stat`), which
-verifies a Merkle proof of the final goal counts against the daily scores root
-TxODDS anchors on-chain. Only if the chain verifies the proof do funds unlock.
-No oracle operator, no admin key, no trust in us.
+cryptographic proof, not a promise**.
+
+**No house. Fully verifiable. Pro-rata payouts + auto-refunds.** Stakes escrow
+in a program vault PDA. When TxLINE finalises a match, anyone can trigger
+`settle`: our program CPIs into TxODDS's deployed TxOracle program
+(`validate_stat`), which verifies a Merkle proof of the final goal counts
+against the daily scores root TxODDS anchors on-chain. Only if the chain
+verifies the proof do funds unlock — no oracle operator, no admin key, no
+trust in us. Wrong settlement is blocked by three on-chain integrity gates
+(finalisation-only / post-match window / fixed stat IDs).
+
+Hackathon deploy is **Solana devnet** (allowed). Mainnet path is unchanged
+program logic: redeploy the Anchor program, point the client at a mainnet
+RPC + TxLINE mainnet subscription, keep the same CPI into TxOracle
+`validate_stat`.
 
 ## Receipts (all on devnet, all real World Cup data)
 
@@ -72,7 +81,7 @@ TxLINE SSE/REST ──► Next.js server (odds→probability engine, drama, even
 - **Live catch-up**: joining mid-match replays the full history first, so the
   wave always shows the whole story.
 
-## TxLINE endpoints used
+## TxLINE endpoints used (upstream)
 
 | Purpose | Endpoint |
 |---|---|
@@ -82,6 +91,44 @@ TxLINE SSE/REST ──► Next.js server (odds→probability engine, drama, even
 | Scores | `GET /api/scores/stream` (SSE), `GET /api/scores/historical/{fixtureId}`, `GET /api/scores/updates/{fixtureId}` |
 | Settlement proofs | `GET /api/scores/stat-validation?fixtureId&seq&statKeys=1,2` |
 | On-chain | TxOracle `validate_stat` — via CPI (settlement) and read-only `.view()` (verify card) |
+
+## Kryva app routes (what the MVP exposes)
+
+| Route | Role in the settlement loop |
+|---|---|
+| `GET /api/matches` | World Cup fixtures + market badges (lobby) |
+| `GET /api/live/[fixtureId]` | SSE: catch-up + live TxLINE odds/scores → win-prob wave |
+| `GET /api/replay/[fixtureId]?speed=` | SSE: same engine at 30–120× for finished matches |
+| `GET /api/settle-proof/[fixtureId]` | Shapes TxLINE finalisation proof as `settle` ix args |
+| `GET /api/market/[fixtureId]` | On-chain market + positions |
+| `GET /api/verify/[fixtureId]` | Server read-only `validate_stat` check (UI also re-verifies in-browser) |
+| `GET /api/portfolio` · `GET /api/stats` · `GET/POST /api/activity` | Hub / FOMO / verified activity |
+
+Honest builder notes on SSE, schema friction, and proofs: [FEEDBACK.md](FEEDBACK.md).
+
+## Tests & robustness
+
+Automated unit/integration suite is not the primary gate for this hackathon
+build. Robustness is exercised end-to-end against **real World Cup fixtures**:
+
+| Check | How |
+|---|---|
+| Full settle path | `pnpm tsx scripts/settlement-e2e.ts [fixtureId]` — fetch proof → CPI `validate_stat` → market settled on-chain |
+| Market open + stake | `pnpm tsx scripts/open-market.ts` |
+| Live/replay pipeline | `/api/live` + `/api/replay` against TxLINE historical + SSE |
+| Proof integrity | On-chain gates (period 100 / post-match window / fixed stat keys) + browser re-verify card |
+| Receipt | England vs Argentina settle tx on explorer (see Receipts above) |
+
+Program math uses checked `u128` pro-rata splits; empty winning side and
+abandoned markets (72h) unlock refunds without an admin.
+
+## Mainnet path
+
+1. `anchor build && anchor deploy` against mainnet (new program id).
+2. Swap RPC + update client IDL / program id constants.
+3. TxLINE: mainnet `subscribe` + token activate (same auth flow as
+   `scripts/txline-setup.ts`).
+4. No settlement redesign — CPI target and the three gates stay identical.
 
 ## Business highlights
 
