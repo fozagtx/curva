@@ -1,4 +1,4 @@
-# Kryva UX Profile — TikTok × SportyBet Prediction Market
+# Kryva UX Profile - TikTok × SportyBet Prediction Market
 
 > If TikTok and SportyBet shipped a World Cup prediction market settled on Solana, this is how it feels.
 
@@ -9,8 +9,8 @@
 ## User
 
 - Phone in hand, match night energy
-- Knows 1X2 (Home / Draw / Away) — does not know Merkle proofs
-- Will swipe 8 matches in 30 seconds; will only open 1–2
+- Knows 1X2 (Home / Draw / Away) - does not know Merkle proofs
+- Will swipe 8 matches in 30 seconds; will only open 1-2
 - Trusts green odds buttons more than whitepapers
 
 ## Product rules
@@ -18,10 +18,10 @@
 1. **Dense sportsbook, not TikTok wallpaper.** Compact lists + one featured card; never full-viewport empty slides.
 2. **Odds first.** 1X2 tiles are the hero; wallet/proof are secondary.
 3. **Thumb zone.** Primary CTA is bottom-center, full width, green.
-4. **White by default.** Bright sportsbook light — dark is opt-in later, not the brand.
-5. **Two lanes, labeled.** Real SOL stake vs risk-free Kryva Calls — never mix copy.
+4. **White by default.** Bright sportsbook light - dark is opt-in later, not the brand.
+5. **Two lanes, labeled.** Real SOL stake vs risk-free Kryva Calls - never mix copy.
 6. **Proof is a receipt, not a lecture.** Show verify after they care about the pot.
-7. **FOMO is real data.** Countdown to kick-off, “just staked” from on-chain activity, hottest pool — never fake user counts.
+7. **FOMO is real data.** Countdown to kick-off, “just staked” from on-chain activity, hottest pool - never fake user counts.
 
 ## FOMO layer
 
@@ -31,7 +31,7 @@
 | “LOCKS Mm:Ss” | < 30 min to KO | Red solid chip + pulsing CTA |
 | Social ticker | Recent stake/create txs | Intro + per-match feed |
 | Hottest pool | Largest SOL vault in feed | Fire badge |
-| Urgency CTA copy | hot / closing | “Get in before kick-off” / “Stake now — closing” |
+| Urgency CTA copy | hot / closing | “Get in before kick-off” / “Stake now - closing” |
 
 ## Session loop
 
@@ -57,7 +57,7 @@ Swipe feed → tap 1X2 / Open → stake SOL → (optional) Call Higher/Lower
 - **Accent:** SportyBet-adjacent green `#16A34A` (primary CTA)
 - **Away accent:** sky `#0EA5E9` for team 2 only
 - **Live:** red pulse chip, not red backgrounds
-- **Type:** IBM Plex Sans / Mono — bold prices, quiet labels
+- **Type:** IBM Plex Sans / Mono - bold prices, quiet labels
 - **Cards:** light gray borders, almost no shadow; odds tiles are the “cards”
 
 ## Copy voice
