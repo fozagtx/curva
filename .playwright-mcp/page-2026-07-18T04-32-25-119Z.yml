@@ -1,0 +1,16 @@
+- generic [active] [ref=f27e1]:
+  - main [ref=f27e3]:
+    - generic [ref=f27e4]:
+      - generic [ref=f27e5]:
+        - button "Back to matches" [ref=f27e6] [cursor=pointer]
+        - link [ref=f27e7] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f27e9]:
+            - paragraph [ref=f27e10]: Curva
+            - paragraph [ref=f27e11]: Where conviction meets the curve
+      - button "Connect wallet" [ref=f27e12] [cursor=pointer]
+    - paragraph [ref=f27e17]: Connecting to the live feed…
+    - generic [ref=f27e18]:
+      - heading "As it happened" [level=2] [ref=f27e19]
+      - paragraph [ref=f27e22]: Match events will land here the second they happen.
+  - button "Open Next.js Dev Tools" [ref=f27e28] [cursor=pointer]

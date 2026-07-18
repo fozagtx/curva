@@ -67,9 +67,9 @@ export default function Lobby() {
           Stake on the match. Let Solana settle it.
         </h1>
         <p className="text-medium text-default-500">
-          Curva runs a prediction pool for every World Cup game — live win
-          probability from consensus odds, and payouts unlocked by cryptographic
-          proof of the final score, not by anyone&apos;s say-so.
+          There is no house and no oracle operator here. Your stake is a public
+          commitment on Solana before the result exists, and payouts unlock only
+          when the chain itself verifies a proof of the final score.
         </p>
       </div>
 
@@ -87,9 +87,9 @@ export default function Lobby() {
           title="The market, live"
         />
         <ActionCard
-          description="Settlement is a Merkle proof verified by Solana itself — no oracle to trust."
+          description="Every claim is checkable: verify any result from your own browser."
           icon="solar:shield-check-bold-duotone"
-          title="Proof-settled"
+          title="Don't trust us"
         />
       </div>
 
