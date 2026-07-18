@@ -1,0 +1,14 @@
+- main [ref=f16e3]:
+  - generic [ref=f16e4]:
+    - generic [ref=f16e5]:
+      - button "Back to matches" [ref=f16e6] [cursor=pointer]
+      - link [ref=f16e7] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f16e9]:
+          - paragraph [ref=f16e10]: Pulse
+          - paragraph [ref=f16e11]: Feel the World Cup
+    - button "Connect wallet" [ref=f16e12] [cursor=pointer]
+  - paragraph [ref=f16e17]: Connecting to the live feed…
+  - generic [ref=f16e18]:
+    - heading "As it happened" [level=2] [ref=f16e19]
+    - paragraph [ref=f16e22]: Match events will land here the second they happen.

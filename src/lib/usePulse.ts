@@ -67,6 +67,10 @@ function reducer(state: PulseState, action: Action): PulseState {
           return { ...state, probs, drama: ev.drama };
         }
         case "match": {
+          const key = `${ev.ev.id}:${ev.ev.kind}:${ev.ev.label}`;
+          if (state.events.some((e) => `${e.id}:${e.kind}:${e.label}` === key)) {
+            return { ...state, drama: Math.max(state.drama, ev.drama) };
+          }
           const events = [ev.ev, ...state.events].slice(0, 200);
           return { ...state, events, drama: Math.max(state.drama, ev.drama) };
         }
