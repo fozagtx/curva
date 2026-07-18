@@ -19,6 +19,10 @@ export const metadata: Metadata = {
   title: "Kryva: World Cup pools settled by proof",
   description:
     "Kryva runs a parimutuel pool for every World Cup match: live consensus odds, and payouts settled trustlessly on Solana by TxLINE Merkle proofs.",
+  icons: {
+    icon: [{ url: "/favicon.ico" }, { url: "/icon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-icon.png" }],
+  },
 };
 
 export const viewport: Viewport = {
