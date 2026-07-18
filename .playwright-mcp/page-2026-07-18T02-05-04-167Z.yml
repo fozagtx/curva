@@ -1,0 +1,50 @@
+- generic:
+  - generic:
+    - main:
+      - generic:
+        - list
+        - generic:
+          - generic:
+            - heading [level=3]:
+              - generic:
+                - generic: Request Airdrop
+                - combobox
+            - paragraph: Maximum of 2 requests every 8 hours
+          - generic:
+            - textbox:
+              - /placeholder: Wallet Address
+              - text: 3MTbC3TnVgCeMMmzqwm1GqAopVQ7DLBqVfV4bY8XdXsU
+            - button: 0.5 SOL
+          - generic:
+            - generic:
+              - button: Confirm Airdrop
+      - generic:
+        - generic:
+          - generic:
+            - heading [level=3]:
+              - generic: Unlock a Higher Airdrop Limit
+            - paragraph: Sign in with your GitHub account to unlock a higher airdrop limit
+          - generic:
+            - button: Connect your GitHub
+            - generic:
+              - paragraph:
+                - text: This faucet is built for developers. GitHub accounts are validated to ensure fair usage — some accounts may not pass verification. For other ways to get devnet SOL, check out the
+                - link:
+                  - /url: https://solana.com/de/developers/guides/getstarted/solana-token-airdrop-and-faucets
+                  - text: full guide
+        - group:
+          - generic: I am an AI Agent
+  - generic:
+    - paragraph: This tool is designed for development purposes and does not distribute mainnet SOL.
+    - paragraph:
+      - text: Operated by the
+      - link:
+        - /url: https://solana.org
+        - text: Solana Foundation
+      - text: .
+  - alert
+  - dialog [ref=e66]:
+    - generic [ref=e67]:
+      - heading "Cloudflare Verification" [level=2] [ref=e68]
+      - paragraph [ref=e69]: Please complete the captcha to confirm your airdrop request.
+    - button "Close" [active] [ref=e72] [cursor=pointer]

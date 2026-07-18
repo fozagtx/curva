@@ -1,0 +1,46 @@
+- generic [ref=e1]:
+  - img "Solana Logo" [ref=e3]
+  - main [ref=e5]:
+    - generic [ref=e6]:
+      - region "Notifications (F8)":
+        - list
+      - generic [ref=e7]:
+        - generic [ref=e8]:
+          - heading "Request Airdrop devnet" [level=3] [ref=e9]:
+            - generic [ref=e10]:
+              - generic [ref=e11]: Request Airdrop
+              - combobox [ref=e12] [cursor=pointer]:
+                - option "devnet" [selected]
+                - option "testnet"
+          - paragraph [ref=e13]: Maximum of 2 requests every 8 hours
+        - generic [ref=e14]:
+          - textbox "Wallet Address" [ref=e15]: 3MTbC3TnVgCeMMmzqwm1GqAopVQ7DLBqVfV4bY8XdXsU
+          - button "Amount" [expanded] [ref=e16] [cursor=pointer]
+        - generic [ref=e18]:
+          - button "Confirm Airdrop" [disabled]
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - generic [ref=e21]:
+          - heading "Unlock a Higher Airdrop Limit" [level=3] [ref=e22]
+          - paragraph [ref=e24]: Sign in with your GitHub account to unlock a higher airdrop limit
+        - generic [ref=e25]:
+          - button "Connect your GitHub" [ref=e26] [cursor=pointer]
+          - paragraph [ref=e33]:
+            - text: This faucet is built for developers. GitHub accounts are validated to ensure fair usage — some accounts may not pass verification. For other ways to get devnet SOL, check out the
+            - link "full guide" [ref=e34] [cursor=pointer]:
+              - /url: https://solana.com/de/developers/guides/getstarted/solana-token-airdrop-and-faucets
+      - group [ref=e39]:
+        - generic "I am an AI Agent" [ref=e40] [cursor=pointer]
+  - generic [ref=e47]:
+    - paragraph [ref=e48]: This tool is designed for development purposes and does not distribute mainnet SOL.
+    - paragraph [ref=e49]:
+      - text: Operated by the
+      - link "Solana Foundation" [ref=e50] [cursor=pointer]:
+        - /url: https://solana.org
+      - text: .
+  - alert [ref=e51]
+  - dialog [ref=e53]:
+    - button "0.5" [active] [ref=e54] [cursor=pointer]
+    - button "1" [ref=e55] [cursor=pointer]
+    - button "2.5" [ref=e56] [cursor=pointer]
+    - button "5" [ref=e57] [cursor=pointer]
