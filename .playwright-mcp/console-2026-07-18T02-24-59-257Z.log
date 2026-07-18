@@ -3,3 +3,9 @@
 [     156ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3457/api/matches:0
 [     225ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
 [     834ms] [LOG] [Fast Refresh] done in 710ms @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[   92850ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[   93035ms] [LOG] [Fast Refresh] done in 74ms @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[   93151ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[   93195ms] [LOG] [Fast Refresh] done in 144ms @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  121320ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477
+[  121401ms] [LOG] [Fast Refresh] done in 78ms @ http://localhost:3457/_next/static/chunks/0qd5_next_dist_17cz2di._.js:2477

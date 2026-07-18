@@ -10,6 +10,7 @@ import ScoreHeader from "@/components/score-header";
 import ProbWave from "@/components/prob-wave";
 import PulseCall from "@/components/pulse-call";
 import EventTicker from "@/components/event-ticker";
+import VerifyCard from "@/components/verify-card";
 import { usePulse } from "@/lib/usePulse";
 import { usePulseGame } from "@/lib/game";
 import { useWallet } from "@/lib/wallet";
@@ -117,6 +118,8 @@ export default function MatchPage({
       />
 
       <PulseCall gameApi={gameApi} meta={pulse.meta} phase={pulse.phase} probs={pulse.probs} />
+
+      <VerifyCard meta={pulse.meta} />
 
       <section className="flex flex-col gap-2">
         <h2 className="text-small font-medium uppercase tracking-wide text-default-400">
