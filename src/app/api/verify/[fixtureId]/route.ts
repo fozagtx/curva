@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- anchor's IDL-driven API */
 // On-chain verification: fetch a Merkle proof for the fixture's goal stats from
 // TxLINE and run the TxOracle program's validateStat as a read-only view against
 // the daily_scores_roots PDA on Solana devnet. No wallet or gas required —

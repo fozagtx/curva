@@ -30,6 +30,7 @@ export function useWallet() {
   useEffect(() => {
     const provider = getProvider();
     if (!provider) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- provider detection on mount
     setAvailable(true);
     provider
       .connect({ onlyIfTrusted: true })

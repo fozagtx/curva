@@ -123,7 +123,7 @@ export async function* streamSse(
       if (!res.ok || !res.body) {
         throw new Error(`SSE ${pathname} -> ${res.status}`);
       }
-    } catch (err) {
+    } catch {
       if (signal.aborted) return;
       attempt += 1;
       await sleep(Math.min(1000 * 2 ** attempt, 15000), signal);

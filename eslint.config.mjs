@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // one-time onboarding script, not app code
+    "scripts/**",
   ]),
 ]);
 

@@ -31,15 +31,15 @@ export default function Lobby() {
     };
   }, []);
 
+  const [now] = useState(() => Date.now());
   const groups = useMemo(() => {
     if (!matches) return null;
-    const now = Date.now();
     const by: Record<MatchStatus, FixtureMeta[]> = { live: [], upcoming: [], finished: [] };
     for (const m of matches) by[inferStatus(m, now)].push(m);
     by.upcoming.sort((a, b) => a.startTime - b.startTime);
     by.finished.sort((a, b) => b.startTime - a.startTime);
     return by;
-  }, [matches]);
+  }, [matches, now]);
 
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-10">

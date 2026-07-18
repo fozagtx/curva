@@ -14,7 +14,7 @@ import type { OddsPayload, ScoresRecord } from "@/lib/txline/types";
 import { MatchEngine, encodeSse, fixtureMeta, type PulseEvent } from "@/lib/engine/state";
 
 export const dynamic = "force-dynamic";
-export const maxDuration = 800;
+export const maxDuration = 300;
 
 interface TimelineItem {
   ts: number;

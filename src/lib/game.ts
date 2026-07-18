@@ -95,6 +95,7 @@ export function usePulseGame(
   const cooldownUntil = useRef(0);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate once from localStorage
     setGame(loadGame(identity));
   }, [identity]);
 
@@ -107,6 +108,7 @@ export function usePulseGame(
     const ha = homeAwayProbs(meta, latest.probs);
     const prob1 = activeCall.team === "home" ? ha.home : ha.away;
     const resolved = scoreCall(activeCall, prob1);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- resolving against stream time
     setActiveCall(null);
     setLastResolved(resolved);
     cooldownUntil.current = latest.ts + CALL_COOLDOWN_MS;
