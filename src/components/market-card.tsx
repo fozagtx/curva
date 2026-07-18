@@ -133,8 +133,8 @@ export default function MarketCard({ meta, probs, phase }: Props) {
           </Chip>
         </div>
 
-        {/* Pools */}
-        {market ? (
+        {/* Pool distribution (once money is in, or after settlement) */}
+        {market && (total > 0 || market.settled) ? (
           <div className="flex flex-col gap-2">
             {displaySides.map(({ side: s, name }) => {
               const pool = market.pools[s];
