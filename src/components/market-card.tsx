@@ -39,6 +39,12 @@ export default function MarketCard({ meta, probs, phase }: Props) {
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [lastTx, setLastTx] = useState<string | null>(null);
+  const [stakeReceipt, setStakeReceipt] = useState<{
+    sideName: string;
+    amount: number;
+    txSig: string;
+  } | null>(null);
+  const [shareCopied, setShareCopied] = useState(false);
   const [side, setSide] = useState<MarketSide>(0);
   const [amount, setAmount] = useState<number>(0.05);
 
@@ -67,12 +73,20 @@ export default function MarketCard({ meta, probs, phase }: Props) {
     return () => clearInterval(t);
   }, [refresh]);
 
-  const run = async (label: string, fn: () => Promise<string>) => {
+  const run = async (
+    label: string,
+    fn: () => Promise<string>,
+    receipt?: { sideName: string; amount: number },
+  ) => {
     setBusy(label);
     setError(null);
     try {
       const sig = await fn();
       setLastTx(sig);
+      if (label === "stake" && receipt) {
+        setStakeReceipt({ ...receipt, txSig: sig });
+        setShareCopied(false);
+      }
       // report to the receipts feed; server verifies on-chain before recording
       fetch("/api/activity", {
         method: "POST",
@@ -85,6 +99,33 @@ export default function MarketCard({ meta, probs, phase }: Props) {
       setError(msg.includes("User rejected") ? "Transaction cancelled." : msg.slice(0, 220));
     } finally {
       setBusy(null);
+    }
+  };
+
+  const shareStake = async () => {
+    if (!stakeReceipt || !meta) return;
+    const url =
+      typeof window !== "undefined"
+        ? `${window.location.origin}/m/${meta.fixtureId}`
+        : `https://getcurva.vercel.app/m/${meta.fixtureId}`;
+    const text =
+      `I put ${stakeReceipt.amount} SOL on ${stakeReceipt.sideName} ` +
+      `(${meta.home.name} vs ${meta.away.name}) — escrowed on Curva, ` +
+      `settled by proof not by a house. ${url}`;
+    try {
+      if (navigator.share) {
+        await navigator.share({ text, url });
+        return;
+      }
+      await navigator.clipboard.writeText(text);
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2000);
+    } catch {
+      try {
+        await navigator.clipboard.writeText(text);
+        setShareCopied(true);
+        setTimeout(() => setShareCopied(false), 2000);
+      } catch { /* ignore */ }
     }
   };
 
@@ -267,7 +308,15 @@ export default function MarketCard({ meta, probs, phase }: Props) {
                 isDisabled={!!busy}
                 radius="full"
                 startContent={busy === "stake" ? undefined : <Icon icon="solar:lock-keyhole-bold" width={18} />}
-                onPress={() => wallet && run("stake", () => stakeTx(wallet, meta.fixtureId, side, amount))}
+                onPress={() => {
+                  if (!wallet) return;
+                  const sideName = displaySides.find((d) => d.side === side)?.name ?? "side";
+                  void run(
+                    "stake",
+                    () => stakeTx(wallet, meta.fixtureId, side, amount),
+                    { sideName, amount },
+                  );
+                }}
               >
                 Stake {amount} SOL on {displaySides.find((d) => d.side === side)?.name}
               </Button>
@@ -356,7 +405,57 @@ export default function MarketCard({ meta, probs, phase }: Props) {
           </div>
         ) : null}
 
-        {lastTx ? (
+        {stakeReceipt ? (
+          <div className="flex flex-col gap-3 rounded-medium border border-primary-100 bg-primary-50 p-3">
+            <div className="flex items-start gap-3">
+              <div className="flex shrink-0 rounded-medium border border-primary-100 bg-content1 p-2">
+                <Icon className="text-primary" icon="solar:share-circle-bold-duotone" width={20} />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-small font-medium">Conviction locked</p>
+                <p className="text-tiny text-default-500">
+                  {stakeReceipt.amount} SOL on{" "}
+                  <span className="font-semibold text-foreground">{stakeReceipt.sideName}</span>
+                  {" · "}
+                  <a
+                    className="font-mono underline decoration-dotted"
+                    href={explorerUrl("tx", stakeReceipt.txSig)}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {stakeReceipt.txSig.slice(0, 12)}…
+                  </a>
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                color="primary"
+                radius="full"
+                size="sm"
+                startContent={
+                  <Icon
+                    icon={shareCopied ? "solar:check-circle-bold" : "solar:share-bold"}
+                    width={16}
+                  />
+                }
+                onPress={() => void shareStake()}
+              >
+                {shareCopied ? "Copied" : "Share your stake"}
+              </Button>
+              <Button
+                radius="full"
+                size="sm"
+                variant="light"
+                onPress={() => setStakeReceipt(null)}
+              >
+                Dismiss
+              </Button>
+            </div>
+          </div>
+        ) : null}
+
+        {lastTx && !stakeReceipt ? (
           <p className="font-mono text-tiny text-default-400">
             Last transaction:{" "}
             <a className="underline decoration-dotted" href={explorerUrl("tx", lastTx)} rel="noreferrer" target="_blank">

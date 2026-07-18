@@ -53,17 +53,28 @@ const ActionCard = React.forwardRef<HTMLDivElement, ActionCardProps>(
     return (
       <Card
         ref={ref}
-        className={cn("border-small", colors?.card, className)}
+        className={cn(
+          "group border-small transition-transform duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-reduce:transition-none hover:-translate-y-0.5 hover:shadow-md",
+          colors?.card,
+          className,
+        )}
         shadow="sm"
         {...props}
       >
         <CardBody className="flex h-full flex-row items-start gap-3 p-4">
-          <div className={cn("item-center flex rounded-medium border p-2", colors?.iconWrapper)}>
+          <div
+            className={cn(
+              "item-center flex shrink-0 rounded-medium border p-2 transition-transform duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-reduce:transition-none group-hover:scale-110",
+              colors?.iconWrapper,
+            )}
+          >
             <Icon className={colors?.icon} icon={icon} width={24} />
           </div>
-          <div className="flex flex-col">
+          <div className="flex min-w-0 flex-col">
             <p className="text-medium">{title}</p>
-            <p className="text-small text-default-400">{description || children}</p>
+            <p className="line-clamp-2 text-small text-default-400 transition-[line-clamp] duration-200 group-hover:line-clamp-none">
+              {description || children}
+            </p>
           </div>
         </CardBody>
       </Card>

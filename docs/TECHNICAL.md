@@ -1,7 +1,7 @@
 # Curva — Technical Documentation
 
 **Track:** TxODDS · Prediction Markets and Settlement (Superteam Earn, World Cup 2026)
-**Live app:** https://pulse-one-rose.vercel.app
+**Live app:** https://getcurva.vercel.app
 **Program (devnet):** `3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp`
 
 ## Core idea

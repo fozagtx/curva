@@ -40,7 +40,7 @@ the final whistle (~23:00 UTC), all before the July 19 23:59 UTC deadline.
 
 - [ ] Demo video link (YouTube/Loom, ≤5 min)
 - [ ] Public repo link (github.com/fozagtx/curva — push before submitting)
-- [ ] App link: https://pulse-one-rose.vercel.app
+- [ ] App link: https://getcurva.vercel.app
 - [ ] Technical doc: `docs/TECHNICAL.md` (endpoints list included)
 - [ ] Feedback: `docs/FEEDBACK.md` (paste into the form's feedback field)
 - [ ] Submit before **July 19, 23:59 UTC**

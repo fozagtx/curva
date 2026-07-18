@@ -1,6 +1,6 @@
 "use client";
 
-// Match screen: score header -> probability wave -> market pool -> event ticker.
+// Match screen: score → market → wave → Curva Calls → receipts / ticker.
 
 import { use, useMemo, useState } from "react";
 import { Button, Card, CardBody, Chip } from "@heroui/react";
@@ -10,10 +10,14 @@ import ScoreHeader from "@/components/score-header";
 import ProbWave from "@/components/prob-wave";
 import EventTicker from "@/components/event-ticker";
 import MarketCard from "@/components/market-card";
+import CurvaCall from "@/components/curva-call";
+import DramaToast from "@/components/drama-toast";
 import VerifyCard from "@/components/verify-card";
 import RecapCard from "@/components/recap-card";
 import ActivityFeed from "@/components/activity-feed";
 import { usePulse } from "@/lib/usePulse";
+import { usePulseGame } from "@/lib/game";
+import { useWallet } from "@/lib/wallet";
 
 const REPLAY_SPEEDS = [30, 60, 120] as const;
 
@@ -27,10 +31,17 @@ export default function MatchPage({
 
   const [mode, setMode] = useState<"live" | "replay">("live");
   const [speed, setSpeed] = useState<number>(60);
+  const { pubkey } = useWallet();
 
   const pulse = usePulse(Number.isFinite(fixtureId) ? fixtureId : null, mode, speed);
+  const gameApi = usePulseGame(
+    Number.isFinite(fixtureId) ? fixtureId : null,
+    pulse.meta,
+    pulse.probs,
+    pulse.phase,
+    pubkey ?? "guest",
+  );
 
-  // Finished matches always offer the replay experience.
   const [now] = useState(() => Date.now());
   const suggestReplay = useMemo(() => {
     if (mode !== "live") return false;
@@ -40,7 +51,7 @@ export default function MatchPage({
   }, [mode, pulse.meta, pulse.phase, now]);
 
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-col gap-4 px-4 py-6 sm:px-6 sm:py-10">
+    <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6 sm:px-6 sm:py-10">
       <TopBar backHref="/" />
 
       <ScoreHeader
@@ -50,8 +61,6 @@ export default function MatchPage({
         phase={pulse.phase}
         score={pulse.score}
       />
-
-      <MarketCard meta={pulse.meta} phase={pulse.phase} probs={pulse.probs} />
 
       {suggestReplay ? (
         <Card className="border-small border-default-200" shadow="sm">
@@ -80,7 +89,7 @@ export default function MatchPage({
       ) : null}
 
       {mode === "replay" ? (
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Chip color="secondary" size="sm" variant="flat">
             Replay · {speed}x
           </Chip>
@@ -108,26 +117,62 @@ export default function MatchPage({
         </div>
       ) : null}
 
-      <ProbWave
-        connected={pulse.connected}
-        events={pulse.events}
-        meta={pulse.meta}
-        mode={pulse.mode}
-        probs={pulse.probs}
-      />
+      {/* Stake first — the product's money path */}
+      <section className="flex flex-col gap-2">
+        <SectionLabel
+          hint="SOL in a vault · settled by proof"
+          icon="solar:safe-square-bold-duotone"
+          title="Put skin in"
+        />
+        <MarketCard meta={pulse.meta} phase={pulse.phase} probs={pulse.probs} />
+      </section>
+
+      {/* Live curve */}
+      <section className="flex flex-col gap-2">
+        <SectionLabel
+          hint="TxLINE consensus, updating live"
+          icon="solar:pulse-2-bold-duotone"
+          title="The market moves"
+        />
+        <ProbWave
+          connected={pulse.connected}
+          events={pulse.events}
+          meta={pulse.meta}
+          mode={pulse.mode}
+          probs={pulse.probs}
+        />
+      </section>
+
+      {/* Fan loop — no wallet required */}
+      <section className="flex flex-col gap-2">
+        <SectionLabel
+          hint="Higher or lower · build a streak"
+          icon="solar:cup-star-bold-duotone"
+          title="Call the swing"
+        />
+        <CurvaCall gameApi={gameApi} meta={pulse.meta} phase={pulse.phase} probs={pulse.probs} />
+      </section>
 
       {pulse.meta && ["F", "FET", "FPE"].includes(pulse.phase) ? (
         <RecapCard meta={pulse.meta} probs={pulse.probs} score={pulse.score} />
       ) : null}
 
-      <VerifyCard meta={pulse.meta} />
-
-      <ActivityFeed meta={pulse.meta} />
+      <section className="flex flex-col gap-3">
+        <SectionLabel
+          hint="Chain-checked, not trust-me"
+          icon="solar:shield-check-bold-duotone"
+          title="Proof & receipts"
+        />
+        <VerifyCard meta={pulse.meta} />
+        <ActivityFeed meta={pulse.meta} />
+      </section>
 
       <section className="flex flex-col gap-2">
-        <h2 className="text-small font-medium uppercase tracking-wide text-default-400">
-          As it happened
-        </h2>
+        <SectionLabel
+          hint="Goals, cards, VAR as they land"
+          icon="solar:clipboard-list-bold-duotone"
+          title="As it happened"
+        />
         <EventTicker events={pulse.events} meta={pulse.meta} />
       </section>
 
@@ -139,6 +184,30 @@ export default function MatchPage({
           </CardBody>
         </Card>
       ) : null}
+
+      <DramaToast meta={pulse.meta} probs={pulse.probs} />
     </main>
+  );
+}
+
+function SectionLabel({
+  title,
+  hint,
+  icon,
+}: {
+  title: string;
+  hint: string;
+  icon: string;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-3">
+      <div className="flex min-w-0 items-center gap-2">
+        <Icon className="shrink-0 text-default-400" icon={icon} width={16} />
+        <h2 className="text-small font-medium uppercase tracking-wide text-default-400">
+          {title}
+        </h2>
+      </div>
+      <p className="hidden truncate text-tiny text-default-300 sm:block">{hint}</p>
+    </div>
   );
 }

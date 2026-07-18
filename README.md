@@ -11,7 +11,7 @@ transaction or can be re-verified from your own browser.
 
 Built for the TxODDS **Prediction Markets and Settlement** track (World Cup hackathon, Superteam Earn).
 
-**Live app:** https://pulse-one-rose.vercel.app · **Program (devnet):** `3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp`
+**Live app:** https://getcurva.vercel.app · **Program (devnet):** `3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp`
 
 ## How It Works
 
