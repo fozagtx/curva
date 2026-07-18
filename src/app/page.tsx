@@ -94,32 +94,33 @@ export default function Lobby() {
   const nextLeft = featured ? msUntil(featured.m.startTime, now) : null;
 
   return (
-    <main className="mx-auto flex w-full max-w-2xl flex-col gap-3 px-3 py-4 sm:px-4 sm:py-6">
+    <main className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-3 py-3 sm:px-5 sm:py-5 lg:px-6">
       <TopBar />
 
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-wrap items-center gap-1.5">
-          <Chip size="sm" variant="flat" color="success">
-            World Cup · 1X2
-          </Chip>
-          {nextLeft != null && nextLeft > 0 && featured?.status === "upcoming" ? (
-            <Chip size="sm" color="warning" variant="flat" className="font-mono font-bold">
-              KO {formatCountdown(nextLeft)}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex min-w-0 flex-col gap-1">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <Chip size="sm" variant="flat" color="success">
+              World Cup · 1X2
             </Chip>
-          ) : null}
+            {nextLeft != null && nextLeft > 0 && featured?.status === "upcoming" ? (
+              <Chip size="sm" color="warning" variant="flat" className="font-mono font-bold">
+                KO {formatCountdown(nextLeft)}
+              </Chip>
+            ) : null}
+          </div>
+          <h1 className="text-xl font-bold leading-tight sm:text-2xl">
+            Pick 1X2. Cash when it&apos;s proven.
+          </h1>
         </div>
-        <h1 className="text-xl font-bold leading-tight sm:text-2xl">
-          Pick 1X2. Cash when it&apos;s proven.
-        </h1>
-      </div>
-
-      <div className="grid grid-cols-3 gap-2">
-        <Stat
-          label="Locked"
-          value={`${((stats?.tvlLamports ?? 0) / 1e9).toLocaleString(undefined, { maximumFractionDigits: 2 })} SOL`}
-        />
-        <Stat label="Open" value={String(stats?.marketsOpen ?? "-")} />
-        <Stat label="Settled" value={String(stats?.settlements ?? "-")} />
+        <div className="grid w-full grid-cols-3 gap-2 sm:w-auto sm:min-w-[20rem]">
+          <Stat
+            label="Locked"
+            value={`${((stats?.tvlLamports ?? 0) / 1e9).toLocaleString(undefined, { maximumFractionDigits: 2 })} SOL`}
+          />
+          <Stat label="Open" value={String(stats?.marketsOpen ?? "-")} />
+          <Stat label="Settled" value={String(stats?.settlements ?? "-")} />
+        </div>
       </div>
 
       {pings.length > 0 ? <SocialProofTicker pings={pings} /> : null}
@@ -132,50 +133,54 @@ export default function Lobby() {
           </CardBody>
         </Card>
       ) : !groups ? (
-        <div className="flex flex-col gap-2">
-          {[0, 1, 2, 3].map((i) => (
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+          {[0, 1, 2, 3, 4, 5].map((i) => (
             <Skeleton key={i} className="h-16 rounded-large" />
           ))}
         </div>
       ) : (
-        <>
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-12 lg:items-start">
           {featured ? (
-            <FeaturedCompact
-              market={featured.m.market}
-              meta={featured.m}
-              status={featured.status}
-            />
+            <div className="lg:col-span-5">
+              <FeaturedCompact
+                market={featured.m.market}
+                meta={featured.m}
+                status={featured.status}
+              />
+            </div>
           ) : null}
 
-          {groups.live.filter((m) => m.fixtureId !== featured?.m.fixtureId).length > 0 && (
-            <Section title="Live">
-              {groups.live
-                .filter((m) => m.fixtureId !== featured?.m.fixtureId)
-                .map((m) => (
-                  <MatchCard key={m.fixtureId} market={m.market} meta={m} status="live" />
-                ))}
-            </Section>
-          )}
+          <div className={`flex flex-col gap-3 ${featured ? "lg:col-span-7" : "lg:col-span-12"}`}>
+            {groups.live.filter((m) => m.fixtureId !== featured?.m.fixtureId).length > 0 && (
+              <Section title="Live">
+                {groups.live
+                  .filter((m) => m.fixtureId !== featured?.m.fixtureId)
+                  .map((m) => (
+                    <MatchCard key={m.fixtureId} market={m.market} meta={m} status="live" />
+                  ))}
+              </Section>
+            )}
 
-          {groups.upcoming.filter((m) => m.fixtureId !== featured?.m.fixtureId).length > 0 && (
-            <Section title="Coming up">
-              {groups.upcoming
-                .filter((m) => m.fixtureId !== featured?.m.fixtureId)
-                .slice(0, 10)
-                .map((m) => (
-                  <MatchCard key={m.fixtureId} market={m.market} meta={m} status="upcoming" />
-                ))}
-            </Section>
-          )}
+            {groups.upcoming.filter((m) => m.fixtureId !== featured?.m.fixtureId).length > 0 && (
+              <Section title="Coming up">
+                {groups.upcoming
+                  .filter((m) => m.fixtureId !== featured?.m.fixtureId)
+                  .slice(0, 12)
+                  .map((m) => (
+                    <MatchCard key={m.fixtureId} market={m.market} meta={m} status="upcoming" />
+                  ))}
+              </Section>
+            )}
 
-          {groups.finished.length > 0 && (
-            <Section title="Finished">
-              {groups.finished.slice(0, 8).map((m) => (
-                <MatchCard key={m.fixtureId} market={m.market} meta={m} status="finished" />
-              ))}
-            </Section>
-          )}
-        </>
+            {groups.finished.length > 0 && (
+              <Section title="Finished">
+                {groups.finished.slice(0, 10).map((m) => (
+                  <MatchCard key={m.fixtureId} market={m.market} meta={m} status="finished" />
+                ))}
+              </Section>
+            )}
+          </div>
+        </div>
       )}
     </main>
   );
@@ -279,7 +284,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   return (
     <section className="flex flex-col gap-1.5">
       <h2 className="text-[10px] font-bold uppercase tracking-wide text-default-400">{title}</h2>
-      {children}
+      <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">{children}</div>
     </section>
   );
 }

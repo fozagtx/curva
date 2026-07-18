@@ -92,7 +92,7 @@ export default function HubPage() {
   const claimCount = rows?.filter(claimable).length ?? 0;
 
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-col gap-4 px-3 py-4 sm:px-5 sm:py-6">
+    <main className="mx-auto flex w-full max-w-5xl flex-col gap-4 px-3 py-3 sm:px-5 sm:py-5 lg:px-6">
       <TopBar backHref="/" />
 
       <div className="flex flex-col gap-1">
