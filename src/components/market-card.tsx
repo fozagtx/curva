@@ -134,6 +134,27 @@ export default function MarketCard({ meta, probs, phase }: Props) {
         </div>
 
         {/* Pool distribution (once money is in, or after settlement) */}
+        {!loaded ? (
+          <p className="text-small text-default-400">Reading the chain…</p>
+        ) : !market ? (
+          <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+            <p className="text-small text-default-500">
+              No pool for this match yet. Opening one is permissionless and takes a click.
+            </p>
+            <Button
+              color="primary"
+              isLoading={busy === "create"}
+              isDisabled={!pubkey || !!busy}
+              radius="full"
+              startContent={busy === "create" ? undefined : <Icon icon="solar:add-circle-bold" width={18} />}
+              onPress={() =>
+                wallet && run("create", () => createMarketTx(wallet, meta.fixtureId, meta.startTime))
+              }
+            >
+              Open the market
+            </Button>
+          </div>
+        ) : null}
         {market && (total > 0 || market.settled) ? (
           <div className="flex flex-col gap-2">
             {displaySides.map(({ side: s, name }) => {
@@ -184,27 +205,7 @@ export default function MarketCard({ meta, probs, phase }: Props) {
               );
             })}
           </div>
-        ) : loaded ? (
-          <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-            <p className="text-small text-default-500">
-              No pool for this match yet. Opening one is permissionless and takes a click.
-            </p>
-            <Button
-              color="primary"
-              isLoading={busy === "create"}
-              isDisabled={!pubkey || !!busy}
-              radius="full"
-              startContent={busy === "create" ? undefined : <Icon icon="solar:add-circle-bold" width={18} />}
-              onPress={() =>
-                wallet && run("create", () => createMarketTx(wallet, meta.fixtureId, meta.startTime))
-              }
-            >
-              Open the market
-            </Button>
-          </div>
-        ) : (
-          <p className="text-small text-default-400">Reading the chain…</p>
-        )}
+        ) : null}
 
         {/* Pick a side: 1X2 odds buttons */}
         {market && !market.settled && !kickoffPassed ? (

@@ -7,11 +7,13 @@ import { Card, CardBody, Chip, Skeleton } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import TopBar from "@/components/top-bar";
 import ActionCard from "@/components/action-card";
-import MatchCard, { inferStatus, type MatchStatus } from "@/components/match-card";
+import MatchCard, { inferStatus, type MatchStatus, type MarketBadge } from "@/components/match-card";
 import type { FixtureMeta } from "@/lib/engine/state";
 
+type LobbyMatch = FixtureMeta & { market: MarketBadge };
+
 export default function Lobby() {
-  const [matches, setMatches] = useState<FixtureMeta[] | null>(null);
+  const [matches, setMatches] = useState<LobbyMatch[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -21,7 +23,7 @@ export default function Lobby() {
         const body = await res.json();
         if (cancelled) return;
         if (!res.ok) throw new Error(body.error ?? `HTTP ${res.status}`);
-        setMatches(body.matches as FixtureMeta[]);
+        setMatches(body.matches as LobbyMatch[]);
       })
       .catch((err) => {
         if (!cancelled) setError(String(err.message ?? err));
@@ -34,7 +36,7 @@ export default function Lobby() {
   const [now] = useState(() => Date.now());
   const groups = useMemo(() => {
     if (!matches) return null;
-    const by: Record<MatchStatus, FixtureMeta[]> = { live: [], upcoming: [], finished: [] };
+    const by: Record<MatchStatus, LobbyMatch[]> = { live: [], upcoming: [], finished: [] };
     for (const m of matches) by[inferStatus(m, now)].push(m);
     by.upcoming.sort((a, b) => a.startTime - b.startTime);
     by.finished.sort((a, b) => b.startTime - a.startTime);
@@ -46,14 +48,31 @@ export default function Lobby() {
       <TopBar />
 
       <div className="flex flex-wrap items-center gap-2">
-        <Chip
-          color="danger"
-          size="sm"
-          startContent={<span className="mx-1 h-1.5 w-1.5 animate-pulse rounded-full bg-danger" />}
-          variant="flat"
-        >
-          {groups ? `${groups.live.length} live now` : "Checking pitches…"}
-        </Chip>
+        {groups && groups.live.length === 0 && groups.upcoming.length > 0 ? (
+          <Chip
+            color="warning"
+            size="sm"
+            startContent={<Icon icon="solar:alarm-bold" width={14} />}
+            variant="flat"
+          >
+            Next kick-off{" "}
+            {new Date(groups.upcoming[0].startTime).toLocaleString(undefined, {
+              weekday: "short",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })}
+          </Chip>
+        ) : (
+          <Chip
+            color="danger"
+            size="sm"
+            startContent={<span className="mx-1 h-1.5 w-1.5 animate-pulse rounded-full bg-danger" />}
+            variant="flat"
+          >
+            {groups ? `${groups.live.length} live now` : "Checking pitches…"}
+          </Chip>
+        )}
         <Chip size="sm" variant="flat" startContent={<Icon icon="solar:cup-bold" width={14} />}>
           World Cup 2026
         </Chip>
@@ -71,26 +90,6 @@ export default function Lobby() {
           commitment on Solana before the result exists, and payouts unlock only
           when the chain itself verifies a proof of the final score.
         </p>
-      </div>
-
-      <div className="grid gap-3 sm:grid-cols-3">
-        <ActionCard
-          color="primary"
-          description="Stake SOL on any match. The pot sits in a vault no one controls."
-          icon="solar:safe-square-bold-duotone"
-          title="Trustless pools"
-        />
-        <ActionCard
-          color="secondary"
-          description="Live win probability from TxLINE consensus odds, lurching with every goal."
-          icon="solar:pulse-2-bold-duotone"
-          title="The market, live"
-        />
-        <ActionCard
-          description="Every claim is checkable: verify any result from your own browser."
-          icon="solar:shield-check-bold-duotone"
-          title="Don't trust us"
-        />
       </div>
 
       {error ? (
@@ -116,21 +115,21 @@ export default function Lobby() {
           {groups.live.length > 0 && (
             <Section title="Live now">
               {groups.live.map((m) => (
-                <MatchCard key={m.fixtureId} meta={m} status="live" />
+                <MatchCard key={m.fixtureId} market={m.market} meta={m} status="live" />
               ))}
             </Section>
           )}
           {groups.upcoming.length > 0 && (
             <Section title="Coming up">
               {groups.upcoming.slice(0, 8).map((m) => (
-                <MatchCard key={m.fixtureId} meta={m} status="upcoming" />
+                <MatchCard key={m.fixtureId} market={m.market} meta={m} status="upcoming" />
               ))}
             </Section>
           )}
           {groups.finished.length > 0 && (
             <Section title="Relive the drama">
-              {groups.finished.slice(0, 10).map((m) => (
-                <MatchCard key={m.fixtureId} meta={m} status="finished" />
+              {groups.finished.slice(0, 12).map((m) => (
+                <MatchCard key={m.fixtureId} market={m.market} meta={m} status="finished" />
               ))}
             </Section>
           )}
@@ -144,6 +143,26 @@ export default function Lobby() {
           )}
         </>
       )}
+      <div className="grid gap-3 sm:grid-cols-3">
+        <ActionCard
+          color="primary"
+          description="Stake SOL on any match. The pot sits in a vault no one controls."
+          icon="solar:safe-square-bold-duotone"
+          title="Trustless pools"
+        />
+        <ActionCard
+          color="secondary"
+          description="Live win probability from TxLINE consensus odds, lurching with every goal."
+          icon="solar:pulse-2-bold-duotone"
+          title="The market, live"
+        />
+        <ActionCard
+          description="Every claim is checkable: verify any result from your own browser."
+          icon="solar:shield-check-bold-duotone"
+          title="Don't trust us"
+        />
+      </div>
+
     </main>
   );
 }

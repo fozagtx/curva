@@ -1,0 +1,12 @@
+[  309384ms] [ERROR] Failed to load resource: net::ERR_NETWORK_IO_SUSPENDED @ https://pulse-one-rose.vercel.app/api/live/18241006:0
+[10947940ms] RangeError: Maximum call stack size exceeded
+    at https://pulse-one-rose.vercel.app/_next/static/chunks/3zc262dbjjxyl.js:7:313065
+    at Object.useMemo (https://pulse-one-rose.vercel.app/_next/static/chunks/0nbdukk8535p7.js:1:76523)
+    at r.useMemo (https://pulse-one-rose.vercel.app/_next/static/chunks/2f_bki8ncx-77.js:1:13243)
+    at or (https://pulse-one-rose.vercel.app/_next/static/chunks/3zc262dbjjxyl.js:7:313022)
+    at ay (https://pulse-one-rose.vercel.app/_next/static/chunks/0nbdukk8535p7.js:1:63846)
+    at oJ (https://pulse-one-rose.vercel.app/_next/static/chunks/0nbdukk8535p7.js:1:84103)
+    at iu (https://pulse-one-rose.vercel.app/_next/static/chunks/0nbdukk8535p7.js:1:95705)
+    at sd (https://pulse-one-rose.vercel.app/_next/static/chunks/0nbdukk8535p7.js:1:138945)
+    at https://pulse-one-rose.vercel.app/_next/static/chunks/0nbdukk8535p7.js:1:138790
+    at sf (https://pulse-one-rose.vercel.app/_next/static/chunks/0nbdukk8535p7.js:1:138798)

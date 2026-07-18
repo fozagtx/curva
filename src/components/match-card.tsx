@@ -8,6 +8,7 @@ import { Icon } from "@iconify/react";
 import type { FixtureMeta } from "@/lib/engine/state";
 
 export type MatchStatus = "live" | "upcoming" | "finished";
+export type MarketBadge = { pool: number; settled: boolean } | null;
 
 export function inferStatus(meta: FixtureMeta, now: number): MatchStatus {
   if (now < meta.startTime) return "upcoming";
@@ -20,10 +21,23 @@ function kickoffLabel(ts: number): string {
     weekday: "short",
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
   });
 }
 
-export default function MatchCard({ meta, status }: { meta: FixtureMeta; status: MatchStatus }) {
+function dateLabel(ts: number): string {
+  return new Date(ts).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}
+
+export default function MatchCard({
+  meta,
+  status,
+  market,
+}: {
+  meta: FixtureMeta;
+  status: MatchStatus;
+  market?: MarketBadge;
+}) {
   return (
     <Card
       as={Link}
@@ -50,7 +64,10 @@ export default function MatchCard({ meta, status }: { meta: FixtureMeta; status:
           <p className="truncate text-medium font-medium">
             {meta.home.name} <span className="text-default-400">vs</span> {meta.away.name}
           </p>
-          <p className="truncate text-tiny text-default-400">{meta.competition}</p>
+          <p className="truncate text-tiny text-default-400">
+            {meta.competition}
+            {status === "finished" ? ` · ${dateLabel(meta.startTime)}` : ""}
+          </p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           {status === "live" ? (
@@ -62,14 +79,29 @@ export default function MatchCard({ meta, status }: { meta: FixtureMeta; status:
             >
               LIVE
             </Chip>
+          ) : market?.settled ? (
+            <Chip
+              color="success"
+              size="sm"
+              startContent={<Icon icon="solar:check-circle-bold" width={13} />}
+              variant="flat"
+            >
+              Settled
+            </Chip>
           ) : status === "finished" ? (
             <Chip size="sm" variant="flat" color="secondary">
               Replay
             </Chip>
           ) : (
-            <p className="font-mono text-tiny text-default-400">{kickoffLabel(meta.startTime)}</p>
+            <div className="flex flex-col items-end">
+              {market && market.pool > 0 ? (
+                <span className="font-mono text-tiny font-semibold text-primary">
+                  {(market.pool / 1e9).toLocaleString(undefined, { maximumFractionDigits: 2 })} SOL pool
+                </span>
+              ) : null}
+              <p className="font-mono text-tiny text-default-400">{kickoffLabel(meta.startTime)}</p>
+            </div>
           )}
-          <Icon className="text-default-300" icon="solar:alt-arrow-right-linear" width={16} />
         </div>
       </CardBody>
     </Card>

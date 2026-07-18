@@ -61,7 +61,9 @@ export default function ScoreHeader({
             startContent={live ? <span className="mx-1 h-1.5 w-1.5 animate-pulse rounded-full bg-danger" /> : undefined}
             variant="flat"
           >
-            {PHASE_LABEL[phase] ?? phase}
+            {phase === "NS"
+              ? `Kick-off ${new Date(meta.startTime).toLocaleString(undefined, { weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false })}`
+              : PHASE_LABEL[phase] ?? phase}
             {live && minute ? ` · ${minute}'` : ""}
           </Chip>
           <p className="text-tiny text-default-400">{meta.competition}</p>
@@ -96,8 +98,10 @@ export default function ScoreHeader({
             size="sm"
             value={drama}
           />
-          <p className="w-24 shrink-0 text-right text-tiny text-default-400">
-            {drama >= 60 ? "Chaos" : drama >= 30 ? "Heating up" : "Calm"} · {drama}
+          <p className="w-28 shrink-0 text-right text-tiny text-default-400">
+            {["F", "FET", "FPE"].includes(phase)
+              ? `Drama peak · ${drama}`
+              : `${drama >= 60 ? "Chaos" : drama >= 30 ? "Heating up" : "Calm"} · ${drama}`}
           </p>
         </div>
       </CardBody>
