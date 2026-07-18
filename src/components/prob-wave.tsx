@@ -127,10 +127,10 @@ export default function ProbWave({ meta, probs, events, connected, mode }: Props
 
   if (!view || !meta) {
     return (
-      <Card className="border-small border-default-200" shadow="sm">
-        <CardBody className="flex min-h-[280px] flex-col items-center justify-center gap-3 p-6">
-          <Icon className="text-default-300" icon="solar:chart-2-bold-duotone" width={40} />
-          <p className="text-small text-default-400">
+      <Card className="h-full min-h-[140px] border-small border-default-200 lg:min-h-[280px]" shadow="sm">
+        <CardBody className="flex h-full flex-col items-center justify-center gap-2 p-4">
+          <Icon className="text-default-300" icon="solar:chart-2-bold-duotone" width={32} />
+          <p className="text-center text-tiny text-default-400">
             {connected ? "Waiting for the market to speak…" : "Connecting to the live feed…"}
           </p>
         </CardBody>
@@ -139,8 +139,8 @@ export default function ProbWave({ meta, probs, events, connected, mode }: Props
   }
 
   return (
-    <Card className="border-small border-default-200" shadow="sm">
-      <CardBody className="gap-3 p-4 sm:p-6">
+    <Card className="h-full border-small border-default-200" shadow="sm">
+      <CardBody className="gap-2 p-3 sm:p-4">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <p className="text-small font-medium text-default-500">Win probability</p>
@@ -151,7 +151,7 @@ export default function ProbWave({ meta, probs, events, connected, mode }: Props
           <p className="hidden text-tiny text-default-400 sm:block">TxLINE StablePrice consensus</p>
         </div>
 
-        <div className="relative h-56 w-full sm:h-64">
+        <div className="relative h-40 w-full sm:h-48 lg:h-56">
           <svg className="h-full w-full" preserveAspectRatio="none" viewBox={`0 0 ${W} ${H}`}>
             <defs>
               <linearGradient id="homeFill" x1="0" x2="0" y1="0" y2="1">

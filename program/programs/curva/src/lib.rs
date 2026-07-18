@@ -1,4 +1,5 @@
-//! Curva — parimutuel World Cup prediction pools with trustless settlement.
+//! Kryva — parimutuel World Cup prediction pools with trustless settlement.
+//! (crate/program name remains `curva` for the deployed hackathon binary)
 //! Named for the terrace where the most devoted fans stand, and for the live
 //! probability curve the product is built around. The only referee is the proof.
 //!

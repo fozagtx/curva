@@ -1,6 +1,8 @@
-# Curva
+# Kryva
 
 Parimutuel World Cup prediction pools on Solana, settled trustlessly by cryptographic proof.
+
+> Product brand: **Kryva**. Repo folder, Vercel host (`getkryva.vercel.app`), and on-chain program crate remain `curva` for the hackathon deploy.
 
 Fans stake SOL on Home / Draw / Away for any of the 104 World Cup matches. Stakes escrow in a
 program-owned vault, the live win-probability curve streams from TxLINE's consensus odds, and when
@@ -11,7 +13,7 @@ transaction or can be re-verified from your own browser.
 
 Built for the TxODDS **Prediction Markets and Settlement** track (World Cup hackathon, Superteam Earn).
 
-**Live app:** https://getcurva.vercel.app · **Program (devnet):** `3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp`
+**Live app:** https://getkryva.vercel.app · **Program (devnet):** `3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp`
 
 ## How It Works
 
@@ -152,6 +154,63 @@ curva/
 | [Technical Overview](docs/TECHNICAL.md) | Architecture, settlement design, on-chain receipts, TxLINE endpoints used |
 | [TxLINE Feedback](docs/FEEDBACK.md) | Honest builder feedback: what we loved, where we hit friction |
 | [Demo Plan](docs/DEMO.md) | Demo video shot list and submission checklist |
+
+## World Cup Track Submission (copy-paste)
+
+Ready answers for the Superteam Earn **World Cup / TxODDS** form. Social / X fields omitted on purpose — fill those yourself.
+
+| Form field | Value |
+|---|---|
+| **Link to Your Submission** | https://getkryva.vercel.app |
+| **Project Title** | Kryva |
+| **Briefly explain your Project** | *(paste block below)* |
+| **Link to your live & working MVP** | https://getkryva.vercel.app |
+| **Link to Your Live Demo Video** | `TODO` — add public Loom/YouTube after recording ([shot list](docs/DEMO.md)) |
+| **Project's Public Repository** | https://github.com/fozagtx/curva |
+| **Link to Technical Documentation** | https://github.com/fozagtx/curva/blob/main/docs/TECHNICAL.md |
+| **TxLINE API experience** | *(paste from [docs/FEEDBACK.md](docs/FEEDBACK.md) — short version below)* |
+| **Anything Else?** | *(paste extras below)* |
+
+### Briefly explain your Project
+
+```
+Kryva is a parimutuel World Cup 1X2 prediction market on Solana where settlement is a cryptographic proof, not a house call.
+
+Fans stake SOL on Home / Draw / Away. Stakes escrow in a program-owned vault. Live win probability streams from TxLINE StablePrice consensus. When a match finalises, anyone can settle: the program CPIs into TxODDS’s on-chain TxOracle validate_stat with a TxLINE finalisation Merkle proof. Funds unlock only if the chain verifies the proof — no oracle operator, no admin key.
+
+Built for the TxODDS Prediction Markets and Settlement track. Proven on devnet against a real World Cup semifinal (England vs Argentina).
+```
+
+### TxLINE API experience (paste into form)
+
+```
+Liked most:
+- Pct on TXLineStablePriceDemargined (1X2_PARTICIPANT_RESULT) — clean implied probs, no de-vig math.
+- Finalisation design (game_finalised / period=100) — unforgeable on-chain gate against early-proof attacks.
+- validate_stat as a CPI target — one instruction, returned bool; our settle path is ~40 lines around it.
+- llms.txt + docs repo + free World Cup tier with on-chain subscribe — permissionless onboarding.
+
+Friction:
+- OpenAPI scores schema doesn’t match production (camelCase vs PascalCase; phase in StatusId).
+- /api/scores/historical/{id} returns SSE-formatted text while other endpoints feel like JSON.
+- Stat-validation V2 shape (statsToProve / statProofs / eventStatRoot) undocumented vs single-stat examples.
+- GameState stays "scheduled" during live play; real phase is StatusId.
+- Unconfirmed goal events often lack team attribution in Data — we infer from score deltas.
+- Devnet SOL faucet often dry — only real onboarding wall.
+
+Full write-up: docs/FEEDBACK.md in the repo.
+```
+
+### Anything Else?
+
+```
+Live app: https://getkryva.vercel.app
+Repo: https://github.com/fozagtx/curva
+Tech doc: https://github.com/fozagtx/curva/blob/main/docs/TECHNICAL.md
+Program (devnet): 3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp
+England vs Argentina settle tx: https://explorer.solana.com/tx/4VwkVQmmB1McxjUivcpp6icEGPicAoo8oZWBYkYEmfNfqGKmM9aKq9uw2FRSieLPV2T6dwDwWTDG8zMQrNWU8trN?cluster=devnet
+Settled market account: https://explorer.solana.com/address/955uZjkKK4EqnmUFfVtHgWDqr85Wa1GouvMD9cQmgqV1?cluster=devnet
+```
 
 ## License
 

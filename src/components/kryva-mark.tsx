@@ -1,6 +1,6 @@
-// The Curva mark: a rising probability curve ending in a live dot.
+// The Kryva mark: a rising probability curve ending in a live dot.
 
-export default function CurvaMark({ size = 22 }: { size?: number }) {
+export default function KryvaMark({ size = 22 }: { size?: number }) {
   return (
     <svg fill="none" height={size} viewBox="0 0 32 32" width={size}>
       <path

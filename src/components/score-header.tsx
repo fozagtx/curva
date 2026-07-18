@@ -19,14 +19,14 @@ const LIVE = new Set(["H1", "H2", "ET1", "ET2", "PE"]);
 function TeamTile({ name, accent }: { name: string; accent: string }) {
   const code = name.slice(0, 3).toUpperCase();
   return (
-    <div className="flex min-w-0 flex-1 flex-col items-center gap-2">
+    <div className="flex min-w-0 flex-1 flex-col items-center gap-1">
       <div
-        className="flex h-12 w-12 items-center justify-center rounded-full border text-small font-semibold"
+        className="flex h-9 w-9 items-center justify-center rounded-full border text-tiny font-semibold sm:h-10 sm:w-10"
         style={{ borderColor: `${accent}55`, background: `${accent}14`, color: accent }}
       >
         {code}
       </div>
-      <p className="max-w-full truncate text-small font-medium">{name}</p>
+      <p className="max-w-full truncate text-tiny font-medium sm:text-small">{name}</p>
     </div>
   );
 }
@@ -43,7 +43,7 @@ export default function ScoreHeader({
   if (!meta) {
     return (
       <Card className="border-small border-default-200" shadow="sm">
-        <CardBody className="h-28 animate-pulse p-4" />
+        <CardBody className="h-20 animate-pulse p-3" />
       </Card>
     );
   }
@@ -53,8 +53,8 @@ export default function ScoreHeader({
 
   return (
     <Card className="border-small border-default-200" shadow="sm">
-      <CardBody className="gap-4 p-4 sm:p-6">
-        <div className="flex items-center justify-between">
+      <CardBody className="gap-2.5 p-3 sm:p-4">
+        <div className="flex items-center justify-between gap-2">
           <Chip
             color={live ? "danger" : "default"}
             size="sm"
@@ -71,10 +71,10 @@ export default function ScoreHeader({
 
         <div className="flex items-center gap-2">
           <TeamTile accent="#22C55E" name={meta.home.name} />
-          <div className="flex flex-col items-center px-2">
-            <p className="font-mono text-4xl font-semibold tabular-nums sm:text-5xl">
+          <div className="flex flex-col items-center px-1">
+            <p className="font-mono text-3xl font-semibold tabular-nums sm:text-4xl">
               {goals[0]}
-              <span className="px-1.5 text-default-400">–</span>
+              <span className="px-1 text-default-400">–</span>
               {goals[1]}
             </p>
             {pens ? (
@@ -86,11 +86,11 @@ export default function ScoreHeader({
           <TeamTile accent="#38BDF8" name={meta.away.name} />
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <Icon
             className={drama >= 60 ? "text-danger" : drama >= 30 ? "text-warning" : "text-default-400"}
             icon="solar:fire-bold"
-            width={18}
+            width={16}
           />
           <Progress
             aria-label="Drama meter"
@@ -98,10 +98,10 @@ export default function ScoreHeader({
             size="sm"
             value={drama}
           />
-          <p className="w-28 shrink-0 text-right text-tiny text-default-400">
+          <p className="w-24 shrink-0 text-right text-tiny text-default-400">
             {["F", "FET", "FPE"].includes(phase)
-              ? `Drama peak · ${drama}`
-              : `${drama >= 60 ? "Chaos" : drama >= 30 ? "Heating up" : "Calm"} · ${drama}`}
+              ? `Peak · ${drama}`
+              : `${drama >= 60 ? "Chaos" : drama >= 30 ? "Heating" : "Calm"} · ${drama}`}
           </p>
         </div>
       </CardBody>

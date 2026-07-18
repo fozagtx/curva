@@ -8,7 +8,7 @@ the final whistle (~23:00 UTC), all before the July 19 23:59 UTC deadline.
 ## Shot list (Problem → Solution → Demo → Impact)
 
 1. **Hook (0:00–0:20)** — over the lobby: "Every prediction market has the same
-   weak spot: someone you have to trust to say who won. Curva removes them.
+   weak spot: someone you have to trust to say who won. Kryva removes them.
    The referee is a cryptographic proof, verified by Solana itself."
 2. **Stake (0:20–1:10)** — open France vs England, connect Phantom, stake on a
    side. Show the pool bars vs the professional market's consensus percentages.
@@ -40,7 +40,7 @@ the final whistle (~23:00 UTC), all before the July 19 23:59 UTC deadline.
 
 - [ ] Demo video link (YouTube/Loom, ≤5 min)
 - [ ] Public repo link (github.com/fozagtx/curva — push before submitting)
-- [ ] App link: https://getcurva.vercel.app
+- [ ] App link: https://getkryva.vercel.app
 - [ ] Technical doc: `docs/TECHNICAL.md` (endpoints list included)
 - [ ] Feedback: `docs/FEEDBACK.md` (paste into the form's feedback field)
 - [ ] Submit before **July 19, 23:59 UTC**

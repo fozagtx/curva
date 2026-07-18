@@ -1,4 +1,4 @@
-// TxLINE payload types, trimmed to what Curva consumes.
+// TxLINE payload types, trimmed to what Kryva consumes.
 // Source: https://txline.txodds.com/docs/docs.yaml + soccer feed spec v1.1
 
 export interface Fixture {

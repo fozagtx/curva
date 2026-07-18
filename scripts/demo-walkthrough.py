@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Capture a demo walkthrough of Curva on production."""
+"""Capture a demo walkthrough of Kryva on production."""
 
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 OUT = Path(__file__).resolve().parents[1] / "docs" / "screenshots" / "demo"
-BASE = "https://getcurva.vercel.app"
+BASE = "https://getkryva.vercel.app"
 FIXTURE = "18257865"  # France vs England
 REPLAY = "18241006"  # England vs Argentina (settled)
 
@@ -41,12 +41,12 @@ def main():
         shot(page, "03-france-england-mobile", 390)
         shot(page, "03-france-england-desktop", 1200)
 
-        # scroll to Curva Calls
-        calls = page.get_by_text("Curva Calls")
+        # scroll to Kryva Calls
+        calls = page.get_by_text("Kryva Calls")
         if calls.count():
             calls.first.scroll_into_view_if_needed()
             page.wait_for_timeout(300)
-            shot(page, "04-curva-calls", 390)
+            shot(page, "04-kryva-calls", 390)
 
         page.goto(f"{BASE}/m/{REPLAY}", wait_until="domcontentloaded", timeout=60_000)
         page.wait_for_timeout(3000)

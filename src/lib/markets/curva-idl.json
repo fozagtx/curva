@@ -4,7 +4,7 @@
     "name": "curva",
     "version": "0.1.0",
     "spec": "0.1.0",
-    "description": "Curva: parimutuel World Cup pools settled trustlessly via CPI into TxLINE's TxOracle validate_stat"
+    "description": "Kryva: parimutuel World Cup pools settled trustlessly via CPI into TxLINE's TxOracle validate_stat"
   },
   "instructions": [
     {

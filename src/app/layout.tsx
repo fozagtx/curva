@@ -16,13 +16,13 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Curva — World Cup pools settled by proof",
+  title: "Kryva — World Cup pools settled by proof",
   description:
-    "Curva runs a parimutuel pool for every World Cup match — live consensus odds, and payouts settled trustlessly on Solana by TxLINE Merkle proofs.",
+    "Kryva runs a parimutuel pool for every World Cup match — live consensus odds, and payouts settled trustlessly on Solana by TxLINE Merkle proofs.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#09090B",
+  themeColor: "#FFFFFF",
   width: "device-width",
   initialScale: 1,
 };
@@ -36,9 +36,9 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${plexSans.variable} ${plexMono.variable} dark h-full antialiased`}
+      className={`${plexSans.variable} ${plexMono.variable} light h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body className="flex min-h-full flex-col bg-white text-foreground">
         <Providers>{children}</Providers>
       </body>
     </html>

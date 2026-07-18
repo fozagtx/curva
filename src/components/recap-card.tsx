@@ -52,7 +52,7 @@ export default function RecapCard({ meta, score, probs }: Props) {
   const shareText =
     `${meta.home.name} ${goals[0]}–${goals[1]} ${meta.away.name} · ` +
     `biggest swing: ${recap.swing.team} ${(recap.swing.from * 100).toFixed(0)}%→${(recap.swing.to * 100).toFixed(0)}% ` +
-    `· drama peak ${recap.peakDrama}/100 · felt live on Curva`;
+    `· drama peak ${recap.peakDrama}/100 · felt live on Kryva`;
 
   const share = async () => {
     try {

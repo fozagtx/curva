@@ -1,6 +1,6 @@
 "use client";
 
-// Stacked list of match events, newest first.
+// Compact event list in a scroll pane — newest first.
 
 import { Card, CardBody, cn } from "@heroui/react";
 import { Icon } from "@iconify/react";
@@ -43,60 +43,55 @@ export default function EventTicker({
   meta: FixtureMeta | null;
   events: MatchEvent[];
 }) {
-  if (!events.length) {
-    return (
-      <Card className="border-small border-dashed border-default-200" shadow="none">
-        <CardBody className="flex flex-col items-center gap-2 p-8">
-          <Icon className="text-default-300" icon="solar:soundwave-bold-duotone" width={32} />
-          <p className="text-small text-default-400">
-            Match events will land here the second they happen.
-          </p>
-        </CardBody>
-      </Card>
-    );
-  }
-
   const teamName = (team?: 1 | 2) => {
     if (!team || !meta) return null;
     return meta.home.parti === team ? meta.home.name : meta.away.name;
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      {events.slice(0, 30).map((ev) => {
-        const cfg = ICONS[ev.kind];
-        const tone = TONE_STYLES[cfg.tone];
-        const team = teamName(ev.team);
-        const big = ev.kind === "goal" || ev.kind === "penalty_goal" || ev.kind === "red_card";
-        return (
-          <Card
-            key={`${ev.id}:${ev.kind}:${ev.label}`}
-            className={cn(
-              "border-small border-default-200",
-              big && "border-primary-200",
-            )}
-            shadow="sm"
-          >
-            <CardBody className="flex flex-row items-center gap-3 p-3">
-              <div className={cn("flex rounded-medium border p-2", tone.wrap)}>
-                <Icon className={tone.icon} icon={cfg.icon} width={18} />
-              </div>
-              <div className="flex min-w-0 flex-1 flex-col">
-                <p className={cn("truncate text-small", big && "font-semibold")}>
-                  {ev.label}
-                  {team ? <span className="text-default-500"> · {team}</span> : null}
-                </p>
-                {ev.detail ? (
-                  <p className="truncate text-tiny text-default-400">{ev.detail}</p>
-                ) : null}
-              </div>
-              <p className="shrink-0 font-mono text-small text-default-400 tabular-nums">
-                {ev.minute ? `${ev.minute}'` : ""}
-              </p>
-            </CardBody>
-          </Card>
-        );
-      })}
-    </div>
+    <Card className="h-full border-small border-default-200" shadow="sm">
+      <CardBody className="gap-2 p-3">
+        <p className="text-tiny font-medium uppercase tracking-wide text-default-400">
+          As it happened
+        </p>
+        {!events.length ? (
+          <div className="flex max-h-52 min-h-[8rem] flex-col items-center justify-center gap-1.5 px-2 py-6">
+            <Icon className="text-default-300" icon="solar:soundwave-bold-duotone" width={28} />
+            <p className="text-center text-tiny text-default-400">
+              Events land here the second they happen.
+            </p>
+          </div>
+        ) : (
+          <div className="flex max-h-52 flex-col gap-1 overflow-y-auto">
+            {events.slice(0, 24).map((ev) => {
+              const cfg = ICONS[ev.kind];
+              const tone = TONE_STYLES[cfg.tone];
+              const team = teamName(ev.team);
+              const big =
+                ev.kind === "goal" || ev.kind === "penalty_goal" || ev.kind === "red_card";
+              return (
+                <div
+                  key={`${ev.id}:${ev.kind}:${ev.label}`}
+                  className={cn(
+                    "flex items-center gap-2 rounded-medium border px-2 py-1.5",
+                    tone.wrap,
+                    big && "border-primary-200",
+                  )}
+                >
+                  <Icon className={cn("shrink-0", tone.icon)} icon={cfg.icon} width={15} />
+                  <p className={cn("min-w-0 flex-1 truncate text-tiny", big && "font-semibold")}>
+                    {ev.label}
+                    {team ? <span className="text-default-500"> · {team}</span> : null}
+                  </p>
+                  <p className="shrink-0 font-mono text-tiny tabular-nums text-default-400">
+                    {ev.minute ? `${ev.minute}'` : ""}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </CardBody>
+    </Card>
   );
 }

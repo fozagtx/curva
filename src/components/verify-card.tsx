@@ -38,8 +38,8 @@ export default function VerifyCard({ meta }: { meta: FixtureMeta | null }) {
   const goals = result ? homeAwayScore(meta, result.goals) : null;
 
   return (
-    <Card className="border-small border-default-200" shadow="sm">
-      <CardBody className="gap-3 p-4 sm:p-6">
+    <Card className="h-full border-small border-default-200" shadow="sm">
+      <CardBody className="gap-3 p-3 sm:p-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex min-w-0 items-center gap-3">
             <div className="flex shrink-0 rounded-medium border border-primary-100 bg-primary-50 p-2">

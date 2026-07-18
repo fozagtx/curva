@@ -13,8 +13,14 @@ const PROGRAM_ID = new PublicKey((idl as { address: string }).address);
 // One getProgramAccounts sweep: fixtureId -> { pool lamports, settled }.
 // Fresh reads refresh the Neon cache; on RPC failure the cache serves instead,
 // so lobby badges survive devnet hiccups.
-async function marketStates(): Promise<Map<number, { pool: number; settled: boolean }>> {
-  const out = new Map<number, { pool: number; settled: boolean }>();
+type MarketState = {
+  pool: number;
+  settled: boolean;
+  pools: [number, number, number];
+};
+
+async function marketStates(): Promise<Map<number, MarketState>> {
+  const out = new Map<number, MarketState>();
   try {
     const conn = new Connection(SOLANA_RPC, "confirmed");
     const accounts = await conn.getProgramAccounts(PROGRAM_ID);
@@ -22,10 +28,14 @@ async function marketStates(): Promise<Map<number, { pool: number; settled: bool
     for (const { pubkey, account } of accounts) {
       try {
         const d = coder.accounts.decode("Market", account.data);
-        const pools = (d.pools as BN[]).map(Number);
+        const pools = (d.pools as BN[]).map(Number) as [number, number, number];
         const fixtureId = Number(d.fixture_id ?? d.fixtureId);
         const settled = Object.keys(d.state ?? {})[0]?.toLowerCase() === "settled";
-        out.set(fixtureId, { pool: pools[0] + pools[1] + pools[2], settled });
+        out.set(fixtureId, {
+          pool: pools[0] + pools[1] + pools[2],
+          settled,
+          pools,
+        });
         cacheRows.push({
           fixture_id: fixtureId,
           pool_p1: pools[0], pool_draw: pools[1], pool_p2: pools[2],
@@ -42,7 +52,11 @@ async function marketStates(): Promise<Map<number, { pool: number; settled: bool
     // RPC down: serve the last known chain state from Neon
     try {
       for (const r of await readMarketCache()) {
-        out.set(r.fixture_id, { pool: r.pool_p1 + r.pool_draw + r.pool_p2, settled: r.settled });
+        out.set(r.fixture_id, {
+          pool: r.pool_p1 + r.pool_draw + r.pool_p2,
+          settled: r.settled,
+          pools: [r.pool_p1, r.pool_draw, r.pool_p2],
+        });
       }
     } catch { /* no cache either: badges disappear, lobby still works */ }
   }

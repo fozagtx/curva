@@ -1,6 +1,6 @@
 "use client";
 
-// Match screen: score → market → wave → Curva Calls → receipts / ticker.
+// Compact match layout — stake + wave side by side on desktop, tight stack on mobile.
 
 import { use, useMemo, useState } from "react";
 import { Button, Card, CardBody, Chip } from "@heroui/react";
@@ -10,7 +10,7 @@ import ScoreHeader from "@/components/score-header";
 import ProbWave from "@/components/prob-wave";
 import EventTicker from "@/components/event-ticker";
 import MarketCard from "@/components/market-card";
-import CurvaCall from "@/components/curva-call";
+import KryvaCall from "@/components/kryva-call";
 import DramaToast from "@/components/drama-toast";
 import VerifyCard from "@/components/verify-card";
 import RecapCard from "@/components/recap-card";
@@ -51,7 +51,7 @@ export default function MatchPage({
   }, [mode, pulse.meta, pulse.phase, now]);
 
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6 sm:px-6 sm:py-10">
+    <main className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-3 py-3 sm:px-4 sm:py-5">
       <TopBar backHref="/" />
 
       <ScoreHeader
@@ -64,150 +64,84 @@ export default function MatchPage({
 
       {suggestReplay ? (
         <Card className="border-small border-default-200" shadow="sm">
-          <CardBody className="flex flex-col items-start justify-between gap-3 p-4 sm:flex-row sm:items-center">
-            <div className="flex items-center gap-3">
-              <div className="flex rounded-medium border border-secondary/20 bg-secondary/10 p-2">
-                <Icon className="text-secondary" icon="solar:rewind-back-bold-duotone" width={20} />
-              </div>
-              <div>
-                <p className="text-small font-medium">This one is in the books.</p>
-                <p className="text-tiny text-default-400">
-                  Replay the full match — real data, real drama, minutes not hours.
-                </p>
-              </div>
-            </div>
+          <CardBody className="flex flex-row flex-wrap items-center justify-between gap-2 p-2.5">
+            <p className="text-tiny text-default-500">Full-time — replay at speed.</p>
             <Button
               color="primary"
               radius="full"
-              startContent={<Icon icon="solar:play-bold" width={18} />}
+              size="sm"
+              startContent={<Icon icon="solar:play-bold" width={14} />}
               onPress={() => setMode("replay")}
             >
-              Replay the drama
+              Replay
             </Button>
           </CardBody>
         </Card>
       ) : null}
 
       {mode === "replay" ? (
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1.5">
           <Chip color="secondary" size="sm" variant="flat">
             Replay · {speed}x
           </Chip>
           {REPLAY_SPEEDS.map((s) => (
             <Button
               key={s}
+              color={speed === s ? "primary" : "default"}
               radius="full"
               size="sm"
               variant={speed === s ? "solid" : "bordered"}
-              color={speed === s ? "primary" : "default"}
               onPress={() => setSpeed(s)}
             >
               {s}x
             </Button>
           ))}
-          <Button
-            radius="full"
-            size="sm"
-            startContent={<Icon icon="solar:play-stream-linear" width={14} />}
-            variant="light"
-            onPress={() => setMode("live")}
-          >
-            Back to live
+          <Button radius="full" size="sm" variant="light" onPress={() => setMode("live")}>
+            Live
           </Button>
         </div>
       ) : null}
 
-      {/* Stake first — the product's money path */}
-      <section className="flex flex-col gap-2">
-        <SectionLabel
-          hint="SOL in a vault · settled by proof"
-          icon="solar:safe-square-bold-duotone"
-          title="Put skin in"
-        />
-        <MarketCard meta={pulse.meta} phase={pulse.phase} probs={pulse.probs} />
-      </section>
+      {/* Dense board: market first on mobile, side-by-side on lg */}
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-12">
+        <div className="order-1 lg:order-2 lg:col-span-5">
+          <MarketCard meta={pulse.meta} phase={pulse.phase} probs={pulse.probs} />
+        </div>
+        <div className="order-2 lg:order-1 lg:col-span-7">
+          <ProbWave
+            connected={pulse.connected}
+            events={pulse.events}
+            meta={pulse.meta}
+            mode={pulse.mode}
+            probs={pulse.probs}
+          />
+        </div>
+      </div>
 
-      {/* Live curve */}
-      <section className="flex flex-col gap-2">
-        <SectionLabel
-          hint="TxLINE consensus, updating live"
-          icon="solar:pulse-2-bold-duotone"
-          title="The market moves"
-        />
-        <ProbWave
-          connected={pulse.connected}
-          events={pulse.events}
-          meta={pulse.meta}
-          mode={pulse.mode}
-          probs={pulse.probs}
-        />
-      </section>
-
-      {/* Fan loop — no wallet required */}
-      <section className="flex flex-col gap-2">
-        <SectionLabel
-          hint="Higher or lower · build a streak"
-          icon="solar:cup-star-bold-duotone"
-          title="Call the swing"
-        />
-        <CurvaCall gameApi={gameApi} meta={pulse.meta} phase={pulse.phase} probs={pulse.probs} />
-      </section>
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <KryvaCall gameApi={gameApi} meta={pulse.meta} phase={pulse.phase} probs={pulse.probs} />
+        <VerifyCard meta={pulse.meta} />
+      </div>
 
       {pulse.meta && ["F", "FET", "FPE"].includes(pulse.phase) ? (
         <RecapCard meta={pulse.meta} probs={pulse.probs} score={pulse.score} />
       ) : null}
 
-      <section className="flex flex-col gap-3">
-        <SectionLabel
-          hint="Chain-checked, not trust-me"
-          icon="solar:shield-check-bold-duotone"
-          title="Proof & receipts"
-        />
-        <VerifyCard meta={pulse.meta} />
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         <ActivityFeed meta={pulse.meta} />
-      </section>
-
-      <section className="flex flex-col gap-2">
-        <SectionLabel
-          hint="Goals, cards, VAR as they land"
-          icon="solar:clipboard-list-bold-duotone"
-          title="As it happened"
-        />
         <EventTicker events={pulse.events} meta={pulse.meta} />
-      </section>
+      </div>
 
       {pulse.error ? (
         <Card className="border-small border-danger-300" shadow="sm">
-          <CardBody className="flex flex-row items-center gap-3 p-4">
-            <Icon className="text-danger" icon="solar:danger-circle-bold" width={20} />
-            <p className="text-small text-default-500">{pulse.error}</p>
+          <CardBody className="flex flex-row items-center gap-2 p-2.5">
+            <Icon className="text-danger" icon="solar:danger-circle-bold" width={16} />
+            <p className="text-tiny text-default-500">{pulse.error}</p>
           </CardBody>
         </Card>
       ) : null}
 
       <DramaToast meta={pulse.meta} probs={pulse.probs} />
     </main>
-  );
-}
-
-function SectionLabel({
-  title,
-  hint,
-  icon,
-}: {
-  title: string;
-  hint: string;
-  icon: string;
-}) {
-  return (
-    <div className="flex items-center justify-between gap-3">
-      <div className="flex min-w-0 items-center gap-2">
-        <Icon className="shrink-0 text-default-400" icon={icon} width={16} />
-        <h2 className="text-small font-medium uppercase tracking-wide text-default-400">
-          {title}
-        </h2>
-      </div>
-      <p className="hidden truncate text-tiny text-default-300 sm:block">{hint}</p>
-    </div>
   );
 }

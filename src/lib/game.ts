@@ -1,6 +1,6 @@
 "use client";
 
-// Curva Calls: beat-the-market prediction game.
+// Kryva Calls: beat-the-market prediction game.
 // Every few match-minutes the market posts a line — the leader's live win
 // probability. You call HIGHER or LOWER for where it sits N minutes later.
 // Resolution uses only stream timestamps, so it works identically in replay.
@@ -40,7 +40,7 @@ export interface GameState {
 const EMPTY: GameState = { score: 0, streak: 0, bestStreak: 0, history: [] };
 
 function storageKey(identity: string) {
-  return `curva-game:${identity}`;
+  return `kryva-game:${identity}`;
 }
 
 export function loadGame(identity: string): GameState {

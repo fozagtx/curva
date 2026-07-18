@@ -16,20 +16,20 @@ interface Props {
   gameApi: UseGameResult;
 }
 
-export default function CurvaCall({ meta, probs, phase, gameApi }: Props) {
+export default function KryvaCall({ meta, probs, phase, gameApi }: Props) {
   const { game, activeCall, lastResolved, offer, placeCall, progress } = gameApi;
   const latest = probs.length ? probs[probs.length - 1] : null;
 
   return (
-    <Card className="border-small border-default-200" shadow="sm">
-      <CardBody className="gap-4 p-4 sm:p-6">
+    <Card className="h-full border-small border-default-200" shadow="sm">
+      <CardBody className="gap-3 p-3 sm:p-4">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <div className="flex rounded-medium border border-primary-100 bg-primary-50 p-2">
               <Icon className="text-primary" icon="solar:cup-star-bold-duotone" width={20} />
             </div>
             <div>
-              <p className="text-medium font-semibold">Curva Calls</p>
+              <p className="text-medium font-semibold">Kryva Calls</p>
               <p className="text-tiny text-default-400">Beat the market, build your streak</p>
             </div>
           </div>

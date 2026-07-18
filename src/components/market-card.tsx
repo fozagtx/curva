@@ -22,6 +22,8 @@ import {
   type MarketSide,
   type SettleProof,
 } from "@/lib/markets/client";
+import { formatCountdown, msUntil, urgencyFor } from "@/lib/fomo";
+import { KickoffCountdown } from "@/components/fomo-strip";
 
 const STAKE_AMOUNTS = [0.05, 0.1, 0.25] as const;
 
@@ -107,10 +109,10 @@ export default function MarketCard({ meta, probs, phase }: Props) {
     const url =
       typeof window !== "undefined"
         ? `${window.location.origin}/m/${meta.fixtureId}`
-        : `https://getcurva.vercel.app/m/${meta.fixtureId}`;
+        : `https://getkryva.vercel.app/m/${meta.fixtureId}`;
     const text =
       `I put ${stakeReceipt.amount} SOL on ${stakeReceipt.sideName} ` +
-      `(${meta.home.name} vs ${meta.away.name}) — escrowed on Curva, ` +
+      `(${meta.home.name} vs ${meta.away.name}) — escrowed on Kryva, ` +
       `settled by proof not by a house. ${url}`;
     try {
       if (navigator.share) {
@@ -161,8 +163,8 @@ export default function MarketCard({ meta, probs, phase }: Props) {
   const wallet = getProvider();
 
   return (
-    <Card className="border-small border-default-200" shadow="sm">
-      <CardBody className="gap-4 p-4 sm:p-6">
+    <Card className="h-full border-small border-default-200" shadow="sm">
+      <CardBody className="gap-3 p-3 sm:p-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex min-w-0 items-center gap-3">
             <div className="flex shrink-0 rounded-medium border border-primary-100 bg-primary-50 p-2">
@@ -257,6 +259,21 @@ export default function MarketCard({ meta, probs, phase }: Props) {
         {/* Pick a side: 1X2 odds buttons */}
         {market && !market.settled && !kickoffPassed ? (
           <div className="flex flex-col gap-3">
+            {(() => {
+              const urg = urgencyFor(meta.startTime, "upcoming", streamNow);
+              const left = msUntil(meta.startTime, streamNow);
+              if (urg === "idle" && left > 24 * 3600_000) return null;
+              return (
+                <div className="flex flex-wrap items-center justify-between gap-2 rounded-medium border border-warning-200 bg-warning-50 px-3 py-2">
+                  <KickoffCountdown startTime={meta.startTime} urgency={urg} />
+                  <p className="text-tiny font-semibold text-warning-800">
+                    {urg === "closing"
+                      ? `Vault locks in ${formatCountdown(left)} — last call`
+                      : `Stake closes at kick-off · ${formatCountdown(left)} left`}
+                  </p>
+                </div>
+              );
+            })()}
             <div className="grid grid-cols-3 gap-2">
               {displaySides.map(({ side: s, name }) => {
                 const pct = consensusFor(s, name);

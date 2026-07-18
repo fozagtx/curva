@@ -1,13 +1,15 @@
 "use client";
 
-// Lobby: top bar -> chips -> hero -> 3 action cards -> match list.
+// Compact white sportsbook lobby — featured match + list. No full-screen waste.
 
 import { useEffect, useMemo, useState } from "react";
-import { Card, CardBody, Chip, Skeleton } from "@heroui/react";
+import Link from "next/link";
+import { Button, Card, CardBody, Chip, Skeleton } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import TopBar from "@/components/top-bar";
-import ActionCard from "@/components/action-card";
 import MatchCard, { inferStatus, type MatchStatus, type MarketBadge } from "@/components/match-card";
+import { SocialProofTicker } from "@/components/fomo-strip";
+import { activityToPings, formatCountdown, msUntil, type SocialPing } from "@/lib/fomo";
 import type { FixtureMeta } from "@/lib/engine/state";
 
 type LobbyMatch = FixtureMeta & { market: MarketBadge };
@@ -15,6 +17,18 @@ type LobbyMatch = FixtureMeta & { market: MarketBadge };
 export default function Lobby() {
   const [matches, setMatches] = useState<LobbyMatch[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [pings, setPings] = useState<SocialPing[]>([]);
+  const [stats, setStats] = useState<{
+    tvlLamports: number;
+    marketsOpen: number;
+    settlements: number;
+  } | null>(null);
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 30_000);
+    return () => clearInterval(t);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -28,149 +42,236 @@ export default function Lobby() {
       .catch((err) => {
         if (!cancelled) setError(String(err.message ?? err));
       });
+    fetch("/api/stats")
+      .then((r) => r.json())
+      .then((b) => {
+        if (!cancelled && b.tvlLamports != null) {
+          setStats({
+            tvlLamports: Number(b.tvlLamports),
+            marketsOpen: Number(b.marketsOpen),
+            settlements: Number(b.settlements),
+          });
+        }
+      })
+      .catch(() => {});
+    fetch("/api/activity")
+      .then((r) => r.json())
+      .then((b) => {
+        if (!cancelled && Array.isArray(b.activity)) {
+          setPings(activityToPings(b.activity));
+        }
+      })
+      .catch(() => {});
     return () => {
       cancelled = true;
     };
   }, []);
 
-  const [now] = useState(() => Date.now());
   const groups = useMemo(() => {
     if (!matches) return null;
     const by: Record<MatchStatus, LobbyMatch[]> = { live: [], upcoming: [], finished: [] };
     for (const m of matches) by[inferStatus(m, now)].push(m);
-    by.upcoming.sort((a, b) => a.startTime - b.startTime);
+    by.upcoming.sort((a, b) => {
+      const ap = a.market?.pool ?? 0;
+      const bp = b.market?.pool ?? 0;
+      if (bp !== ap) return bp - ap;
+      return a.startTime - b.startTime;
+    });
     by.finished.sort((a, b) => b.startTime - a.startTime);
     return by;
   }, [matches, now]);
 
+  const featured = useMemo(() => {
+    if (!groups) return null;
+    if (groups.live[0]) return { m: groups.live[0], status: "live" as const };
+    const withPool = groups.upcoming.find((m) => m.market && m.market.pool > 0);
+    if (withPool) return { m: withPool, status: "upcoming" as const };
+    if (groups.upcoming[0]) return { m: groups.upcoming[0], status: "upcoming" as const };
+    return null;
+  }, [groups]);
+
+  const nextLeft = featured ? msUntil(featured.m.startTime, now) : null;
+
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-10">
+    <main className="mx-auto flex w-full max-w-2xl flex-col gap-3 px-3 py-4 sm:px-4 sm:py-6">
       <TopBar />
 
-      <div className="flex flex-wrap items-center gap-2">
-        {groups && groups.live.length === 0 && groups.upcoming.length > 0 ? (
-          <Chip
-            color="warning"
-            size="sm"
-            startContent={<Icon icon="solar:alarm-bold" width={14} />}
-            variant="flat"
-          >
-            Next kick-off{" "}
-            {new Date(groups.upcoming[0].startTime).toLocaleString(undefined, {
-              weekday: "short",
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: false,
-            })}
+      <div className="flex flex-col gap-1">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <Chip size="sm" variant="flat" color="success">
+            World Cup · 1X2
           </Chip>
-        ) : (
-          <Chip
-            color="danger"
-            size="sm"
-            startContent={<span className="mx-1 h-1.5 w-1.5 animate-pulse rounded-full bg-danger" />}
-            variant="flat"
-          >
-            {groups ? `${groups.live.length} live now` : "Checking pitches…"}
-          </Chip>
-        )}
-        <Chip size="sm" variant="flat" startContent={<Icon icon="solar:cup-bold" width={14} />}>
-          World Cup 2026
-        </Chip>
-        <Chip color="primary" size="sm" variant="flat" startContent={<Icon icon="solar:shield-check-bold" width={14} />}>
-          Verified on Solana
-        </Chip>
+          {nextLeft != null && nextLeft > 0 && featured?.status === "upcoming" ? (
+            <Chip size="sm" color="warning" variant="flat" className="font-mono font-bold">
+              KO {formatCountdown(nextLeft)}
+            </Chip>
+          ) : null}
+        </div>
+        <h1 className="text-xl font-bold leading-tight sm:text-2xl">
+          Pick 1X2. Cash when it&apos;s proven.
+        </h1>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
-          Stake on the match. Let Solana settle it.
-        </h1>
-        <p className="text-medium text-default-500">
-          There is no house and no oracle operator here. Your stake is a public
-          commitment on Solana before the result exists, and payouts unlock only
-          when the chain itself verifies a proof of the final score.
-        </p>
+      <div className="grid grid-cols-3 gap-2">
+        <Stat
+          label="Locked"
+          value={`${((stats?.tvlLamports ?? 0) / 1e9).toLocaleString(undefined, { maximumFractionDigits: 2 })} SOL`}
+        />
+        <Stat label="Open" value={String(stats?.marketsOpen ?? "—")} />
+        <Stat label="Settled" value={String(stats?.settlements ?? "—")} />
       </div>
+
+      {pings.length > 0 ? <SocialProofTicker pings={pings} /> : null}
 
       {error ? (
         <Card className="border-small border-danger-300" shadow="sm">
-          <CardBody className="flex flex-row items-center gap-3 p-4">
-            <div className="flex rounded-medium border border-danger-100 bg-danger-50 p-2">
-              <Icon className="text-danger" icon="solar:danger-circle-bold" width={20} />
-            </div>
-            <div>
-              <p className="text-small font-medium">The data feed is catching its breath.</p>
-              <p className="text-tiny text-default-400">{error}</p>
-            </div>
+          <CardBody className="flex flex-row items-center gap-2 p-3">
+            <Icon className="text-danger" icon="solar:danger-circle-bold" width={18} />
+            <p className="text-tiny text-default-500">{error}</p>
           </CardBody>
         </Card>
       ) : !groups ? (
         <div className="flex flex-col gap-2">
           {[0, 1, 2, 3].map((i) => (
-            <Skeleton key={i} className="h-[72px] rounded-large" />
+            <Skeleton key={i} className="h-16 rounded-large" />
           ))}
         </div>
       ) : (
         <>
-          {groups.live.length > 0 && (
-            <Section title="Live now">
-              {groups.live.map((m) => (
-                <MatchCard key={m.fixtureId} market={m.market} meta={m} status="live" />
-              ))}
+          {featured ? (
+            <FeaturedCompact
+              market={featured.m.market}
+              meta={featured.m}
+              status={featured.status}
+            />
+          ) : null}
+
+          {groups.live.filter((m) => m.fixtureId !== featured?.m.fixtureId).length > 0 && (
+            <Section title="Live">
+              {groups.live
+                .filter((m) => m.fixtureId !== featured?.m.fixtureId)
+                .map((m) => (
+                  <MatchCard key={m.fixtureId} market={m.market} meta={m} status="live" />
+                ))}
             </Section>
           )}
-          {groups.upcoming.length > 0 && (
+
+          {groups.upcoming.filter((m) => m.fixtureId !== featured?.m.fixtureId).length > 0 && (
             <Section title="Coming up">
-              {groups.upcoming.slice(0, 8).map((m) => (
-                <MatchCard key={m.fixtureId} market={m.market} meta={m} status="upcoming" />
-              ))}
+              {groups.upcoming
+                .filter((m) => m.fixtureId !== featured?.m.fixtureId)
+                .slice(0, 10)
+                .map((m) => (
+                  <MatchCard key={m.fixtureId} market={m.market} meta={m} status="upcoming" />
+                ))}
             </Section>
           )}
+
           {groups.finished.length > 0 && (
-            <Section title="Relive the drama">
-              {groups.finished.slice(0, 12).map((m) => (
+            <Section title="Finished">
+              {groups.finished.slice(0, 8).map((m) => (
                 <MatchCard key={m.fixtureId} market={m.market} meta={m} status="finished" />
               ))}
             </Section>
           )}
-          {groups.live.length + groups.upcoming.length + groups.finished.length === 0 && (
-            <Card className="border-small border-dashed border-default-200" shadow="none">
-              <CardBody className="flex flex-col items-center gap-2 p-10">
-                <Icon className="text-default-300" icon="solar:football-bold-duotone" width={36} />
-                <p className="text-small text-default-400">No fixtures on the schedule right now.</p>
-              </CardBody>
-            </Card>
-          )}
         </>
       )}
-      <div className="grid gap-3 sm:grid-cols-3">
-        <ActionCard
-          color="primary"
-          description="Stake SOL on any match. The pot sits in a vault no one controls."
-          icon="solar:safe-square-bold-duotone"
-          title="Trustless pools"
-        />
-        <ActionCard
-          color="secondary"
-          description="Live win probability from TxLINE consensus odds, lurching with every goal."
-          icon="solar:pulse-2-bold-duotone"
-          title="The market, live"
-        />
-        <ActionCard
-          description="Every claim is checkable: verify any result from your own browser."
-          icon="solar:shield-check-bold-duotone"
-          title="Don't trust us"
-        />
-      </div>
-
     </main>
+  );
+}
+
+function FeaturedCompact({
+  meta,
+  status,
+  market,
+}: {
+  meta: FixtureMeta;
+  status: MatchStatus;
+  market: MarketBadge;
+}) {
+  const pool = market && market.pool > 0 ? market.pool / 1e9 : 0;
+  const pools = market?.pools;
+  const total = market?.pool ?? 0;
+  const homeIsP1 = meta.home.parti === 1;
+  const pct = (n: number) => (total > 0 ? `${Math.round((n / total) * 100)}%` : "—");
+  const home = homeIsP1 ? (pools?.[0] ?? 0) : (pools?.[2] ?? 0);
+  const draw = pools?.[1] ?? 0;
+  const away = homeIsP1 ? (pools?.[2] ?? 0) : (pools?.[0] ?? 0);
+
+  return (
+    <Card className="border-small border-primary-200" shadow="sm">
+      <CardBody className="gap-3 p-3">
+        <div className="flex items-center justify-between gap-2">
+          <Chip
+            color={status === "live" ? "danger" : "primary"}
+            size="sm"
+            variant="flat"
+            startContent={
+              status === "live" ? (
+                <span className="mx-1 h-1.5 w-1.5 animate-pulse rounded-full bg-danger" />
+              ) : undefined
+            }
+          >
+            {status === "live" ? "LIVE" : "FEATURED"}
+          </Chip>
+          {pool > 0 ? (
+            <span className="font-mono text-tiny font-bold text-primary">
+              {pool.toLocaleString(undefined, { maximumFractionDigits: 2 })} SOL
+            </span>
+          ) : null}
+        </div>
+
+        <div className="flex items-center justify-between gap-2">
+          <p className="min-w-0 flex-1 truncate text-right text-small font-bold">{meta.home.name}</p>
+          <span className="shrink-0 px-2 text-tiny font-bold text-default-400">VS</span>
+          <p className="min-w-0 flex-1 truncate text-left text-small font-bold">{meta.away.name}</p>
+        </div>
+
+        <div className="grid grid-cols-3 gap-1.5">
+          {[
+            ["1", pct(home)],
+            ["X", pct(draw)],
+            ["2", pct(away)],
+          ].map(([k, v]) => (
+            <div
+              key={k}
+              className="flex flex-col items-center rounded-lg border border-default-200 bg-default-50 py-2"
+            >
+              <span className="text-[10px] font-bold text-default-500">{k}</span>
+              <span className="font-mono text-small font-bold">{v}</span>
+            </div>
+          ))}
+        </div>
+
+        <Button
+          as={Link}
+          className="font-bold"
+          color="primary"
+          fullWidth
+          href={`/m/${meta.fixtureId}`}
+          radius="full"
+          size="sm"
+        >
+          Bet this match
+        </Button>
+      </CardBody>
+    </Card>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-lg border border-default-200 bg-default-50 px-2 py-1.5">
+      <p className="text-[10px] font-semibold uppercase text-default-400">{label}</p>
+      <p className="truncate font-mono text-tiny font-bold">{value}</p>
+    </div>
   );
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="flex flex-col gap-2">
-      <h2 className="text-small font-medium uppercase tracking-wide text-default-400">{title}</h2>
+    <section className="flex flex-col gap-1.5">
+      <h2 className="text-[10px] font-bold uppercase tracking-wide text-default-400">{title}</h2>
       {children}
     </section>
   );

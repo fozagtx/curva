@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     }
     const row = await ingestTransaction(txSig);
     if (!row) {
-      return NextResponse.json({ error: "transaction not found or not a curva instruction" }, { status: 422 });
+      return NextResponse.json({ error: "transaction not found or not a Kryva market instruction" }, { status: 422 });
     }
     await insertActivity(row);
     return NextResponse.json({ recorded: row });

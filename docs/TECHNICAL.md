@@ -1,7 +1,7 @@
-# Curva — Technical Documentation
+# Kryva — Technical Documentation
 
 **Track:** TxODDS · Prediction Markets and Settlement (Superteam Earn, World Cup 2026)
-**Live app:** https://getcurva.vercel.app
+**Live app:** https://getkryva.vercel.app
 **Program (devnet):** `3L9Yb4AicTqnVCAV12R1enNW5dPZHHT26QtWNiQNP4xp`
 
 ## Core idea
@@ -88,7 +88,7 @@ TxLINE SSE/REST ──► Next.js server (odds→probability engine, drama, even
 - **Fee-ready parimutuel design**: a protocol fee on winning pots is a one-line
   change; white-label the market layer for operators/media as B2B.
 - **Trustless settlement is the moat**: operators today pay for result feeds
-  AND carry oracle risk; Curva's settlement cost is one transaction and the
+  AND carry oracle risk; Kryva's settlement cost is one transaction and the
   trust cost is zero.
 - **The viewer doubles as content**: the probability wave + drama recap cards
   are shareable moments that market the pools.

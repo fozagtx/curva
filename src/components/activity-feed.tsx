@@ -73,33 +73,35 @@ export default function ActivityFeed({ meta }: { meta: FixtureMeta | null }) {
   })();
 
   return (
-    <section className="flex flex-col gap-2">
-      <h2 className="text-small font-medium uppercase tracking-wide text-default-400">
-        On-chain receipts
-      </h2>
-      <Card className="border-small border-default-200" shadow="sm">
-        <CardBody className="flex flex-col gap-1 p-2">
-          {items.slice(0, 8).map((a) => {
+    <Card className="h-full border-small border-default-200" shadow="sm">
+      <CardBody className="gap-2 p-3">
+        <p className="text-tiny font-medium uppercase tracking-wide text-default-400">
+          On-chain receipts
+        </p>
+        <div className="flex max-h-52 flex-col gap-0.5 overflow-y-auto">
+          {items.slice(0, 12).map((a) => {
             const k = KIND_META[a.kind] ?? KIND_META.create_market;
             return (
               <a
                 key={a.tx_sig}
-                className="flex items-center gap-3 rounded-medium p-2 transition-colors hover:bg-default-50"
+                className="flex items-center gap-2 rounded-medium px-2 py-1.5 transition-colors hover:bg-default-50"
                 href={explorerUrl("tx", a.tx_sig)}
                 rel="noreferrer"
                 target="_blank"
               >
-                <Icon className={cn("shrink-0", k.tone)} icon={k.icon} width={16} />
-                <p className="min-w-0 flex-1 truncate text-small text-default-500">
-                  <span className="font-mono text-default-400">{a.wallet.slice(0, 4)}…{a.wallet.slice(-4)}</span>{" "}
+                <Icon className={cn("shrink-0", k.tone)} icon={k.icon} width={15} />
+                <p className="min-w-0 flex-1 truncate text-tiny text-default-500">
+                  <span className="font-mono text-default-400">
+                    {a.wallet.slice(0, 4)}…{a.wallet.slice(-4)}
+                  </span>{" "}
                   {k.label(a, sides)}
                 </p>
-                <Icon className="shrink-0 text-default-300" icon="solar:square-top-up-linear" width={13} />
+                <Icon className="shrink-0 text-default-300" icon="solar:square-top-up-linear" width={12} />
               </a>
             );
           })}
-        </CardBody>
-      </Card>
-    </section>
+        </div>
+      </CardBody>
+    </Card>
   );
 }
